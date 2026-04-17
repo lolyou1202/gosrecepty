@@ -1,0 +1,42 @@
+<div
+  class="input-wrapper"
+  [class]="{
+    'input--wide': this.width() === 'wide',
+    'input--invalid': this.invalid(),
+    'input--disabled': this.disabled(),
+    'input--readonly': this.readOnly(),
+    'input--focused': this.isFocused,
+    'input--clearable': this.clearable() && !this.disabled() && !this.readOnly()
+  }"
+>
+  @if (label()) {
+    <label class="input__label">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="input__field-wrapper">
+    <input
+      class="input__field"
+      [value]="value()"
+      [placeholder]="placeholder()"
+      [readonly]="readOnly()"
+      [disabled]="disabled()"
+      (input)="onInput($event)"
+      (blur)="onBlur()"
+      (focus)="onFocus()"
+    />
+
+    <!--@if (showLoader()) {
+      <div class="input__loader">
+        <div class="spinner"></div>
+      </div>
+    }-->
+
+    @if (showClearButton()) {
+      <button class="input__clear" (click)="clear()" [disabled]="disabled()">
+        <app-icon name="cross-24" class="input__clear-icon" />
+      </button>
+    }
+  </div>
+</div>
