@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+.auth-layout {
+  &__container {
+    width: 100%;
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 720px) {
+  :host {
+    align-items: flex-start;
+  }
+}

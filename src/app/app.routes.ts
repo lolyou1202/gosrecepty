@@ -4,6 +4,14 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import { guestGuard } from './core/auth/guest.guard'
 
 export const routes: Routes = [
+  {
+    path: '',
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: AuthLayoutComponent,
+        children: [
           {
             path: 'login',
             canActivate: [guestGuard],
@@ -26,4 +34,6 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/recipe/recipe.component')
       },
+    ]
+  }
 ]
