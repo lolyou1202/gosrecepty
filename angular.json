@@ -50,24 +50,18 @@
                 }
               ],
               "outputHashing": "all",
-              "baseHref": "/",
-              "deployUrl": "/"
+              "baseHref": "/gosrecepty/"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true,
-              "baseHref": "/",
-              "deployUrl": "/"
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
-          "options": {
-            "servePath": "/"
-          },
           "configurations": {
             "production": {
               "buildTarget": "gosrecepty:build:production"
@@ -108,7 +102,12 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "dir": "dist/gosrecepty/browser",
+            "baseHref": "/gosrecepty/",
+            "noSilent": false
+          }
         }
       }
     }
