@@ -1,0 +1,20 @@
+:host {
+  --icon-size: 24px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  vertical-align: middle;
+
+  color: var(--icon-color);
+}
+
+.icon {
+  display: block;
+
+  width: var(--icon-size);
+  height: var(--icon-size);
+
+  fill: currentColor;
+}
