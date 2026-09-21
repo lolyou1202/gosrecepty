@@ -1,0 +1,65 @@
+<div
+  class="input__container"
+  [class.--full-width]="fullWidth()"
+  [class.--invalid]="invalid() && dirty()"
+  [class.--disabled]="disabled()"
+  [class.--focused]="isFocused()"
+>
+  @if (label()) {
+    <label class="input__label text-small">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="input__field-container">
+    <input
+      #inputElement
+      class="input__field text-default"
+      [type]="type()"
+      [value]="value()"
+      [placeholder]="placeholder() || ''"
+      [disabled]="disabled()"
+      (input)="onInput($event.target.value)"
+      (blur)="onBlur()"
+      (focus)="focus()"
+    />
+
+    @if (showClearButton()) {
+      <button
+        class="input__icon-btn"
+        (mousedown)="$event.preventDefault()"
+        (click)="$event.preventDefault(); clear()"
+      >
+        <app-icon name="cross-1" class="input__icon cross" />
+      </button>
+    }
+
+    @if (!showClearButton() && type() === 'search') {
+      <button
+        class="input__icon-btn"
+        (mousedown)="$event.preventDefault()"
+        (click)="$event.preventDefault(); onClickLoupe()"
+      >
+        <app-icon name="loupe" class="input__icon loupe" />
+      </button>
+    }
+  </div>
+
+  @if (hint(); as hint) {
+    <p class="input__hint text-small text-help">
+      {{ hint }}
+    </p>
+  }
+
+  @if (touched() && invalid()) {
+    <div class="input__errors">
+      @for (message of errorMessages(); track $index) {
+        <p class="input__errors-message text-small text-error">
+          {{
+            errorMessages().length > 1 ? `${$index + 1}. ${message}` : message
+          }}
+        </p>
+      }
+    </div>
+  }
+</div>
