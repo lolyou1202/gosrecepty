@@ -1,0 +1,14 @@
+<button
+  class="link-button link-plain"
+  [disabled]="disabled()"
+  (click)="onClick()"
+>
+  @if (iconName(); as iconName) {
+    <app-icon [name]="iconName" class="link-button__icon" />
+  }
+  @if (label(); as label) {
+    <p class="link-button__label">
+      {{ label }}
+    </p>
+  }
+</button>
