@@ -1,0 +1,54 @@
+<div
+  class="input-base__container"
+  [class.--invalid]="invalid() && dirty()"
+  [class.--disabled]="disabled()"
+  [class.--focused]="isFocused()"
+>
+  @if (label()) {
+    <label class="input-base__label text-small">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="input-base__field-container">
+    <input
+      #field
+      class="input-base__field text-default"
+      [type]="type()"
+      [value]="value()"
+      [placeholder]="placeholder() || ''"
+      [disabled]="disabled()"
+      (input)="onInput($event.target.value)"
+      (blur)="onBlur()"
+      (focus)="focus()"
+    />
+
+    @if (showIcon()) {
+      <button
+        class="input-base__icon-btn"
+        (mousedown)="$event.preventDefault()"
+        (click)="$event.preventDefault(); clear()"
+      >
+        <app-icon [name]="iconName()" class="input-base__icon" />
+      </button>
+    }
+  </div>
+
+  @if (hint(); as hint) {
+    <p class="input-base__hint text-small text-help">
+      {{ hint }}
+    </p>
+  }
+
+  @if (touched() && invalid()) {
+    <div class="input-base__errors">
+      @for (message of errorMessages(); track $index) {
+        <p class="input-base__errors-message text-small text-error">
+          {{
+            errorMessages().length > 1 ? `${$index + 1}. ${message}` : message
+          }}
+        </p>
+      }
+    </div>
+  }
+</div>

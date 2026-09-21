@@ -1,0 +1,23 @@
+<button
+  type="button"
+  class="chip__container"
+  [class]="{
+    'shadow-block': variant() === 'outside',
+    'with-hover': variant() === 'outside',
+    '--variant-outside': variant() === 'outside',
+    '--variant-inside': variant() === 'inside',
+    '--only-icon': icon() && !label(),
+    '--active': checked(),
+    '--readonly': readonly(),
+    '--disabled': disabled(),
+  }"
+  [disabled]="readonly() || disabled()"
+  (click)="toggle()"
+>
+  @if (icon(); as iconName) {
+    <app-icon [name]="iconName" size="16px" class="chip__icon" />
+  }
+  @if (label(); as label) {
+    <p class="chip__label">{{ label }}</p>
+  }
+</button>

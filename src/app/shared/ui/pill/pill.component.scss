@@ -1,0 +1,63 @@
+.pill {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+
+    max-width: 360px;
+    height: 40px;
+
+    padding: 0 6px 0 10px;
+
+    border-width: 2px;
+    border-style: solid;
+    border-color: var(--color-gosblue);
+
+    cursor: pointer;
+    transition:
+      background-color ease 0.2s,
+      box-shadow ease 0.2s,
+      border-color ease 0.2s;
+
+    &.--variant-inside {
+      background-color: var(--color-azzurro-alice);
+      border-radius: 8px;
+
+      &:hover {
+        background-color: var(--color-solitario);
+      }
+    }
+
+    &.--variant-outside {
+      border-radius: 12px;
+    }
+  }
+
+  &__label,
+  &__cross {
+    color: var(--color-gosblue);
+  }
+
+  &__label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &__cross {
+		display: inline-flex;
+
+    padding: 0;
+    margin: 0;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    &-icon {
+      color: inherit;
+    }
+  }
+}

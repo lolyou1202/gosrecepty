@@ -1,0 +1,25 @@
+<div class="swiper-element-wrap" [class]="swiperModifyCssCls()">
+  <swiper-container
+    #swiperRef
+    [init]="false"
+    [slidesPerView]="slidesPerView()"
+    [slidesPerGroup]="slidesPerGroup()"
+    [slidesPerGroupAuto]="slidesPerGroupAuto()"
+    [spaceBetween]="slidesSpaceBetween()"
+    [navigation]="navigationConfig()"
+    [watchOverflow]="true"
+    [centeredSlides]="false"
+  >
+    <ng-content></ng-content>
+  </swiper-container>
+  @if (swiperControlsEnabled()) {
+    <button
+      [style.left]="swiperControlsPositionOffset()"
+      class="reset-btn swiper-element-control swiper-element-control-prev"
+    ></button>
+    <button
+      [style.right]="swiperControlsPositionOffset()"
+      class="reset-btn swiper-element-control swiper-element-control-next"
+    ></button>
+  }
+</div>

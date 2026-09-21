@@ -1,0 +1,63 @@
+@use 'color-palette' as palette;
+
+.accordion-stack {
+  &__container {
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-default);
+    border-radius: var(--radius-default);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 24px;
+  }
+
+  &__toggle {
+    &-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      background: none;
+      border: none;
+      outline: none;
+
+      cursor: pointer;
+
+      &:hover {
+        .accordion-stack__toggle-icon {
+          color: palette.$color-vertigini-blue;
+        }
+
+        .accordion-stack__toggle-text {
+          color: palette.$color-vertigini-blue;
+        }
+      }
+    }
+
+    &-icon {
+      color: palette.$color-gosblue;
+    }
+
+    &-text {
+      color: palette.$color-gosblue;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &:empty {
+      padding: 0;
+    }
+  }
+}

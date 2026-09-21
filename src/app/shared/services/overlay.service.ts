@@ -1,35 +1,32 @@
 import {
+  EnvironmentInjector,
   Injectable,
   Injector,
   Type,
   inject,
-  DestroyRef,
   signal
 } from '@angular/core'
 import {
-  Overlay,
+  Overlay as CdkOverlay,
   OverlayRef as CdkOverlayRef,
   OverlayConfig as CdkOverlayConfig,
-  PositionStrategy,
-  ConnectionPositionPair
+  OverlayPositionBuilder
 } from '@angular/cdk/overlay'
 import { ComponentPortal } from '@angular/cdk/portal'
 import { Subject } from 'rxjs'
-import { OverlayBaseConfig, OverlayRef } from '../models/overlay.types'
+import { OverlayBaseConfig, OverlayRef } from '../models/overlay.model'
 import {
   OVERLAY_CONFIG,
   OVERLAY_DATA,
   OVERLAY_REF
 } from '../models/overlay.tokens'
 import { clsx } from 'clsx'
-
-const OFFSET_MARGIN = 8
+import { ComponentInputValues } from '../../utils/input-value.type'
 
 @Injectable({ providedIn: 'root' })
 export class OverlayService {
-  protected readonly overlay = inject(Overlay)
-  protected readonly injector = inject(Injector)
-  protected readonly destroyRef = inject(DestroyRef)
+  private readonly _cdkOverlay = inject(CdkOverlay)
+  private readonly _injector = inject(EnvironmentInjector)
 
   private readonly _stack = signal<
     {
@@ -38,16 +35,21 @@ export class OverlayService {
     }[]
   >([])
 
-  public open<T>(
-    component: Type<T>,
-    config: OverlayBaseConfig,
+  public create<T>({
+    component,
+    config,
+    data,
+    initialInputs
+  }: {
+    component: Type<T>
+    config: OverlayBaseConfig
     data?: unknown
-  ): OverlayRef {
-    const id = this._generateId()
+    initialInputs?: ComponentInputValues<T>
+  }): OverlayRef {
+    const id = `overlay_${crypto.randomUUID()}`
     const cdkConfig = this._buildCdkConfig(config)
-    const cdkRef = this.overlay.create(cdkConfig)
-
-    const overlayRef = this._createOverlayRef(cdkRef, id)
+    const cdkRef = this._cdkOverlay.create(cdkConfig)
+    const overlayRef = this._createOverlayRef(cdkRef, id, config)
 
     const injector = Injector.create({
       providers: [
@@ -55,11 +57,19 @@ export class OverlayService {
         { provide: OVERLAY_CONFIG, useValue: config },
         { provide: OVERLAY_DATA, useValue: data }
       ],
-      parent: this.injector
+      parent: this._injector
     })
 
     const portal = new ComponentPortal(component, null, injector)
-    cdkRef.attach(portal)
+    const componentRef = cdkRef.attach(portal)
+
+    this._applyAnimation(cdkRef.overlayElement, config, 'opening')
+
+    if (initialInputs) {
+      Object.entries(initialInputs).forEach(([key, value]) => {
+        componentRef.setInput(key, value)
+      })
+    }
 
     this._stack.update(_stack => [
       ..._stack,
@@ -69,64 +79,93 @@ export class OverlayService {
       }
     ])
 
-    this._setupAutoClose(cdkRef, config)
+    this._setupAutoClose(cdkRef, config, overlayRef.close)
 
     overlayRef.closed.subscribe(() => this._removeFromStack(id))
 
     return overlayRef
   }
 
-  public closeAll(): void {
-    ;[...this._stack()].reverse().forEach(el => el.ref.close())
+  public position(): OverlayPositionBuilder {
+    return this._cdkOverlay.position()
   }
 
-  private _generateId(): string {
-    return `overlay_${crypto.randomUUID()}`
+  public closeAll(): void {
+    ;[...this._stack()].reverse().forEach(el => el.ref.close())
   }
 
   private _removeFromStack(id: string): void {
     this._stack.update(_stack => _stack.filter(el => el.id !== id))
   }
 
-  private _createOverlayRef(cdkRef: CdkOverlayRef, id: string): OverlayRef {
+  private _createOverlayRef(
+    cdkRef: CdkOverlayRef,
+    id: string,
+    config: OverlayBaseConfig
+  ): OverlayRef {
     const afterClosed$ = new Subject<void>()
+
+    let isClosing = false
+    let isDisposed = false
+
+    const finishClose = (): void => {
+      if (isDisposed) return
+      isDisposed = true
+      afterClosed$.next()
+      afterClosed$.complete()
+      cdkRef.dispose()
+    }
+
+    const close = (): void => {
+      if (isClosing || isDisposed) return
+      isClosing = true
+
+      const overlayElement = cdkRef.overlayElement
+      if (!overlayElement) {
+        finishClose()
+        return
+      }
+
+      this._applyAnimation(overlayElement, config, 'closing', finishClose)
+    }
 
     return {
       id,
       closed: afterClosed$.asObservable(),
-      close: (): void => {
-        afterClosed$.next()
-        afterClosed$.complete()
-        cdkRef.dispose()
-      },
+      close,
       cdkRef
     }
   }
 
   private _setupAutoClose(
     cdkRef: CdkOverlayRef,
-    config: OverlayBaseConfig
+    config: OverlayBaseConfig,
+    closeFn: () => void
   ): void {
-    cdkRef.detachments().subscribe(() => cdkRef.dispose())
-
     if (config.closeOnBackdropClick !== false) {
-      cdkRef.backdropClick().subscribe(() => cdkRef.dispose())
+      cdkRef.backdropClick().subscribe(() => closeFn())
     }
 
     if (config.closeOnEsc !== false) {
       cdkRef.keydownEvents().subscribe(event => {
-        if (event.code === 'Escape') cdkRef.dispose()
+        if (event.code === 'Escape') closeFn()
       })
     }
   }
 
   private _buildCdkConfig(config: OverlayBaseConfig): CdkOverlayConfig {
-    const positionStrategy = this._getPositionStrategy(
-      config.origin,
-      config.positions
-    )
+    const positionStrategy =
+      config.positionStrategy ??
+      this._cdkOverlay
+        .position()
+        .global()
+        .centerHorizontally()
+        .centerVertically()
 
-    const scrollStrategy = this.overlay.scrollStrategies.block()
+    const scrollStrategy =
+      config.scrollStrategy ?? this._cdkOverlay.scrollStrategies.block()
+
+    const hasBackdrop = config.hasBackdrop ?? true
 
     const backdropClass = clsx(
       'overlay-backdrop',
@@ -136,67 +175,59 @@ export class OverlayService {
 
     const panelClass = clsx(
       'overlay-panel',
-      `overlay-panel-shadow-${config.panelShadow}`,
+      config.panelShadow ?? `overlay-panel-shadow-${config.panelShadow}`,
       config.panelClass
     ).split(' ')
 
     return {
+      ...config,
       positionStrategy,
       scrollStrategy,
-      hasBackdrop: true,
+      hasBackdrop,
       backdropClass,
       panelClass
     }
   }
 
-  private _getPositionStrategy(
-    origin?: HTMLElement,
-    positions?: ConnectionPositionPair[]
-  ): PositionStrategy {
-    if (!origin) {
-      return this.overlay
-        .position()
-        .global()
-        .centerHorizontally()
-        .centerVertically()
+  private _applyAnimation(
+    element: HTMLElement,
+    config: OverlayBaseConfig,
+    phase: 'opening' | 'closing',
+    onDone?: () => void
+  ): void {
+    const duration = config.animationDuration
+    if (!duration || config.disableAnimation) {
+      onDone?.()
+      return
+    }
+
+    const selector = '.overlay-panel'
+    const panel = element.matches(selector)
+      ? element
+      : (element.querySelector(selector) as HTMLElement)
+
+    if (!panel) {
+      onDone?.()
+      return
+    }
+
+    const animationClass = `--${phase}`
+
+    if (phase === 'opening') {
+      panel.style.animationDuration = `${duration}ms`
+      panel.classList.add(animationClass)
+      panel.addEventListener(
+        'animationend',
+        () => {
+          panel.classList.remove(animationClass)
+        },
+        { once: true }
+      )
+      onDone?.()
     } else {
-      return this.overlay
-        .position()
-        .flexibleConnectedTo(origin)
-        .withPositions(
-          positions || [
-            {
-              originX: 'start',
-              originY: 'bottom',
-              overlayX: 'start',
-              overlayY: 'top',
-              offsetY: OFFSET_MARGIN
-            },
-            {
-              originX: 'start',
-              originY: 'top',
-              overlayX: 'start',
-              overlayY: 'bottom',
-              offsetY: -OFFSET_MARGIN
-            },
-            {
-              originX: 'end',
-              originY: 'bottom',
-              overlayX: 'end',
-              overlayY: 'top',
-              offsetY: OFFSET_MARGIN
-            },
-            {
-              originX: 'end',
-              originY: 'top',
-              overlayX: 'end',
-              overlayY: 'bottom',
-              offsetY: -OFFSET_MARGIN
-            }
-          ]
-        )
-        .withPush(true)
-        .withViewportMargin(OFFSET_MARGIN)
+      panel.classList.add(animationClass)
+      panel.addEventListener('animationend', () => onDone?.(), { once: true })
+      setTimeout(() => onDone?.(), duration)
     }
   }
 }

@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router'
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component'
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component'
 import { guestGuard } from './core/auth/guest.guard'
 import { authGuard } from './core/auth/auth.guard'
 
@@ -33,6 +35,11 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/recipe/recipe.component')
       },
+      {
+        path: 'demo',
+        loadComponent: () =>
+          import('./pages/demo/page-demo.component')
+      }
     ]
   }
 ]

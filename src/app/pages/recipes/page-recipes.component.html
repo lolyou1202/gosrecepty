@@ -1,0 +1,28 @@
+<app-filter-catalog pathPrefix="recipeList" />
+
+@if (recipeListService.loading()) {
+  <p>Загрузка...</p>
+}
+@if (recipeListService.error()) {
+  <p>Ошибка загрузки</p>
+}
+
+<ul>
+  @for (recipe of recipeListService.recipes(); track recipe.id) {
+    <li>{{ recipe.name }}</li>
+  }
+</ul>
+
+<button
+  (click)="recipeListService.setCurrentPage(currentPage() - 1)"
+  [disabled]="currentPage() <= 1"
+>
+  Назад
+</button>
+<span>{{ currentPage() }} / {{ recipeListService.totalPages() }}</span>
+<button
+  (click)="recipeListService.setCurrentPage(currentPage() + 1)"
+  [disabled]="currentPage() >= (recipeListService.totalPages() ?? 1)"
+>
+  Вперед
+</button>

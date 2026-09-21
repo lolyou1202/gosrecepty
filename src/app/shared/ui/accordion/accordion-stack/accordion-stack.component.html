@@ -1,0 +1,21 @@
+<div class="accordion-stack__container">
+  <div class="accordion-stack__header">
+    <h4 class="accordion-stack__title">
+      {{ title() }}
+    </h4>
+
+    <button class="accordion-stack__toggle-btn" (click)="toggleExpanded()">
+      <app-icon
+        [name]="isExpandedSome() ? 'rollup' : 'expand'"
+        class="accordion-stack__toggle-icon"
+      />
+      <p class="accordion-stack__toggle-text">
+        {{ isExpandedSome() ? 'Свернуть все' : 'Развернуть все' }}
+      </p>
+    </button>
+  </div>
+
+  <div class="accordion-stack__content">
+    <ng-content></ng-content>
+  </div>
+</div>

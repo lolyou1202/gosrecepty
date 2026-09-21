@@ -1,0 +1,9 @@
+<div class="tooltip shadow-block" [class]="position()">
+  @if (isArray(content()) && content().length > 1) {
+    @for (line of content(); track $index) {
+      <p class="tooltip-text text-small">{{ $index + 1 }}. {{ line }}</p>
+    }
+  } @else {
+    <p class="tooltip-text text-small">{{ content() }}</p>
+  }
+</div>

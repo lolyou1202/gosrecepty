@@ -1,0 +1,20 @@
+<div class="tags-list__container">
+  @for (tag of displayedTags(); track $index) {
+    <app-tag [variant]="tag.variant" [label]="tag.label" [icon]="tag.icon" />
+  }
+  @if (showDetailsButton()) {
+    <app-tag
+      [label]="detailsLabel()"
+      [clickable]="true"
+      (clicked)="openModal()"
+    />
+  }
+</div>
+
+<ng-template #modalTemplate>
+  <div class="tags-list__container">
+    @for (tag of tagsList(); track $index) {
+      <app-tag [variant]="tag.variant" [label]="tag.label" [icon]="tag.icon" />
+    }
+  </div>
+</ng-template>

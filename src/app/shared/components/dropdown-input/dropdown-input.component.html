@@ -1,0 +1,68 @@
+<div
+  class="dropdown__wrapper"
+  [class.full-width]="width() === 'full-width'"
+  [class.--invalid]="invalid() && touched()"
+  [class.--disabled]="disabled()"
+  [class.--focused]="isOpen()"
+  [class.--open]="isOpen()"
+>
+  @if (label()) {
+    <label class="dropdown__label text-small">
+      {{ label() }}
+    </label>
+  }
+
+  <div class="dropdown__container">
+    <div
+      #dropdownField
+      class="dropdown__field-wrapper"
+      [class.--disabled]="disabled()"
+      [class.--focused]="isOpen()"
+    >
+      <p class="dropdown__field text-plain">
+        {{ displayValue() }}
+      </p>
+
+      @if (invalid() && touched()) {
+        <app-icon
+          name="warn"
+          class="dropdown__icon"
+          appTooltip
+          [tooltipContent]="errorMessages().join(', ')"
+          [tooltipPosition]="'bottom-end'"
+          [tooltipColor]="'var(--color-gosred)'"
+          (click)="$event.stopPropagation()"
+        />
+      }
+
+      <app-icon
+        [name]="`chevron-${isOpen() ? 'up' : 'down'}`"
+        class="dropdown__icon chevron"
+        aria-hidden="true"
+      />
+    </div>
+
+    <app-dropdown
+      #dropdown
+      [items]="preparedItems()"
+      [(open)]="isOpen"
+      [placeholder]="placeholder()"
+      [multiple]="multiple()"
+      (selectedItemId)="onItemClick($event)"
+    />
+  </div>
+
+  @if (hint()) {
+    <p class="dropdown__helper text-small text-help">
+      {{ hint() }}
+    </p>
+  }
+
+  @if (showChips() && multiple() && selectedItems().length > 0) {
+    <div class="dropdown__chips">
+      @for (chip of visibleChips(); track chip.id) {
+        <app-pill [label]="chip.value" (removed)="removeChip(chip.id)" />
+      }
+    </div>
+  }
+</div>

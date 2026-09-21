@@ -1,2 +1,7 @@
 <div class="page-register__container">
+  <app-auth-form mode="register" class="page-register__form" />
+  <div class="page-register__auth-question">
+    <p class="default-text text-color-gray">Уже есть аккаунт?</p>
+    <a [routerLink]="'/login'">Войти</a>
+  </div>
 </div>

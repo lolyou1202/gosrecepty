@@ -1,0 +1,28 @@
+<div class="scrollable-chips">
+  <div class="scrollable-chips__track" #track>
+    <ng-content></ng-content>
+  </div>
+
+  <button
+    class="scrollable-chips__arrow --left"
+    [class.hidden]="!canScrollLeft()"
+    (click)="scroll('left')"
+  >
+    <app-icon
+      name="arrow-left-12"
+      size="12px"
+      class="scrollable-chips__arrow-icon"
+    />
+  </button>
+  <button
+    class="scrollable-chips__arrow --right"
+    [class.hidden]="!canScrollRight()"
+    (click)="scroll('right')"
+  >
+    <app-icon
+      name="arrow-right-12"
+      size="12px"
+      class="scrollable-chips__arrow-icon"
+    />
+  </button>
+</div>

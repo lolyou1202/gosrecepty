@@ -1,0 +1,30 @@
+.swiper-element-wrap {
+  position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+.swiper-element-control {
+	position: absolute;
+  top: 0;
+	bottom: 0;
+  z-index: 2;
+
+  background: white;
+  border: 1px solid var(color-solitario);
+  border-radius: 50%;
+
+  
+  height: 24px;
+  margin: auto;
+  
+  width: 24px;
+  transition: transform 0.5s;
+  cursor: pointer;
+
+  &-prev {
+    rotate: -180deg;
+  }
+}
+.swiper-button-disabled {
+  display: none !important;
+}

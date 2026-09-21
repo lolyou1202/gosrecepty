@@ -6,21 +6,23 @@
   border: none;
   margin: var(--divider-margin);
 
-  &--horizontal {
-    width: 100%;
+  &.--horizontal {
     height: var(--divider-thickness);
   }
 
-  &--vertical {
-    height: 100%;
+  &.--vertical {
     width: var(--divider-thickness);
   }
 
-  &--primary {
-    background-color: var(--token-divisore);
+  &.--solitario {
+    background-color: var(--color-solitario);
   }
 
-  &--secondary {
-    background-color: var(--token-fessura);
+  &.--divisore {
+    background-color: var(--color-divisore);
+  }
+
+  &.--ciottoli {
+    background-color: var(--color-ciottoli);
   }
 }

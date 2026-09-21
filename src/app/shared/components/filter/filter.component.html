@@ -1,0 +1,51 @@
+<div class="filter shadow-block">
+  <div class="filter__fields-line">
+    @for (config of configs(); track config.name) {
+      @if (config.type === 'input' && !config.hide) {
+        @if (_filterFormService.getInputField(config.name); as field) {
+          <app-input
+            type="search"
+            width="full-width"
+            [clearable]="true"
+            [label]="config.fieldLabel"
+            [formField]="field"
+          />
+        }
+      }
+      @if (config.type === 'select' && config.hide) {
+        <app-dropdown-input
+          [items]="config.items"
+          [multiple]="!!config.multiple"
+          [showChips]="!!config.showChips"
+          [maxVisibleChips]="config.maxVisibleChips ?? 0"
+          [placeholder]="config.placeholder ?? ''"
+          [width]="'full-width'"
+          label="Выберите пункт"
+        />
+      }
+    }
+
+    @if (showOpenModalBtn()) {
+      <button
+        class="filter__filters-btn"
+        [class]="{
+          '--has-active-filters': hasActiveFilters()
+        }"
+      >
+        <span class="filter__filters-btn__icon-container">
+          <app-icon name="filter" class="filter__filters-btn__icon" />
+        </span>
+        <p class="link-plain">Фильтры</p>
+      </button>
+    }
+  </div>
+
+  <!--@if (showChips()) {
+    <div class="filter__chips-container">
+      @for (chip of chips(); track chip.name) {
+        <app-chip [label]="chip.label" (removed)="removeChip(chip.name)" />
+      }
+      <app-chip label="Русский язык" />
+    </div>
+  }-->
+</div>

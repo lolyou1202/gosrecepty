@@ -1,0 +1,44 @@
+<div class="modal__container">
+  <div class="modal__header">
+    <h3>{{ title() }}</h3>
+
+    <button class="modal__close link-plain" (click)="close()">
+      <app-icon name="cross-1" class="modal__close-icon" />
+    </button>
+  </div>
+
+  <app-divider />
+
+  <div class="modal__content">
+    @if (contentComponent(); as component) {
+      <ng-container
+        *ngComponentOutlet="
+          component;
+          injector: bodyInjector();
+          inputs: contentComponentInputs()
+        "
+      />
+    } @else if (contentTemplate(); as template) {
+      <ng-container
+        *ngTemplateOutlet="template; context: contentTemplateContext()"
+      />
+    } @else {
+      <ng-content />
+    }
+  </div>
+
+  @if (actions().length) {
+    <app-divider />
+
+    <div class="modal__footer">
+      @for (action of actions(); track action.text) {
+        <app-button-default
+          [variant]="action.variant"
+          [label]="action.text"
+          [disabled]="action.disabled"
+          (click)="onActionClick(action)"
+        />
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,12 @@
+<button
+  class="button-circle__button"
+  [disabled]="disabled()"
+  (click)="onClick()"
+>
+  @if (iconName(); as iconName) {
+    <app-icon [name]="iconName" size="24px" class="button-circle__icon" />
+  }
+  @if (label(); as label) {
+    <p class="button-circle__label">{{ label }}</p>
+  }
+</button>

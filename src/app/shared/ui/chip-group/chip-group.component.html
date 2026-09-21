@@ -1,0 +1,14 @@
+<app-expandable-list>
+  @for (chip of chips(); track chip.id) {
+    <app-chip
+      appExpandableItem
+      [label]="chip.label"
+      [icon]="chip.icon"
+      [variant]="variant()"
+      [readonly]="readonly()"
+      [disabled]="disabled()"
+      [checked]="isSelected(chip.id)"
+      (checkedChange)="onChipCheckedChange(chip, $event)"
+    />
+  }
+</app-expandable-list>
