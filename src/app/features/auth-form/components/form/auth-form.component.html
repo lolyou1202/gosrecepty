@@ -1,0 +1,53 @@
+<div class="auth-form__container shadow-block">
+  <h2 class="auth-form__title">
+    {{ formTitle() }}
+  </h2>
+  <form [formRoot]="form()" class="auth-form__form">
+    @if (!isLogin()) {
+      <app-default-input
+        type="text"
+        [formField]="registerForm.userName"
+        variant="plain"
+        width="full-width"
+        label="Псевдоним"
+        class="auth-form__form-field"
+      />
+    }
+    <app-default-input
+      type="text"
+      [formField]="form().email"
+      variant="plain"
+      width="full-width"
+      label="E-mail"
+      class="auth-form__form-field"
+    />
+    <app-default-input
+      type="password"
+      [formField]="form().password"
+      variant="plain"
+      width="full-width"
+      label="Пароль"
+      class="auth-form__form-field"
+    />
+    <app-button-default
+      type="submit"
+      variant="primary"
+      width="full-width"
+      [loading]="formSubmitting()"
+      [disabled]="formInvalid()"
+      [label]="formSubmitLabel()"
+      class="auth-form__form-submit"
+    />
+    @if (formErrors(); as errorsList) {
+      <div class="auth-form__errors">
+        @for (err of errorsList; track $index) {
+          <p class="auth-form__errors-message small-text text-error">
+            {{
+              errorsList.length > 1 ? `${$index}. ${err.message}` : err.message
+            }}
+          </p>
+        }
+      </div>
+    }
+  </form>
+</div>
