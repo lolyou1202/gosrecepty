@@ -1,0 +1,29 @@
+.main-layout {
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+  }
+
+  &__main {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 720px) {
+  .main-layout {
+    &__main {
+      justify-content: flex-start;
+
+      padding-top: 16px;
+      padding-bottom: 32px;
+    }
+  }
+}
