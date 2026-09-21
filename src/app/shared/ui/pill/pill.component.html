@@ -1,0 +1,14 @@
+<span
+  class="pill__container"
+  [class]="{
+    'shadow-block': variant() === 'outside',
+    'with-hover': variant() === 'outside',
+    '--variant-outside': variant() === 'outside',
+    '--variant-inside': variant() === 'inside'
+  }"
+>
+  <p class="pill__label">{{ label() }}</p>
+  <button type="button" class="pill__cross" (click)="remove()">
+    <app-icon name="cross-2" size="16px" class="pill__cross-icon" />
+  </button>
+</span>

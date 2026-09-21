@@ -1,0 +1,25 @@
+@use 'color-palette' as palette;
+
+.filter {
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__fields-line {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+
+    padding: 16px;
+  }
+
+  &__chips-container {
+    position: relative;
+
+    display: flex;
+    gap: 8px;
+
+    padding: 16px 0;
+  }
+}

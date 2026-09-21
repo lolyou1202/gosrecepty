@@ -1,0 +1,80 @@
+@use 'color-palette' as palette;
+@use 'variables' as variables;
+
+.catalog-card {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    padding: 16px;
+
+    background-color: palette.$color-white;
+    box-shadow: variables.$shadow-default;
+    border-radius: variables.$radius-default;
+  }
+
+  &__image {
+    overflow: hidden;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+
+    background-color: palette.$color-white;
+    border: 1px solid palette.$color-divisore;
+    border-radius: 8px;
+    outline: none;
+
+    pointer-events: none;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  &__title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+
+    &-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+  }
+
+  &__favorite-icon {
+    margin-top: 4px;
+
+    color: palette.$color-gosblue;
+
+    cursor: pointer;
+
+    &.--active {
+      color: palette.$color-gosred;
+    }
+  }
+
+  &__help-info {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    overflow: hidden;
+  }
+}

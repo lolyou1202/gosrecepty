@@ -1,4 +1,7 @@
 @use './assets/styles/fonts';
+@use 'ngx-scrollbar' as scrollbar;
+@use '@angular/material' as mat;
+
 *,
 *::after,
 *::before {
@@ -50,6 +53,18 @@ body {
 
   --radius-default: 12px;
   --radius-mobile: 8px;
+
+  @include scrollbar.ng-scrollbar-overrides(
+    (
+      track-color: transparent,
+      thumb-color: var(--color-calcestruzzo),
+      track-thickness: 6px,
+      thumb-thickness: 6px,
+      track-shape: 3px,
+      thumb-min-size: 16px,
+      container-offset: 2px
+    )
+  );
 }
 
 h1,
@@ -174,4 +189,36 @@ strong,
       box-shadow: var(--shadow-default-hover);
     }
   }
+}
+
+.overlay-panel-reset {
+  @include mat.dialog-overrides(
+    (
+      container-color: transparent,
+      container-elevation-shadow: none,
+      container-shape: 0,
+      container-min-width: 0,
+      container-max-width: none,
+      container-small-max-width: none,
+      content-padding: 0,
+      actions-padding: 0,
+      headline-padding: 0
+    )
+  );
+
+  .mat-mdc-dialog-container {
+    padding: 0;
+  }
+
+  .mat-mdc-dialog-surface {
+    overflow: visible;
+  }
+}
+
+.overlay-backdrop-dark {
+  background-color: var(--color-bg-blured);
+  backdrop-filter: blur(2px);
+  transition:
+    background-color 0.2s,
+    opacity 0.2s;
 }

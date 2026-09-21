@@ -1,0 +1,23 @@
+<div
+  class="explanation__container"
+  [class.--inside]="variant() === 'inside'"
+  [class.--outside]="variant() === 'outside'"
+  [class.--info]="type() === 'info'"
+  [class.--warn]="type() === 'warn'"
+  [class.--error]="type() === 'error'"
+>
+  @if (title(); as title) {
+    <h5 class="explanation__title">
+      {{ title }}
+    </h5>
+  }
+  @if (text(); as text) {
+    <p class="explanation__text text-default">
+      {{ text }}
+    </p>
+  }
+  <div class="explanation__content">
+    <ng-content></ng-content>
+  </div>
+  <div class="explanation__line"></div>
+</div>

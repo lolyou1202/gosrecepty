@@ -1,0 +1,46 @@
+@use 'color-palette' as palette;
+@use 'variables' as variables;
+
+.accordion {
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    background-color: palette.$color-white;
+    box-shadow: variables.$shadow-default;
+    border-radius: variables.$radius-default;
+
+    &.stack-mode {
+      box-shadow: none;
+      border-top: 1px solid palette.$color-solitario;
+      border-radius: 0;
+    }
+  }
+
+  &__trigger {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 24px;
+
+    background: none;
+    border: none;
+    outline: none;
+
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  &__content {
+    padding: 0 24px 24px 24px;
+
+    &:empty {
+      padding: 0;
+    }
+  }
+}

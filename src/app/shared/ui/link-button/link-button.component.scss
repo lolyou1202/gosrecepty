@@ -1,0 +1,25 @@
+.link-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 0;
+  background: none;
+  border: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  &:disabled {
+    border: none;
+
+    pointer-events: none;
+    cursor: default;
+
+    .link-button__label,
+    .link-button__icon {
+      color: var(--color-telegrey-scuro);
+    }
+  }
+}

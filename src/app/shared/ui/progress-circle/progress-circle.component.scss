@@ -1,0 +1,31 @@
+:host {
+  display: inline-flex;
+  flex-shrink: 0;
+  line-height: 0;
+}
+
+.progress-circle {
+  &__container {
+    will-change: transform;
+    transform-origin: center;
+    animation: spin var(--pc-speed) linear infinite;
+  }
+
+  &__icon {
+    &.--primary {
+      --pc-fill-color: var(--color-gosblue);
+      --pc-empty-color: var(--color-solitario);
+    }
+
+    &.--secondary {
+      --pc-fill-color: var(--color-white);
+      --pc-empty-color: var(--color-divisore);
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,25 @@
+<div class="tabs__container">
+  <nav class="tabs__nav">
+    @for (tab of tabs(); let i = $index; track i) {
+      <button
+        class="tabs__tab"
+        [class.--active]="isActive(i)"
+        [class.--hovered]="isHovered(i)"
+        [class.--disabled]="tab.disabled"
+        (click)="$event.preventDefault(); selectTab(i)"
+        (mouseenter)="onMouseEnter(i)"
+        (mouseleave)="onMouseLeave()"
+        [disabled]="tab.disabled"
+      >
+        <p class="tabs__tab-label">
+          {{ tab.label }}
+        </p>
+        <span class="tabs__tab-indicator"></span>
+      </button>
+    }
+  </nav>
+
+  <div class="tabs__content">
+    <ng-content></ng-content>
+  </div>
+</div>

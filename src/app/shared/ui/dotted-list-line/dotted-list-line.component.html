@@ -1,0 +1,15 @@
+<div class="dotted-list-line__container">
+  <p
+    class="dotted-list-line__name"
+    [class]="{ 'link-plain': clickableName() }"
+    (click)="onClickName()"
+  >
+    {{ name() }}
+  </p>
+
+  <span class="dotted-list-line__dots"></span>
+
+  <p class="dotted-list-line__value">
+    {{ value() }}
+  </p>
+</div>

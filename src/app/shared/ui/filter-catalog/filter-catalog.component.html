@@ -1,0 +1,27 @@
+<div class="filter__container shadow-block">
+  <div class="filter__fields-line">
+    <app-default-input
+      variant="search"
+      width="full-width"
+      placeholder="Поиск по названию или ингридиенту"
+      [clearable]="true"
+      [formField]="quickForm.search"
+    />
+  </div>
+
+  <!--@if (displayedChips().length > 0) {
+    <app-divider variant="solitario" />
+
+    <div class="filter__chips-container">
+      <app-scrollable>
+        @for (chip of displayedChips(); track chip.name) {
+          <app-chip
+            [active]="chip.active"
+            [label]="chip.label"
+            (clicked)="toggleChip(chip.name)"
+          />
+        }
+      </app-scrollable>
+    </div>
+  }-->
+</div>

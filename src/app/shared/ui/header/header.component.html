@@ -1,0 +1,64 @@
+<header class="header">
+  <div class="header__container container">
+    <div class="header__leftside">
+      <!--@if (showModal()) {
+					<app-default-button
+						variant="transparent"
+						iconName="cross-24"
+						class="header__cross"
+					/>
+				} @else {
+					<app-default-button
+						variant="transparent"
+						iconName="burger-menu"
+						class="header__menu"
+					/>
+				}-->
+      <a routerLink="/" class="header__logo-link">
+        <img src="/logo.svg" alt="ГосРецепты Лого" class="header__logo" />
+      </a>
+    </div>
+    <div class="header__rightside">
+      <nav class="header__nav">
+        <a
+          #rlaRecipes="routerLinkActive"
+          routerLink="/recipes"
+          ariaCurrentWhenActive="page"
+          routerLinkActive="--active"
+          class="header__nav-item"
+        >
+          <app-icon
+            [name]="rlaRecipes.isActive ? 'book-filled' : 'book-outlined'"
+            class="header__nav-item-icon"
+          />
+          <p class="header__nav-item-label text-default">Рецепты</p>
+        </a>
+        <a
+          #rlaFavorites="routerLinkActive"
+          routerLink="/favorites"
+          ariaCurrentWhenActive="page"
+          routerLinkActive="--active"
+          class="header__nav-item"
+        >
+          <app-icon
+            [name]="rlaFavorites.isActive ? 'heart-filled' : 'heart-outlined'"
+            class="header__nav-item-icon"
+          />
+          <p class="header__nav-item-label text-default">Избранное</p>
+        </a>
+      </nav>
+      <app-button-light
+        size="md"
+        [label]="isAuth() ? 'Выйти' : 'Войти'"
+        (clicked)="onClickLogin()"
+        class="header__singin"
+      />
+      <!--<div class="header__user">
+					<div class="header__user-avatar">
+						<p class="header__user-name text-small bold">ГК</p>
+					</div>
+					<app-icon name="chevron-down-2" class="header__user-chevron" />
+				</div>-->
+    </div>
+  </div>
+</header>

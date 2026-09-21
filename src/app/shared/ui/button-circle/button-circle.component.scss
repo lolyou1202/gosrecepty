@@ -1,0 +1,49 @@
+:host {
+  --button-circle-size: 24px;
+
+  display: inline-flex;
+}
+
+.button-circle {
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: var(--button-circle-size);
+    height: var(--button-circle-size);
+
+    background-color: var(--color-solitario);
+    border: none;
+    border-radius: 50%;
+    outline: none;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--color-caso);
+    }
+
+    &:disabled {
+      background-color: var(--color-pervinca);
+
+      cursor: default;
+      pointer-events: none;
+
+      .button-circle__icon {
+        color: var(--color-telegrey-scuro);
+      }
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+
+    color: var(--color-gosblue);
+  }
+
+  &__label {
+    color: var(--color-gosblue);
+  }
+}

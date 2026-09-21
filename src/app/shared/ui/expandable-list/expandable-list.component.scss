@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.expandable-list {
+  &__measurer {
+    position: fixed;
+    top: -99999px;
+    left: -99999px;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  &__row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--expandable-list-gap, 8px);
+    min-width: 0;
+
+    &:not(.--collapsible) {
+      flex-wrap: wrap;
+      overflow: visible;
+    }
+
+    &.--collapsible {
+      flex-wrap: nowrap;
+
+      &.--expanded {
+        flex-wrap: wrap;
+        overflow: visible;
+      }
+    }
+  }
+
+  &__more,
+  &__collapse {
+    flex: 0 0 auto;
+    cursor: pointer;
+    white-space: nowrap;
+
+    margin-left: 8px;
+  }
+}

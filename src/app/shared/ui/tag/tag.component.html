@@ -1,0 +1,24 @@
+@let variantValue = variant();
+@let iconValue = icon();
+
+<span
+  class="tag__container"
+  [class]="{
+    '--variant-default': variantValue === 'default',
+    '--variant-info': variantValue === 'info',
+    '--with-icon': iconValue
+  }"
+>
+  @if (iconValue) {
+    <app-icon [name]="iconValue" size="16px" class="tag__icon" />
+  }
+  <p
+    class="tag__label text-small"
+    [class]="{
+      'link-plain': clickable()
+    }"
+    (click)="onClick()"
+  >
+    {{ label() }}
+  </p>
+</span>

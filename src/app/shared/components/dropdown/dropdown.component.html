@@ -1,0 +1,43 @@
+<div class="dropdown__wrapper">
+  <ng-scrollbar [visibility]="'hover'" [appearance]="'compact'">
+    @if (placeholder() && !multiple()) {
+      <div
+        class="dropdown__item"
+        [class.--selected]="selectedIds().size === 0"
+        [class.--highlighted]="highlighted() === 0"
+        [attr.data-index]="0"
+        (click)="reset()"
+        (mousedown)="$event.preventDefault()"
+        (mouseenter)="highlightItem(0, true)"
+        (mouseleave)="highlightItem(null, true)"
+      >
+        <div class="dropdown__item-content">
+          <span class="dropdown__item-text">
+            {{ placeholder() }}
+          </span>
+        </div>
+      </div>
+    }
+    @for (item of items(); track item.id) {
+      <div
+        class="dropdown__item"
+        [class.--selected]="selectedIds().has(item.id)"
+        [class.--highlighted]="highlighted() === $index + 1"
+        [attr.data-index]="$index + 1"
+        (click)="selectItem(item.id)"
+        (mousedown)="$event.preventDefault()"
+        (mouseenter)="highlightItem($index + 1, true)"
+        (mouseleave)="highlightItem(null, true)"
+      >
+        <div class="dropdown__item-content">
+          <span class="dropdown__item-text">
+            {{ item.value }}
+          </span>
+        </div>
+        @if (selectedIds().has(item.id)) {
+          <app-icon name="check-24" class="dropdown__item-check" />
+        }
+      </div>
+    }
+  </ng-scrollbar>
+</div>

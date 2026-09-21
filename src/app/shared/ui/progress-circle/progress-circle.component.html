@@ -1,0 +1,39 @@
+<div
+  class="progress-circle__container"
+  [attr.width]="size()"
+  [attr.height]="size()"
+  [style.--pc-speed]="speed()"
+>
+  <svg
+    [attr.width]="size()"
+    [attr.height]="size()"
+    [attr.viewBox]="'0 0 ' + size() + ' ' + size()"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class="progress-circle__icon"
+    [class.--primary]="variant() === 'primary'"
+    [class.--secondary]="variant() === 'secondary'"
+  >
+    <!-- Серый фон -->
+    <circle
+      [attr.cx]="size() / 2"
+      [attr.cy]="size() / 2"
+      [attr.r]="radius()"
+      [attr.stroke]="'var(--pc-empty-color)'"
+      [attr.stroke-width]="strokeWidth()"
+    />
+    <!-- Заливка -->
+    <circle
+      [attr.cx]="size() / 2"
+      [attr.cy]="size() / 2"
+      [attr.r]="radius()"
+      [attr.stroke]="'var(--pc-fill-color)'"
+      [attr.stroke-width]="strokeWidth()"
+      [attr.stroke-dasharray]="dashArray()"
+      stroke-linecap="round"
+      [attr.transform]="
+        'rotate(' + rotation() + ' ' + size() / 2 + ' ' + size() / 2 + ')'
+      "
+    />
+  </svg>
+</div>

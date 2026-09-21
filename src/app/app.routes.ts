@@ -35,6 +35,11 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./pages/recipe/recipe.component')
       },
+      {
+        path: 'demo',
+        loadComponent: () =>
+          import('./pages/demo/page-demo.component')
+      }
     ]
   }
 ]

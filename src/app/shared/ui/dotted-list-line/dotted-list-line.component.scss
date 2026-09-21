@@ -1,0 +1,32 @@
+@use 'color-palette' as palette;
+
+.dotted-list-line {
+  &__container {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+
+    width: 100%;
+  }
+
+  &__name {
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    padding-right: 2px;
+  }
+
+  &__dots {
+    flex-grow: 1;
+    height: 4px;
+
+    border-bottom: 2px dotted palette.$color-calcestruzzo;
+  }
+
+  &__value {
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    padding-left: 2px;
+  }
+}

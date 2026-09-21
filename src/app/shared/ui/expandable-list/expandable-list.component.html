@@ -1,0 +1,42 @@
+<div
+  #row
+  class="expandable-list__row"
+  [class.--expanded]="collapsible() && expanded()"
+  [class.--collapsible]="collapsible()"
+  [style.--expandable-list-gap]="gapStyle()"
+>
+  <ng-content />
+
+  @if (collapsible() && !expanded() && hasOverflow()) {
+    <button
+      type="button"
+      class="expandable-list__more button-reset text-default link-plain"
+      (click)="expanded.set(true)"
+    >
+      Показать ещё ({{ hiddenCount() }})
+    </button>
+  }
+
+  @if (collapsible() && expanded()) {
+    <button
+      type="button"
+      class="expandable-list__collapse button-reset text-default link-plain"
+      (click)="expanded.set(false)"
+    >
+      Свернуть
+    </button>
+  }
+</div>
+
+@if (collapsible()) {
+  <div class="expandable-list__measurer" aria-hidden="true">
+    <button
+      #moreMeasurer
+      type="button"
+      tabindex="-1"
+      class="expandable-list__more button-reset text-default link-plain"
+    >
+      Показать ещё (000)
+    </button>
+  </div>
+}

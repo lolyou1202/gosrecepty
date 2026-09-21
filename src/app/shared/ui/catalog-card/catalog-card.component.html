@@ -1,0 +1,28 @@
+<div class="catalog-card__container">
+  <img src="/empty.jpg" alt="empty" class="catalog-card__image" />
+  <div class="catalog-card__content">
+    <div class="catalog-card__content-wrapper">
+      <span class="catalog-card__title-row">
+        <h4 class="catalog-card__title">
+          {{ title() }}
+        </h4>
+        @if (showFavorite()) {
+          <app-icon
+            [name]="isOnFavorite() ? 'heart-filled' : 'heart-outline'"
+            class="catalog-card__favorite-icon"
+            [class.--active]="isOnFavorite()"
+            (click)="toggleFavorite()"
+          />
+        }
+      </span>
+      @if (helpInfo()) {
+        <p class="catalog-card__help-info text-small text-help">
+          {{ helpInfo() }}
+        </p>
+      }
+    </div>
+    @if (tags().length > 0 || statuses().length > 0) {
+      <app-tags-list [statuses]="statuses()" [tags]="tags()" [limit]="5" />
+    }
+  </div>
+</div>

@@ -1,0 +1,96 @@
+.button-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 48px;
+  padding: 0 40px;
+
+  background: none;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  user-select: none;
+
+  &.--primary {
+    background-color: var(--color-gosblue);
+
+    &:hover {
+      background-color: var(--color-vertigini-blue);
+    }
+
+    &:active {
+      background-color: var(--color-pulsante-premuto);
+    }
+
+    .button-default__label,
+    .button-default__icon {
+      color: var(--color-white);
+    }
+  }
+
+  &.--secondary {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gosblue);
+
+    &:hover {
+      background-color: var(--color-fessura);
+      border-color: var(--color-vertigini-blue);
+
+      .button-default__label,
+      .button-default__icon {
+        color: var(--color-vertigini-blue);
+      }
+    }
+
+    &:active {
+      border-color: var(--color-pulsante-premuto);
+
+      .button-default__label,
+      .button-default__icon {
+        color: var(--color-pulsante-premuto);
+      }
+    }
+
+    .button-default__label,
+    .button-default__icon {
+      color: var(--color-gosblue);
+    }
+  }
+
+  &.--small-padding {
+    padding: 0 24px;
+  }
+
+  &.--full-width {
+    width: 100%;
+  }
+
+  &.--disabled {
+    border: none;
+
+    &.--primary,
+    &.--secondary {
+      background-color: var(--color-pervinca);
+    }
+
+    .button-default__label,
+    .button-default__icon {
+      color: var(--color-telegrey-scuro);
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+@media (max-width: 768px) {
+  .button.--primary,
+  .button.--secondary {
+    width: 100%;
+  }
+}

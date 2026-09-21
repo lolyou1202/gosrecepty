@@ -1,0 +1,20 @@
+<div class="accordion__container" [class]="{ 'stack-mode': stackMode() }">
+  <button class="accordion__trigger" (click)="toggle()" [disabled]="disabled()">
+    <h5 class="accordion__title">
+      {{ title() }}
+    </h5>
+
+    <app-button-circle
+      [iconName]="expanded() ? 'chevron-up' : 'chevron-down'"
+      [disabled]="disabled()"
+      size="24px"
+      class="accordion__icon"
+    />
+  </button>
+
+  @if (expanded()) {
+    <div class="accordion__content">
+      <ng-content></ng-content>
+    </div>
+  }
+</div>

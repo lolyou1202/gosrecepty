@@ -1,0 +1,345 @@
+<div class="demo-page container">
+  <header class="demo-header">
+    <h1>Демонстрация компонентов</h1>
+    <p class="text-large text-help">
+      Живые примеры UI-кита: кнопки, чипсы, пилюли и группы чипсов.
+    </p>
+  </header>
+
+  <!-- ============ app-button-light ============ -->
+  <section class="demo-section">
+    <header class="demo-section__header">
+      <h3>Кнопки</h3>
+      <p class="text-small text-help">
+        <code>app-button-light</code> — размеры <em>sm/md/lg</em>, формы
+        <em>circle/rounded</em>, поддержка иконки, текста и disabled-состояния.
+      </p>
+    </header>
+
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light
+            size="lg"
+            shape="circle"
+            iconName="heart-outlined"
+          />
+        </div>
+        <p class="demo-card__caption text-small"><b>lg · circle</b> — иконка</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light size="md" shape="rounded" label="Сохранить" />
+        </div>
+        <p class="demo-card__caption text-small"><b>md · rounded</b> — текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light
+            size="sm"
+            shape="circle"
+            iconName="heart-outlined"
+          />
+        </div>
+        <p class="demo-card__caption text-small"><b>sm · circle</b> — иконка</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light
+            circleSize="60px"
+            shape="circle"
+            iconName="heart-outlined"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>custom 60px · circle</b>
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light
+            size="lg"
+            shape="rounded"
+            label="Отключена"
+            [disabled]="true"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>lg · rounded</b> — disabled
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light
+            size="md"
+            shape="rounded"
+            iconName="heart-outlined"
+            label="Поиск"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>md · rounded</b> — иконка + текст
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-button-light size="sm" shape="rounded" label="OK" />
+        </div>
+        <p class="demo-card__caption text-small"><b>sm · rounded</b> — текст</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ app-chip ============ -->
+  <section class="demo-section">
+    <header class="demo-section__header">
+      <h3>Чипсы</h3>
+      <p class="text-small text-help">
+        <code>app-chip</code> — два варианта оформления (<em>inside</em> /
+        <em>outside</em>), иконка, текст или комбинация.
+      </p>
+    </header>
+
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="inside" label="Внутри" />
+        </div>
+        <p class="demo-card__caption text-small">inside · текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="inside" icon="cross-2" />
+        </div>
+        <p class="demo-card__caption text-small">inside · иконка</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="inside" icon="cross-2" label="Внутри" />
+        </div>
+        <p class="demo-card__caption text-small">inside · иконка + текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="outside" label="Снаружи" />
+        </div>
+        <p class="demo-card__caption text-small">outside · текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="outside" icon="cross-2" />
+        </div>
+        <p class="demo-card__caption text-small">outside · иконка</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-chip variant="outside" icon="cross-2" label="Снаружи" />
+        </div>
+        <p class="demo-card__caption text-small">outside · иконка + текст</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ app-pill ============ -->
+  <section class="demo-section">
+    <header class="demo-section__header">
+      <h3>Пилюли</h3>
+      <p class="text-small text-help">
+        <code>app-pill</code> — компактные метки с обрезкой длинного текста
+        многоточием.
+      </p>
+    </header>
+
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-pill variant="inside" label="Короткий" />
+        </div>
+        <p class="demo-card__caption text-small">inside · короткий текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-pill
+            variant="inside"
+            label="Очень длинный текст, который должен обрезаться многоточием"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          inside · длинный текст (обрезается)
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-pill variant="outside" label="Короткий" />
+        </div>
+        <p class="demo-card__caption text-small">outside · короткий текст</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <div class="demo-card__preview">
+          <app-pill
+            variant="outside"
+            label="Длинный текст, который тоже должен обрезаться"
+            (click)="openModal()"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          outside · длинный текст (обрезается)
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ app-chip-group ============ -->
+  <section class="demo-section">
+    <header class="demo-section__header">
+      <h3>Группа чипсов</h3>
+      <p class="text-small text-help">
+        <code>app-chip-group</code> — одиночный и множественный выбор,
+        <em>readonly</em>, <em>disabled</em>, программное управление через
+        <code>value</code>.
+      </p>
+    </header>
+
+    <div class="demo-grid demo-grid--wide">
+      <!-- 1. Одиночный выбор -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="false"
+            [chips]="singleChips"
+            [(value)]="singleValue"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Одиночный выбор</b> — <code>multiple=false</code>
+        </p>
+        <p class="demo-card__value text-small text-help">
+          Значение: <code>{{ singleValue() ?? '—' }}</code>
+        </p>
+      </div>
+
+      <!-- 2. Множественный выбор -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="true"
+            [chips]="multiChips"
+            [(value)]="multiValue"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Множественный выбор</b> — <code>multiple=true</code>
+        </p>
+        <p class="demo-card__value text-small text-help">
+          Выбрано: <code>{{ selectedLabels() || '—' }}</code>
+        </p>
+      </div>
+
+      <!-- 3. Вариант outside -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="true"
+            variant="outside"
+            [chips]="multiChips"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Вариант outside</b> — обводка снаружи
+        </p>
+      </div>
+
+      <!-- 4. Readonly -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="true"
+            [readonly]="true"
+            [chips]="preselectedChips"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Readonly</b> — только просмотр
+        </p>
+      </div>
+
+      <!-- 5. Disabled -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="true"
+            [disabled]="true"
+            [chips]="preselectedChips"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Disabled</b> — взаимодействие заблокировано
+        </p>
+      </div>
+
+      <!-- 6. Программное управление -->
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <div class="demo-card__preview demo-card__preview--block">
+          <app-chip-group
+            [multiple]="true"
+            [chips]="multiChips"
+            [(value)]="programmaticValue"
+          />
+        </div>
+        <p class="demo-card__caption text-small">
+          <b>Программное управление</b> — через <code>value</code>
+        </p>
+        <div class="demo-card__actions">
+          <button class="demo-btn" (click)="selectFirstTwo()">
+            Выбрать первые два
+          </button>
+          <button class="demo-btn demo-btn--ghost" (click)="clearSelection()">
+            Очистить
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demo-section">
+    <header class="demo-section__header">
+      <h3>Группа инпутов</h3>
+    </header>
+
+    <app-default-input variant="search" />
+  </section>
+</div>
+
+<ng-template #tpl>
+  <p class="text-default demo-modal__text">
+    Выберите один или несколько вариантов:
+  </p>
+
+  <div class="demo-modal__groups">
+    <app-chip-group
+      [multiple]="false"
+      [chips]="singleChips"
+      [(value)]="modalSingleValue"
+    />
+
+    <app-chip-group
+      [multiple]="true"
+      [chips]="multiChips"
+      [(value)]="modalMultiValue"
+    />
+  </div>
+</ng-template>

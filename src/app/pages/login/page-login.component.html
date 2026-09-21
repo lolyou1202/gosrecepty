@@ -1,2 +1,14 @@
 <div class="page-login__container">
+  <app-explanation
+    title="Можно воспользоваться тестовой УЗ"
+    class="page-login__explanation"
+  >
+    <p class="text-default">Email: test@test.test</p>
+    <p class="text-default">Пароль: test1234</p>
+  </app-explanation>
+  <app-auth-form mode="login" class="page-login__form" />
+  <div class="page-login__auth-question">
+    <p class="default-text text-color-gray">Вы еще не зарегистрированы?</p>
+    <a [routerLink]="'/register'">Зарегистрироваться</a>
+  </div>
 </div>

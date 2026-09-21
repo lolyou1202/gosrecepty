@@ -1,0 +1,69 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  &__fields-line {
+    display: flex;
+    align-items: flex-end;
+    gap: 24px;
+  }
+
+  &__filters-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    height: 48px;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    &.--has-active-filters {
+      .filter__filters-btn__icon-container {
+        &::after {
+          opacity: 1;
+        }
+      }
+    }
+
+    &__icon {
+      display: flex;
+
+      color: var(--color-gosblue);
+    }
+
+    &__icon-container {
+      position: relative;
+      overflow: hidden;
+
+      display: flex;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        z-index: 1;
+
+        width: 12px;
+        height: 12px;
+
+        opacity: 0;
+
+        background-color: var(--color-gosred);
+        border: 2px solid var(--color-white);
+        border-radius: 7px;
+      }
+    }
+  }
+
+  &__chips-container {
+    overflow: hidden;
+
+    display: flex;
+    gap: 8px;
+  }
+}

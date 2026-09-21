@@ -1,0 +1,28 @@
+:host.divider {
+  --divider-margin: 0 24px;
+  --divider-thickness: 1px;
+
+  display: block;
+  border: none;
+  margin: var(--divider-margin);
+
+  &.--horizontal {
+    height: var(--divider-thickness);
+  }
+
+  &.--vertical {
+    width: var(--divider-thickness);
+  }
+
+  &.--solitario {
+    background-color: var(--color-solitario);
+  }
+
+  &.--divisore {
+    background-color: var(--color-divisore);
+  }
+
+  &.--ciottoli {
+    background-color: var(--color-ciottoli);
+  }
+}
