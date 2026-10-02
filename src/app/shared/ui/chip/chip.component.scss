@@ -71,7 +71,8 @@
       background-color: var(--chip-background-color-disabled);
 
       &::after {
-        box-shadow: inset 0 0 0 1.5px var(--chip-border-color-disabled);
+        box-shadow: inset 0 0 0 var(--border-width)
+          var(--chip-border-color-disabled);
       }
 
       .chip__label,
@@ -95,7 +96,7 @@
       height: 100%;
 
       background-color: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--chip-border-color);
+      box-shadow: inset 0 0 0 var(--border-width) var(--chip-border-color);
 
       opacity: 0;
       transition:
