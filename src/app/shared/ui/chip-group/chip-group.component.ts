@@ -5,6 +5,7 @@ import {
   input,
   linkedSignal,
   model,
+  signal,
   untracked
 } from '@angular/core'
 import { FormValueControl } from '@angular/forms/signals'
@@ -29,41 +30,46 @@ export interface ChipOption {
 export class ChipGroupComponent<
   T extends ChipOption
 > implements FormValueControl<T | T[] | null> {
-  public variant = input<'inside' | 'outside'>('inside')
-  public multiple = input<boolean>(false)
-  public chips = input<T[]>([])
+  public readonly variant = input<'inside' | 'outside'>('inside')
+  public readonly multiple = input<boolean>(false)
+  public readonly chips = input<T[]>([])
+  public readonly readonly = input<boolean>(false)
+  public readonly disabled = input<boolean>(false)
 
-  public readonly = input<boolean>(false)
-  public disabled = input<boolean>(false)
-  public touched = model<boolean>(false)
-  public value = model<T | T[] | null>(null)
+  public readonly touched = model<boolean>(false)
+  public readonly value = model<T | T[] | null>(null)
 
-  protected selectedIds = linkedSignal<T | T[] | null, Set<string>>({
-    source: () => this.value(),
-    computation: (value, previous) => {
+  // Отделяет "пустое, потому что не задано" от "пустое, потому что сняли всё"
+  private readonly _interacted = signal(false)
+
+  protected readonly selectedIds = linkedSignal({
+    source: () => ({
+      value: this.value(),
+      chips: this.chips(),
+      interacted: this._interacted()
+    }),
+    computation: ({ value, chips, interacted }) => {
+      // Явно заданное значение имеет приоритет
+      // Пустой массив — это валидное "пусто", а не "не задано"
+      if (Array.isArray(value)) {
+        return new Set(value.map(c => c.id))
+      }
       if (value) {
-        return Array.isArray(value)
-          ? new Set(value.map(c => c.id))
-          : new Set([value.id])
+        return new Set([value.id])
       }
 
-      // value === null
-      if (previous) return new Set<string>() // не первый прогон — уважаем очистку
+      // value == null и пользователь ещё не трогал — поднимаем active из конфига
+      // Работает и когда чипсы приехали асинхронно, т.к. chips в source
+      if (!interacted && chips.length > 0) {
+        return new Set(chips.filter(c => c.active).map(c => c.id))
+      }
 
-      // Первый прогон — поднимаем active из конфига
-      // untracked, чтобы последующие изменения chips не пересчитывали computation
-      return untracked(
-        () =>
-          new Set(
-            this.chips()
-              .filter(c => c.active)
-              .map(c => c.id)
-          )
-      )
+      return new Set<string>()
     }
   })
 
   constructor() {
+    // Валидация конфигурации
     effect(() => {
       const chips = this.chips()
       if (chips.length === 0) return
@@ -71,7 +77,7 @@ export class ChipGroupComponent<
       const activeChips = chips.filter(c => c.active)
       if (!this.multiple() && activeChips.length > 1) {
         throw new Error(
-          `[ChipGroupComponent] Некорректная конфигурация: multiple=false, но в чипсах найдено ${activeChips.length} активных элементов (${activeChips.map(c => c.id).join(', ')}). В режиме одиночного выбора допустим только один чип с active: true.`
+          `[ChipGroupComponent] Некорректная конфигурация: multiple=false, но активных чипсов ${activeChips.length} (${activeChips.map(c => c.id).join(', ')}).`
         )
       }
     })
@@ -79,12 +85,16 @@ export class ChipGroupComponent<
     // selectedIds -> внешнее value
     effect(() => {
       const ids = this.selectedIds()
-      const selected = this.chips().filter(chip => ids.has(chip.id))
-      const nextValue = this.multiple()
-        ? selected.length
-          ? selected
-          : null
-        : (selected[0] ?? null)
+      const chips = this.chips()
+      const multiple = this.multiple()
+
+      // Чипсы ещё не загружены — не затираем то, что мог выставить родитель
+      if (chips.length === 0) return
+
+      const selected = chips.filter(chip => ids.has(chip.id))
+      const nextValue: T | T[] | null = multiple
+        ? selected // multiple: пустое значение — []
+        : (selected[0] ?? null) // single: пустое значение — null
 
       const currentValue = untracked(this.value)
       if (this._valuesEqual(currentValue, nextValue)) return
@@ -93,6 +103,9 @@ export class ChipGroupComponent<
   }
 
   protected onChipCheckedChange(chip: T, checked: boolean): void {
+    // Как только пользователь что-то сделал — больше не подтягиваем active
+    this._interacted.set(true)
+
     const ids = new Set(this.selectedIds())
 
     if (!this.multiple()) {
@@ -103,11 +116,8 @@ export class ChipGroupComponent<
         ids.delete(chip.id)
       }
     } else {
-      if (checked) {
-        ids.add(chip.id)
-      } else {
-        ids.delete(chip.id)
-      }
+      if (checked) ids.add(chip.id)
+      else ids.delete(chip.id)
     }
 
     this.selectedIds.set(ids)
@@ -118,10 +128,7 @@ export class ChipGroupComponent<
     return this.selectedIds().has(id)
   }
 
-  private _valuesEqual<T extends ChipOption>(
-    a: T | T[] | null,
-    b: T | T[] | null
-  ): boolean {
+  private _valuesEqual(a: T | T[] | null, b: T | T[] | null): boolean {
     if (a === b) return true
     if (a == null || b == null) return false
 

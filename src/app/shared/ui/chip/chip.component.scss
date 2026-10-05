@@ -1,14 +1,3 @@
-:host {
-  --chip-background-color-inside: var(--color-azzurro-alice);
-  --chip-background-color-inside-hover: var(--color-solitario);
-  --chip-background-color-outside: var(--color-white);
-  --chip-background-color-disabled: var(--color-pervinca);
-  --chip-border-color: var(--color-gosblue);
-  --chip-border-color-disabled: var(--color-telegrey-scuro);
-  --chip-symbols-color: var(--color-gosblue);
-  --chip-symbols-color-disabled: var(--color-telegrey-scuro);
-}
-
 .chip {
   &__container {
     position: relative;
@@ -31,11 +20,11 @@
       box-shadow ease 0.2s;
 
     &.--variant-inside {
-      background-color: var(--chip-background-color-inside);
+      background-color: var(--color-azzurro-alice);
       border-radius: 8px;
 
       &:hover {
-        background-color: var(--chip-background-color-inside-hover);
+        background-color: var(--color-solitario);
       }
 
       &::after {
@@ -44,7 +33,7 @@
     }
 
     &.--variant-outside {
-      background-color: var(--chip-background-color-outside);
+      background-color: var(--color-white);
       border-radius: 12px;
 
       &::after {
@@ -54,7 +43,6 @@
 
     &.--only-icon {
       width: 40px;
-
       padding: 0;
     }
 
@@ -64,19 +52,16 @@
       }
     }
 
-    &.--readonly {
-    }
-
     &.--disabled {
-      background-color: var(--chip-background-color-disabled);
+      background-color: var(--color-pervinca);
 
       &::after {
-        box-shadow: inset 0 0 0 1.5px var(--chip-border-color-disabled);
+        box-shadow: inset 0 0 0 var(--border-width) var(--color-telegrey-scuro);
       }
 
       .chip__label,
       .chip__icon {
-        color: var(--chip-symbols-color-disabled);
+        color: var(--color-telegrey-scuro);
       }
     }
 
@@ -95,7 +80,7 @@
       height: 100%;
 
       background-color: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--chip-border-color);
+      box-shadow: inset 0 0 0 var(--border-width) var(--color-gosblue);
 
       opacity: 0;
       transition:
@@ -106,7 +91,7 @@
 
   &__label,
   &__icon {
-    color: var(--chip-symbols-color);
+    color: var(--color-gosblue);
   }
 
   &__label {
