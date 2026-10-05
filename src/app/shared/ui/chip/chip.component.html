@@ -1,18 +1,15 @@
 <button
   type="button"
-  class="chip__container"
-  [class]="{
-    'shadow-block': variant() === 'outside',
-    'with-hover': variant() === 'outside',
-    '--variant-outside': variant() === 'outside',
-    '--variant-inside': variant() === 'inside',
-    '--only-icon': icon() && !label(),
-    '--active': checked(),
-    '--readonly': readonly(),
-    '--disabled': disabled(),
-  }"
-  [disabled]="readonly() || disabled()"
+  [disabled]="disabled()"
   (click)="toggle()"
+  class="chip__container"
+  [class.shadow-block]="variant() === 'outside'"
+  [class.with-hover]="variant() === 'outside'"
+  [class.--variant-outside]="variant() === 'outside'"
+  [class.--variant-inside]="variant() === 'inside'"
+  [class.--only-icon]="icon() && !label()"
+  [class.--active]="checked()"
+  [class.--disabled]="disabled()"
 >
   @if (icon(); as iconName) {
     <app-icon [name]="iconName" size="16px" class="chip__icon" />
