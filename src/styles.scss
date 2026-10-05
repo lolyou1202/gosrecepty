@@ -222,3 +222,29 @@ strong,
     background-color 0.2s,
     opacity 0.2s;
 }
+
+@keyframes dropdown-panel-open {
+  from {
+    max-height: 0;
+  }
+  to {
+    max-height: var(--dropdown-panel--maxheight, 320px);
+  }
+}
+
+@keyframes dropdown-panel-close {
+  from {
+    max-height: var(--dropdown-panel--maxheight, 320px);
+  }
+  to {
+    max-height: 0;
+  }
+}
+
+.dropdown-panel--animate-enter {
+  animation: dropdown-panel-open 0.2s ease;
+}
+
+.dropdown-panel--animate-leave {
+  animation: dropdown-panel-close 0s ease;
+}
