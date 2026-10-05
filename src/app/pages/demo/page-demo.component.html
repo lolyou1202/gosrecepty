@@ -338,12 +338,285 @@
     </div>
   </section>
 
+  <!-- ============ app-base-input ============ -->
   <section class="demo-section">
     <header class="demo-section__header">
-      <h3>Группа инпутов</h3>
+      <h3>Базовый инпут</h3>
+      <p class="text-small text-help">
+        <code>app-base-input</code> — два режима <em>input/display</em>,
+        состояния <em>invalid</em>, <em>disabled</em>, <em>readonly</em>,
+        иконки, clearable, hint и ошибки.
+      </p>
     </header>
 
-    <app-default-input variant="search" />
+    <h4 class="demo-subtitle">Режимы</h4>
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input label="Логин" placeholder="Введите логин" />
+        <p class="demo-card__caption text-small">
+          <b>input</b> — label + placeholder
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input mode="display" label="Город" value="Санкт-Петербург" />
+        <p class="demo-card__caption text-small">
+          <b>display</b> — только текст
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          mode="display"
+          label="Категория"
+          value="Выберите категорию"
+          (clicked)="onDisplayClick()"
+        />
+        <p class="demo-card__caption text-small">
+          <b>display</b> — триггер (клик → консоль)
+        </p>
+      </div>
+    </div>
+
+    <h4 class="demo-subtitle">Иконки и очистка</h4>
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input placeholder="Поиск" iconName="loupe" />
+        <p class="demo-card__caption text-small">
+          <b>иконка</b> — showIcon + iconName
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          placeholder="Введите что-нибудь"
+          [(value)]="clearableValue"
+          [clearable]="true"
+        >
+          <p class="demo-card__caption text-small">
+            <b>clearable</b> — крестик при фокусе и наличии текста
+          </p>
+        </app-base-input>
+        <p class="demo-card__caption text-small">
+          <b>clearable</b> — крестик при фокусе и наличии текста
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          mode="display"
+          value="С иконкой"
+          iconName="loupe"
+          (clicked)="onDisplayClick()"
+        >
+          <p class="demo-card__caption text-small" [style.cursor]="'default'">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+          <p class="demo-card__caption text-small">
+            <b>display + иконка</b> — тоже работает
+          </p>
+        </app-base-input>
+        <p class="demo-card__caption text-small">
+          <b>display + иконка</b> — тоже работает
+        </p>
+      </div>
+    </div>
+
+    <h4 class="demo-subtitle">Подсказки и ошибки</h4>
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          label="Email"
+          hint="Мы не передаём его третьим лицам"
+          placeholder="you@example.com"
+        />
+        <p class="demo-card__caption text-small">
+          <b>hint</b> — серая подпись под полем
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          label="Email"
+          placeholder="you@example.com"
+          [invalid]="true"
+          [dirty]="true"
+          [touched]="true"
+          [errors]="emailErrors"
+        />
+        <p class="demo-card__caption text-small">
+          <b>invalid</b> — одна ошибка
+        </p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          label="Пароль"
+          placeholder="Минимум 8 символов"
+          [invalid]="true"
+          [dirty]="true"
+          [touched]="true"
+          [errors]="passwordErrors"
+        />
+        <p class="demo-card__caption text-small">
+          <b>invalid</b> — список ошибок нумеруется
+        </p>
+      </div>
+    </div>
+
+    <h4 class="demo-subtitle">Состояния</h4>
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          label="Disabled"
+          value="Только чтение"
+          [disabled]="true"
+        />
+        <p class="demo-card__caption text-small"><b>disabled</b> — input</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          mode="display"
+          label="Disabled"
+          value="Значение"
+          [disabled]="true"
+        />
+        <p class="demo-card__caption text-small"><b>disabled</b> — display</p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          mode="display"
+          label="Expanded"
+          value="Открытый дропдаун"
+          (clicked)="onDisplayClick()"
+        />
+        <p class="demo-card__caption text-small">
+          <b>expanded</b> — скругление снизу убирается
+        </p>
+      </div>
+    </div>
+
+    <h4 class="demo-subtitle">HTML-типы</h4>
+    <div class="demo-grid">
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input
+          type="email"
+          label="Email"
+          placeholder="you@example.com"
+        />
+        <p class="demo-card__caption text-small"><b>type="email"</b></p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input type="password" label="Пароль" placeholder="••••••••" />
+        <p class="demo-card__caption text-small"><b>type="password"</b></p>
+      </div>
+
+      <div class="demo-card shadow-block with-hover">
+        <app-base-input type="number" label="Количество" placeholder="0" />
+        <p class="demo-card__caption text-small"><b>type="number"</b></p>
+      </div>
+    </div>
+
+    <h4 class="demo-subtitle">Интерактив</h4>
+    <div class="demo-grid demo-grid--wide">
+      <div class="demo-card demo-card--stack shadow-block with-hover">
+        <app-base-input
+          label="Свяжите с value"
+          placeholder="Начните печатать"
+          [(value)]="interactiveValue"
+          [(touched)]="interactiveTouched"
+          [clearable]="true"
+          [invalid]="interactiveInvalid()"
+          [dirty]="true"
+          [errors]="interactiveErrors()"
+        />
+        <p class="demo-card__caption text-small">
+          <b>Live-валидация</b> — минимум 5 символов, ошибки появляются после
+          blur
+        </p>
+        <p class="demo-card__value text-small text-help">
+          value: <code>{{ interactiveValue() || '—' }}</code> · touched:
+          <code>{{ interactiveTouched() }}</code>
+        </p>
+        <div class="demo-card__actions">
+          <button class="demo-btn" (click)="resetInteractive()">
+            Сбросить
+          </button>
+          <button class="demo-btn demo-btn--ghost" (click)="fillValid()">
+            Заполнить валидно
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
 </div>
 

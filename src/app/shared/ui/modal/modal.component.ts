@@ -11,7 +11,7 @@ import {
   InjectionToken
 } from '@angular/core'
 import { ButtonDefaultComponent } from '../button-default/button-default.component'
-import { DividerComponent } from '../../components/divider/divider.component'
+import { DividerComponent } from '../divider/divider.component'
 import { IconComponent } from '../icon/icon.component'
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'

@@ -6,7 +6,7 @@ import {
   model
 } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { IconComponent } from '../../ui/icon/icon.component'
+import { IconComponent } from '../icon/icon.component'
 
 @Component({
   selector: 'app-checkbox',

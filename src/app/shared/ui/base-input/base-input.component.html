@@ -1,0 +1,93 @@
+<div
+  class="base-input__container"
+  [class.--state-invalid]="invalid() && dirty()"
+  [class.--state-disabled]="disabled()"
+  [class.--state-focused]="focused()"
+  [class.--state-expanded]="expanded()"
+>
+  @if (label()) {
+    <p class="base-input__label text-small">
+      {{ label() }}
+    </p>
+  }
+  <div class="base-input__field-container">
+    @if (mode() === 'display') {
+      <div
+        #fieldDisplay
+        [attr.role]="'combobox'"
+        [attr.aria-expanded]="expanded()"
+        [attr.aria-haspopup]="'listbox'"
+        [attr.tabindex]="disabled() ? -1 : 0"
+        [attr.aria-disabled]="disabled() ? true : null"
+        (click)="onFieldClick()"
+        (focus)="onFocus()"
+        (keydown)="onFieldKeydown($event)"
+        class="base-input__field-display --display"
+      >
+        <p class="base-input__field-text text-default">
+          {{ value() }}
+        </p>
+        @if (iconName(); as icon) {
+          <span class="base-input__field-decorate">
+            <app-icon [name]="icon" class="base-input__field-icon" />
+          </span>
+        }
+      </div>
+    }
+    @if (mode() === 'input') {
+      <div class="base-input__field-display --input">
+        <input
+          #field
+          [type]="type()"
+          [placeholder]="placeholder()"
+          [value]="value()"
+          (input)="onInput($event)"
+          (focus)="onFocus()"
+          [disabled]="disabled()"
+          class="base-input__field-input text-default"
+        />
+        @if (!showClearButton() && iconName()) {
+          <span class="base-input__field-decorate">
+            <app-icon [name]="iconName()!" class="base-input__field-icon" />
+          </span>
+        }
+        @if (showClearButton()) {
+          <button
+            type="button"
+            [attr.tabindex]="-1"
+            (mousedown)="$event.preventDefault()"
+            (click)="$event.preventDefault(); clear()"
+            class="base-input__field-cross"
+          >
+            <app-icon name="cross-1" class="base-input__field-icon" />
+          </button>
+        }
+      </div>
+    }
+    @if (expanded()) {
+      <app-dropdown-panel
+        animate.enter="dropdown-panel--animate-enter"
+        animate.leave="dropdown-panel--animate-leave"
+        [maxHeight]="dropdownMaxHeight()"
+      >
+        <ng-content></ng-content>
+      </app-dropdown-panel>
+    }
+  </div>
+  @if (hint()) {
+    <p class="base-input__hint text-small text-help">
+      {{ hint() }}
+    </p>
+  }
+  @if (touched() && invalid()) {
+    <div class="base-input__errors">
+      @for (message of errorMessages(); track $index) {
+        <p class="base-input__errors-message text-small text-error">
+          {{
+            errorMessages().length > 1 ? `${$index + 1}. ${message}` : message
+          }}
+        </p>
+      }
+    </div>
+  }
+</div>

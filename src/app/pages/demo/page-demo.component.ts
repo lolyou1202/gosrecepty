@@ -16,6 +16,8 @@ import {
 import { PillComponent } from '../../shared/ui/pill/pill.component'
 import { ModalService } from '../../shared/ui/modal/modal.service'
 import { DefaultInputComponent } from '../../shared/ui/default-input/default-input.component'
+import { BaseInputComponent } from '../../shared/ui/base-input/base-input.component'
+import { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals'
 
 @Component({
   selector: 'app-page-demo',
@@ -28,6 +30,7 @@ import { DefaultInputComponent } from '../../shared/ui/default-input/default-inp
     ChipGroupComponent,
     PillComponent,
     DefaultInputComponent
+    BaseInputComponent
   ]
 })
 export default class DemoPageComponent {
@@ -108,5 +111,62 @@ export default class DemoPageComponent {
         { variant: 'primary', text: 'Готово' }
       ]
     })
+  }
+
+  protected readonly clearableValue = signal('')
+
+  // --- ошибки для примера ---
+  protected readonly emailErrors: readonly WithOptionalFieldTree<ValidationError>[] =
+    [
+      {
+        message: 'Некорректный email'
+      } as WithOptionalFieldTree<ValidationError>
+    ]
+
+  protected readonly passwordErrors: readonly WithOptionalFieldTree<ValidationError>[] =
+    [
+      {
+        message: 'Минимум 8 символов'
+      } as WithOptionalFieldTree<ValidationError>,
+      {
+        message: 'Должна быть хотя бы одна цифра'
+      } as WithOptionalFieldTree<ValidationError>,
+      {
+        message: 'Должна быть хотя бы одна заглавная буква'
+      } as WithOptionalFieldTree<ValidationError>
+    ]
+
+  // --- интерактивный пример ---
+  protected readonly interactiveValue = signal('')
+  protected readonly interactiveTouched = signal(false)
+
+  protected readonly interactiveInvalid = computed(
+    () =>
+      this.interactiveValue().length > 0 && this.interactiveValue().length < 5
+  )
+
+  protected readonly interactiveErrors = computed<
+    readonly WithOptionalFieldTree<ValidationError>[]
+  >(() =>
+    this.interactiveInvalid()
+      ? [
+          {
+            message: 'Минимум 5 символов'
+          } as WithOptionalFieldTree<ValidationError>
+        ]
+      : []
+  )
+
+  protected onDisplayClick(): void {
+    console.log('display clicked')
+  }
+
+  protected resetInteractive(): void {
+    this.interactiveValue.set('')
+    this.interactiveTouched.set(false)
+  }
+
+  protected fillValid(): void {
+    this.interactiveValue.set('валидное значение')
   }
 }
