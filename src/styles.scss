@@ -44,6 +44,8 @@ body {
 
   --color-bg-blured: #0b1f3266;
 
+  --border-width: 1.5px;
+
   --shadow-default: 0 1px 4px 0 #e3ebfc, 0 4px 16px 0 #e6ebf5cc;
   --shadow-default-hover:
     0 1px 8px 0 rgba(200, 214, 240, 0.8), 0 4px 16px 0 rgba(181, 201, 232, 0.5);
@@ -131,7 +133,9 @@ a,
 .link-plain {
   color: var(--color-gosblue);
   text-decoration: none;
+	
   cursor: pointer;
+  transition: color 0.2s ease;
 
   &:hover {
     color: var(--color-vertigini-blue);
@@ -144,6 +148,7 @@ a,
   svg,
   p {
     color: inherit;
+    transition: color 0.2s ease;
   }
 }
 
