@@ -1,17 +1,27 @@
-import { configs } from '@eslint/js'
-import { config, configs as _configs } from 'typescript-eslint'
-import { configs as __configs, processInlineTemplates } from 'angular-eslint'
+import js from '@eslint/js'
+import tseslint from 'typescript-eslint'
+import {
+  configs as angularConfigs,
+  processInlineTemplates
+} from 'angular-eslint'
 
-export default config(
+export default tseslint.config(
   {
     files: ['**/*.ts'],
     extends: [
-      configs.recommended,
-      ..._configs.recommended,
-      ...__configs.tsRecommended
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      ...angularConfigs.tsRecommended
     ],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: './tsconfig.json'
+      }
+    },
     processor: processInlineTemplates,
     rules: {
+      'no-unused-vars': 'off',
       '@typescript-eslint/explicit-function-return-type': [
         'error',
         {
@@ -33,7 +43,18 @@ export default config(
         }
       ],
       '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true
+        }
+      ],
       '@angular-eslint/directive-selector': [
         'error',
         { type: 'attribute', prefix: 'app', style: 'camelCase' }
@@ -47,8 +68,8 @@ export default config(
   {
     files: ['**/*.html'],
     extends: [
-      ...__configs.templateRecommended,
-      ...__configs.templateAccessibility
+      ...angularConfigs.templateRecommended,
+      ...angularConfigs.templateAccessibility
     ],
     rules: {
       '@angular-eslint/template/eqeqeq': 'error'
