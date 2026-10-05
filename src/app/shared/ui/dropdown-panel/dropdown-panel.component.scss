@@ -1,0 +1,26 @@
+:host {
+  --dropdown-panel--maxheight: 320px;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  width: 100%;
+  max-height: var(--dropdown-panel--maxheight);
+
+  background-color: var(--color-white);
+  border: var(--border-width) solid var(--color-divisore);
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+
+  outline: none;
+
+  cursor: initial;
+}
