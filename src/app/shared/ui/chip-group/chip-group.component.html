@@ -1,14 +1,25 @@
-<app-expandable-list>
-  @for (chip of chips(); track chip.id) {
-    <app-chip
-      appExpandableItem
-      [label]="chip.label"
-      [icon]="chip.icon"
-      [variant]="variant()"
-      [readonly]="readonly()"
-      [disabled]="disabled()"
-      [checked]="isSelected(chip.id)"
-      (checkedChange)="onChipCheckedChange(chip, $event)"
-    />
-  }
-</app-expandable-list>
+<div
+  appSelectionGroup
+  [selectionGroupMultiple]="multiple()"
+  [(selectionGroupIds)]="selectedIds"
+  #group="selectionGroup"
+  class="chip-group__container"
+>
+  <app-expandable-list
+    [collapsible]="collapsible()"
+    [(expanded)]="expanded"
+    [gap]="gap()"
+  >
+    @for (chip of chips(); track chip.id) {
+      <app-chip
+        appExpandableItem
+        [checked]="group.isSelected(chip.id)"
+        (checkedChange)="group.toggle(chip.id, $event)"
+        [label]="chip.label"
+        [icon]="chip.icon"
+        [disabled]="!!chip.disabled"
+        [variant]="chipsVariant()"
+      />
+    }
+  </app-expandable-list>
+</div>

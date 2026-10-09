@@ -1,46 +1,33 @@
 import { Directive, input, model } from '@angular/core'
-import { FormValueControl } from '@angular/forms/signals'
-import { SelectableItem } from './selection.model'
 
 @Directive({
   selector: '[appSelectionGroup]',
   exportAs: 'selectionGroup'
 })
-export class SelectionGroupDirective<
-  T extends SelectableItem
-> implements FormValueControl<T | T[] | null> {
-  public readonly multiple = input<boolean>(false)
+export class SelectionGroupDirective<T extends string | number = string> {
+  public readonly multiple = input<boolean>(false, {
+    alias: 'selectionGroupMultiple'
+  })
 
-  public readonly value = model<T | T[] | null>(null)
-  public readonly touched = model<boolean>(false)
+  public readonly selectedIds = model<T[]>([], {
+    alias: 'selectionGroupIds'
+  })
 
-  public isSelected(id: string): boolean {
-    const current = this.value()
-
-    if (Array.isArray(current)) {
-      return current.some(i => i.id === id)
-    }
-
-    return current?.id === id
+  public isSelected(id: T): boolean {
+    return this.selectedIds().some(i => i === id)
   }
 
-  public toggle(item: T, checked: boolean): void {
-    const current = this.value()
-
-    const items: T[] =
-      current == null ? [] : Array.isArray(current) ? current : [current]
-
-    const alreadyIn = items.some(i => i.id === item.id)
+  public toggle(id: T, checked: boolean): void {
+    const currentIds = this.selectedIds()
+    const alreadyIn = currentIds.some(i => i === id)
     if (alreadyIn === checked) return
 
-    const without = items.filter(i => i.id !== item.id)
+    const without = currentIds.filter(i => i !== id)
 
-    if (this.multiple()) {
-      this.value.set(checked ? [...without, item] : without)
+    if (checked) {
+      this.selectedIds.set(this.multiple() ? [...without, id] : [id])
     } else {
-      this.value.set(checked ? item : null)
+      this.selectedIds.set(without)
     }
-
-    this.touched.set(true)
   }
 }
