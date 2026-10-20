@@ -1,0 +1,22 @@
+<button
+  type="button"
+  class="button-light"
+  [disabled]="disabled()"
+  [style.--button-light-circleSize]="circleSize()"
+  [class.--size-custom]="circleSize()"
+  [class.--size-lg]="size() === 'lg'"
+  [class.--size-md]="size() === 'md'"
+  [class.--size-sm]="size() === 'sm'"
+  [class.--shape-circle]="shape() === 'circle'"
+  [class.--shape-rounded]="shape() === 'rounded'"
+  (click)="onClick($event)"
+>
+  @if (iconName(); as iconName) {
+    <app-icon [name]="iconName" class="button-light__icon" />
+  }
+  @if (label(); as label) {
+    <p class="button-light__label">
+      {{ label }}
+    </p>
+  }
+</button>

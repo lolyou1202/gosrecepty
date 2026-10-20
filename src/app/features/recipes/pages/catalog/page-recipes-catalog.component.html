@@ -39,6 +39,10 @@
     </button>
   </div>
 
+  <!--<div class="page-recipes-catalog__banner not-found shadow-block">
+    <img src="./not-found.svg" alt="Ничего не найдено" />
+  </div>-->
+
   @if (status() === 'error') {
     <div class="error">Произошла ошибка при загрузке. Попробуйте позже.</div>
   } @else if (loading() && items().length === 0) {
@@ -51,7 +55,9 @@
           <p>{{ item.cookingTime }} мин · {{ item.caloriesPerPortion }} ккал</p>
         </article>
       } @empty {
-        <p>Ничего не найдено</p>
+        <div class="shadow-block">
+          <img src="./not-found.svg" alt="Ничего не найдено" />
+        </div>
       }
     </div>
 
@@ -68,14 +74,11 @@
         }
       } @else {
         @if (hasMore()) {
-          <button
-            type="button"
-            class="load-more-btn"
-            [disabled]="loading()"
-            (click)="loadMore()"
-          >
-            {{ loading() ? 'Загрузка...' : 'Показать ещё' }}
-          </button>
+          <app-button-default
+            label="Показать ещё"
+            [loading]="loading()"
+            (clicked)="loadMore()"
+          />
         }
       }
     </div>

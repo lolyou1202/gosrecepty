@@ -1,0 +1,85 @@
+.button-light {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background-color: var(--color-azzurro-alice);
+  border: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  &.--size-custom {
+    min-width: var(--button-light-circleSize);
+    height: var(--button-light-circleSize);
+
+    &.--shape-circle {
+      width: var(--button-light-circleSize);
+    }
+  }
+
+  &.--size-sm:not(.--size-custom) {
+    min-width: 32px;
+    height: 32px;
+
+    &.--shape-circle {
+      width: 32px;
+    }
+  }
+
+  &.--size-md:not(.--size-custom) {
+    min-width: 40px;
+    height: 40px;
+
+    &.--shape-circle {
+      width: 40px;
+    }
+  }
+
+  &.--size-lg:not(.--size-custom) {
+    min-width: 48px;
+    height: 48px;
+
+    &.--shape-circle {
+      width: 48px;
+    }
+  }
+
+  &.--shape-circle {
+    padding: 0;
+    border-radius: 100%;
+  }
+
+  &.--shape-rounded {
+    padding: 0 16px;
+    border-radius: 12px;
+  }
+
+  &:hover {
+    background-color: var(--color-solitario);
+  }
+
+  &:active {
+    background-color: var(--color-cartone);
+  }
+
+  &:disabled {
+    border: none;
+
+    pointer-events: none;
+    cursor: default;
+
+    background-color: var(--color-pervinca);
+
+    .button-light__label,
+    .button-light__icon {
+      color: var(--color-telegrey-scuro);
+    }
+  }
+
+  &__label,
+  &__icon {
+    color: var(--color-gosblue);
+  }
+}

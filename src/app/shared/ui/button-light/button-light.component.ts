@@ -14,7 +14,7 @@ import { IconComponent } from '../icon/icon.component'
   imports: [IconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ButtonLightComponent {
+export class ShadowButtonComponent {
   public readonly size = input<string>('lg')
   public readonly circleSize = input<string>()
   public readonly shape = input<ButtonLightShape>('rounded')

@@ -9,12 +9,13 @@ import { BreadcrumbsComponent } from '@shared/ui/breadcrumbs/breadcrumbs.compone
 import { ChipGroupComponent } from '@shared/ui/chip-group'
 import { ChipGroupValue } from '@shared/ui/chip-group/chip-group.model'
 import { PaginationComponent } from '@shared/ui/pagination'
+import { ButtonDefaultComponent } from '@shared/ui/button-default/button-default.component';
 
 @Component({
   selector: 'app-page-recipes',
   templateUrl: './page-recipes-catalog.component.html',
   styleUrl: './page-recipes-catalog.component.scss',
-  imports: [BreadcrumbsComponent, ChipGroupComponent, PaginationComponent],
+  imports: [BreadcrumbsComponent, ChipGroupComponent, PaginationComponent, ButtonDefaultComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageRecipesCatalogComponent {

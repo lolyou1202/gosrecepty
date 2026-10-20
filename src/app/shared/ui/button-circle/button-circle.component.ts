@@ -6,7 +6,6 @@ import {
   model
 } from '@angular/core'
 import { IconComponent } from '../icon/icon.component'
-import { IconNames } from '../icon/icon-names.type'
 
 @Component({
   selector: 'app-button-circle',
@@ -20,7 +19,7 @@ import { IconNames } from '../icon/icon-names.type'
 })
 export class ButtonCircleComponent {
   public readonly label = input<string>()
-  public readonly iconName = input<IconNames>()
+  public readonly iconName = input<string>()
   public readonly disabled = input<boolean>(false)
   public readonly size = input<string>('32px')
 
