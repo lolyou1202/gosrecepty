@@ -15,7 +15,8 @@
   &__row {
     display: flex;
     flex-wrap: nowrap;
-    gap: var(--expandable-list-gap, 8px);
+    column-gap: var(--expandable-list-gap, 8px);
+		row-gap: 8px;
     min-width: 0;
 
     &:not(.--collapsible) {

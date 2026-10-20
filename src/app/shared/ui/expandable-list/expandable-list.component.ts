@@ -18,8 +18,7 @@ import { ExpandableItemDirective } from './expandable-item.directive'
 @Component({
   selector: 'app-expandable-list',
   templateUrl: './expandable-list.component.html',
-  styleUrls: ['./expandable-list.component.scss'],
-  imports: [],
+  styleUrl: './expandable-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExpandableListComponent {
@@ -35,16 +34,13 @@ export class ExpandableListComponent {
   })
 
   public readonly collapsible = input<boolean>(true)
-  public readonly gap = input<number | string>(8)
+  public readonly gap = input<number>(8)
   public readonly expanded = model(false)
 
   public readonly hasOverflow = signal(false)
   public readonly hiddenCount = signal(0)
 
-  protected readonly gapStyle = computed(() => {
-    const g = this.gap()
-    return typeof g === 'number' ? `${g}px` : g
-  })
+  protected readonly gapStyle = computed(() => `${this.gap()}px`)
 
   private hostRO?: ResizeObserver
   private itemRO?: ResizeObserver

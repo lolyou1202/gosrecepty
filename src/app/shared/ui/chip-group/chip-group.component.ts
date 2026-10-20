@@ -1,11 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  effect,
+  inject,
   input,
-  linkedSignal,
-  model,
-  untracked
+  model
 } from '@angular/core'
 import { SelectionGroupDirective } from '../../behavior/selection/selection-group.directive'
 import { ExpandableListComponent } from '../expandable-list/expandable-list.component'
@@ -19,54 +17,35 @@ import { FormValueControl } from '@angular/forms/signals'
   selector: 'app-chip-group',
   templateUrl: './chip-group.component.html',
   styleUrl: './chip-group.component.scss',
-  imports: [
-    SelectionGroupDirective,
-    ExpandableListComponent,
-    ExpandableItemDirective,
-    ChipComponent
+  imports: [ExpandableListComponent, ExpandableItemDirective, ChipComponent],
+  hostDirectives: [
+    {
+      directive: SelectionGroupDirective,
+      inputs: ['value', 'multiple'],
+      outputs: ['valueChange']
+    }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChipGroupComponent implements FormValueControl<ChipGroupValue[]> {
+  private readonly _selection = inject(SelectionGroupDirective<ChipGroupValue>)
+
   public readonly chips = input.required<ChipGroupItem[]>()
-  public readonly multiple = input<boolean>(false)
   public readonly chipsVariant = input<ChipVariant>('inside')
   public readonly collapsible = input<boolean>(true)
   public readonly gap = input<number>(12)
   public readonly disabled = input<boolean>(false)
 
-  public readonly value = model<ChipGroupValue[]>([])
   public readonly expanded = model(false)
 
-  public readonly selectedIds = linkedSignal({
-    source: () => ({
-      value: this.value()
-    }),
-    computation: ({ value }) => value.map(c => c.id)
-  })
+  public readonly multiple = this._selection.multiple
+  public readonly value = this._selection.value
 
-  constructor() {
-    effect(() => {
-      const ids = this.selectedIds()
-      const chips = this.chips()
-
-      if (chips.length === 0) return
-
-      const idsSet = new Set(ids)
-      const selected = chips
-        .filter(chip => idsSet.has(chip.id))
-        .map(i => ({ id: i.id, value: i.label }))
-
-      const currentValue = untracked(this.value)
-      if (
-        currentValue.length === selected.length &&
-        currentValue.every(item => idsSet.has(item.id))
-      )
-        return
-
-      this.value.set(selected)
-    })
-  }
+  public readonly isSelected = this._selection.isSelected
+  public readonly select = this._selection.select
+  public readonly deselect = this._selection.deselect
+  public readonly toggle = this._selection.toggle
+  public readonly clear = this._selection.clear
 
   public focus(): void {}
 }

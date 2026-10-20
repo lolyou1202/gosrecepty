@@ -9,15 +9,15 @@ import {
 } from '@angular/core'
 import { ButtonLightComponent } from '../../shared/ui/button-light/button-light.component'
 import { ChipComponent } from '../../shared/ui/chip/chip.component'
-import {
-  ChipGroupComponent,
-  ChipOption
-} from '../../shared/ui/chip-group/chip-group.component'
+import { ChipGroupComponent } from '../../shared/ui/chip-group/chip-group.component'
 import { PillComponent } from '../../shared/ui/pill/pill.component'
 import { ModalService } from '../../shared/ui/modal/modal.service'
-import { DefaultInputComponent } from '../../shared/ui/default-input/default-input.component'
 import { BaseInputComponent } from '../../shared/ui/base-input/base-input.component'
 import { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals'
+import { SelectionGroupDirective } from '../../shared/behavior/selection/selection-group.directive'
+import { ExpandableListComponent } from '../../shared/ui/expandable-list/expandable-list.component'
+import { ExpandableItemDirective } from '../../shared/ui/expandable-list/expandable-item.directive'
+import { BreadcrumbsComponent } from '../../shared/ui/breadcrumbs/breadcrumbs.component'
 
 @Component({
   selector: 'app-page-demo',
@@ -29,8 +29,10 @@ import { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals'
     ChipComponent,
     ChipGroupComponent,
     PillComponent,
-    DefaultInputComponent
-    BaseInputComponent
+    BaseInputComponent,
+    SelectionGroupDirective,
+    ExpandableListComponent,
+    BreadcrumbsComponent
   ]
 })
 export default class DemoPageComponent {
@@ -39,7 +41,7 @@ export default class DemoPageComponent {
   public readonly tpl = viewChild.required('tpl', { read: TemplateRef })
 
   // ==== данные для chip-group ====
-  protected readonly singleChips: ChipOption[] = [
+  protected readonly singleChips = [
     { id: '1', label: 'Первый', active: true },
     { id: '2', label: 'Второй' },
     { id: '3', label: 'Третий' },
@@ -50,7 +52,7 @@ export default class DemoPageComponent {
     { id: '8', label: 'Восьмой' }
   ]
 
-  protected readonly multiChips: ChipOption[] = [
+  protected readonly multiChips = [
     { id: '1', label: 'Дизайн' },
     { id: '2', label: 'Разработка', active: true },
     { id: '3', label: 'Тестирование', active: true },
@@ -63,7 +65,7 @@ export default class DemoPageComponent {
     { id: '10', label: 'Информационные технологии' }
   ]
 
-  protected readonly preselectedChips: ChipOption[] = [
+  protected readonly preselectedChips = [
     { id: '1', label: 'Яблоко', active: true },
     { id: '2', label: 'Банан' },
     { id: '3', label: 'Вишня', active: true },
@@ -71,36 +73,28 @@ export default class DemoPageComponent {
   ]
 
   // ==== значения ====
-  protected readonly singleValue = signal<ChipOption | ChipOption[] | null>(
-    null
-  )
-  protected readonly multiValue = signal<ChipOption | ChipOption[] | null>(null)
-  protected readonly programmaticValue = signal<
-    ChipOption | ChipOption[] | null
-  >(null)
+  protected readonly singleValue = signal(null)
+  protected readonly multiValue = signal(null)
+  protected readonly programmaticValue = signal([])
 
-  protected readonly modalSingleValue = signal<
-    ChipOption | ChipOption[] | null
-  >(null)
-  protected readonly modalMultiValue = signal<ChipOption | ChipOption[] | null>(
-    null
-  )
+  protected readonly modalSingleValue = signal(null)
+  protected readonly modalMultiValue = signal(null)
 
   // ==== производные ====
   protected readonly selectedLabels = computed(() => {
     const v = this.multiValue()
     if (!v) return ''
     const arr = Array.isArray(v) ? v : [v]
-    return arr.map(c => c.label).join(', ')
+    return arr.map(c => c).join(', ')
   })
 
   // ==== действия ====
   protected selectFirstTwo(): void {
-    this.programmaticValue.set(this.multiChips.slice(0, 2))
+    //this.programmaticValue.set(this.multiChips)
   }
 
   protected clearSelection(): void {
-    this.programmaticValue.set(null)
+    this.programmaticValue.set([])
   }
 
   protected openModal(): void {

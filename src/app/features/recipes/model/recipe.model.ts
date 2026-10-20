@@ -4,7 +4,7 @@ export interface RecipeDetail {
   description: string
   image?: string | null
   cookingTime: number
-  calories: number
+  caloriesPerPortion: number
   dateCreated: string
   ingredients: {
     id: number
@@ -60,8 +60,11 @@ export interface RecipeDetail {
 //  data: string
 //}
 
-export type RecipeCard = RecipeDetail
-
-export const RECIPE_FILTER_KEYS = ['search'] as const
-
-export const RECIPE_SORT_BY_KEYS = ['name', 'calories', 'cookingTime'] as const
+export interface RecipeCard {
+  id: number
+  name: string
+	image?: string | null
+  cookingTime: number
+  caloriesPerPortion: number
+  dateCreated: string
+}

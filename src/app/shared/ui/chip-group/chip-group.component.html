@@ -1,10 +1,4 @@
-<div
-  appSelectionGroup
-  [selectionGroupMultiple]="multiple()"
-  [(selectionGroupIds)]="selectedIds"
-  #group="selectionGroup"
-  class="chip-group__container"
->
+<div class="chip-group__container">
   <app-expandable-list
     [collapsible]="collapsible()"
     [(expanded)]="expanded"
@@ -13,8 +7,8 @@
     @for (chip of chips(); track chip.id) {
       <app-chip
         appExpandableItem
-        [checked]="group.isSelected(chip.id)"
-        (checkedChange)="group.toggle(chip.id, $event)"
+        [checked]="isSelected(chip.id)"
+        (checkedChange)="toggle(chip)"
         [label]="chip.label"
         [icon]="chip.icon"
         [disabled]="!!chip.disabled"

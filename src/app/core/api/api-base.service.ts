@@ -13,7 +13,7 @@ export class ApiBaseService {
     select,
     search,
     filters,
-    page = 0,
+    page = 1,
     limit = 20,
     sortBy,
     sortOrder = 'asc'
@@ -26,7 +26,7 @@ export class ApiBaseService {
 
     if (search && search.length > 0) {
       search.forEach(search => {
-        params = params.set(search.field, `*${search.value}*`)
+        params = params.set(search.name, `*${search.value}*`)
       })
     }
 

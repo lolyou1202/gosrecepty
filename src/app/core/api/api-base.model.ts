@@ -1,25 +1,40 @@
+import { SortOrder } from '@shared/data/filter-from-path/pagination-sort.service'
+
 export interface ApiOptions {
-	select?: string[]
-	search?: { field: string; value: string }[]
-	filters?: Record<
-		string,
-		string | number | boolean | (string | number | boolean)[]
-	>
-	page?: number
-	limit?: number
-	sortBy?: string
-	sortOrder?: SortOrder
+  select?: string[]
+  search?: { name: string; value: string }[]
+  filters?: Record<
+    string,
+    string | number | boolean | (string | number | boolean)[]
+  >
+  page?: number
+  limit?: number
+  sortBy?: string
+  sortOrder?: SortOrder
 }
 
-export type SortOrder = 'asc' | 'desc'
+export interface RawPagingMeta {
+  total_items: number
+  total_pages: number
+  current_page: number
+  per_page: number
+  remaining_count: number
+}
+
+export interface RawPagingApiResponse<T> {
+  meta: RawPagingMeta
+  items: T[]
+}
+
+export interface PagingMeta {
+  totalItems: number
+  totalPages: number
+  currentPage: number
+  perPage: number
+  remainingCount: number
+}
 
 export interface PagingApiResponse<T> {
-  meta: {
-    total_pages: number
-    total_items: number
-    current_page: number
-    per_page: number
-    remaining_count: number
-  }
+  meta: PagingMeta
   items: T[]
 }

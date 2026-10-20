@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import AuthFormComponent from '../../features/auth-form/components/form/auth-form.component'
+import AuthFormComponent from '../../features/auth/ui/form/auth-form.component'
 import { RouterLink } from '@angular/router'
 
 @Component({

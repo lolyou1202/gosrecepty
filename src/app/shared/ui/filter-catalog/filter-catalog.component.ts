@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
   effect,
   inject,
   input,
@@ -12,7 +11,7 @@ import { debounce, form, FormField, minLength } from '@angular/forms/signals'
 import { ActivatedRoute, Router } from '@angular/router'
 import { toSignal } from '@angular/core/rxjs-interop'
 import { DefaultInputComponent } from '../default-input/default-input.component'
-import { DividerComponent } from '../../components/divider/divider.component'
+import { DividerComponent } from '../divider/divider.component'
 import { ChipComponent } from '../chip/chip.component'
 import { ScrollableComponent } from '../scrollable/scrollable.component'
 import { readStringParam } from '../../../utils/functions/read-string-param'
@@ -24,9 +23,6 @@ import { readStringParam } from '../../../utils/functions/read-string-param'
   imports: [
     FormField,
     DefaultInputComponent,
-    DividerComponent,
-    ChipComponent,
-    ScrollableComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })

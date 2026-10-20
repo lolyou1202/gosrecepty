@@ -2,7 +2,13 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-		"rootDir": "./src",
+    "rootDir": "./src",
+    "paths": {
+      "@pages/*": ["./src/app/pages/*"],
+      "@shared/*": ["./src/app/shared/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@features/*": ["./src/app/features/*"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,

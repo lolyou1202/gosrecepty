@@ -1,0 +1,14 @@
+<button
+  type="button"
+  class="pagination-button link-plain text-small"
+  [class.--active]="active()"
+  [disabled]="disabled()"
+  (click)="onClick()"
+>
+  @if (icon(); as iconName) {
+    <app-icon [name]="iconName" class="pagination-button-icon" />
+  }
+  @if (text(); as textValue) {
+    {{ textValue }}
+  }
+</button>

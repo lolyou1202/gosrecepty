@@ -1,0 +1,83 @@
+<section class="page-recipes-catalog__section">
+  <div class="page-recipes-catalog__intro">
+    <app-breadcrumbs
+      [items]="[
+        { label: 'Главная', link: '/' },
+        { label: 'Рецепты', disabled: true }
+      ]"
+    />
+    <h2>Рецепты по категориям</h2>
+  </div>
+  <app-chip-group
+    [value]="chipValue()"
+    (valueChange)="onCategoriesChange($event)"
+    chipsVariant="outside"
+    [multiple]="false"
+    [gap]="12"
+    [chips]="chips"
+    class="page-recipes-catalog__categories"
+  />
+
+  <div class="page-recipes-catalog__toolbar"></div>
+
+  <div class="view-toggle">
+    <button
+      type="button"
+      class="view-toggle__btn"
+      [class.view-toggle__btn--active]="filter.viewMode() === 'pagination'"
+      (click)="filter.setViewMode('pagination')"
+    >
+      Страницы
+    </button>
+    <button
+      type="button"
+      class="view-toggle__btn"
+      [class.view-toggle__btn--active]="filter.viewMode() === 'lazy'"
+      (click)="filter.setViewMode('lazy')"
+    >
+      Дозагрузка
+    </button>
+  </div>
+
+  @if (status() === 'error') {
+    <div class="error">Произошла ошибка при загрузке. Попробуйте позже.</div>
+  } @else if (loading() && items().length === 0) {
+    <div class="skeleton">Загрузка...</div>
+  } @else {
+    <div class="page-recipes-catalog__list">
+      @for (item of items(); track item.id) {
+        <article class="page-recipes-catalog__card">
+          <h3>{{ item.name }}</h3>
+          <p>{{ item.cookingTime }} мин · {{ item.caloriesPerPortion }} ккал</p>
+        </article>
+      } @empty {
+        <p>Ничего не найдено</p>
+      }
+    </div>
+
+    <div class="page-recipes-catalog__footer">
+      @if (filter.viewMode() === 'pagination') {
+        @if (totalPages() > 1) {
+          <app-pagination
+            [currentPage]="filter.currentPage()"
+            (currentPageChange)="filter.setCurrentPage($event)"
+            [pageSize]="filter.pageSize()"
+            (pageSizeChange)="filter.setPageSize($event)"
+            [totalItems]="totalItems()"
+          />
+        }
+      } @else {
+        @if (hasMore()) {
+          <button
+            type="button"
+            class="load-more-btn"
+            [disabled]="loading()"
+            (click)="loadMore()"
+          >
+            {{ loading() ? 'Загрузка...' : 'Показать ещё' }}
+          </button>
+        }
+      }
+    </div>
+  }
+</section>

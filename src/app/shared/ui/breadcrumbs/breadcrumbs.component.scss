@@ -1,0 +1,29 @@
+.breadcrumbs {
+  &__nav {
+    display: flex;
+  }
+
+  &__list {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+  }
+
+  &__item {
+    display: flex;
+  }
+
+  &__link {
+  }
+
+  &__text {
+    color: var(--color-interlineare);
+    pointer-events: none;
+  }
+
+  &__separator {
+    margin-bottom: 2px;
+
+    color: var(--color-interlineare);
+  }
+}

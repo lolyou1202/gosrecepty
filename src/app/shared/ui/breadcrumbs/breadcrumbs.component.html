@@ -1,0 +1,24 @@
+<nav class="breadcrumbs__nav">
+  <ol class="breadcrumbs__list">
+    @for (item of items(); track $index; let last = $last) {
+      <li class="breadcrumbs__item">
+        @if (item.link && !item.disabled) {
+          <a class="breadcrumbs__link text-default" [routerLink]="item.link">
+            {{ item.label }}
+          </a>
+        } @else {
+          <p class="breadcrumbs__text">
+            {{ item.label }}
+          </p>
+        }
+      </li>
+      @if (!last) {
+        <app-icon
+          name="chevron-right-2"
+          size="16px"
+          class="breadcrumbs__separator"
+        />
+      }
+    }
+  </ol>
+</nav>

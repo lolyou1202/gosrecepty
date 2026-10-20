@@ -218,11 +218,7 @@
       <!-- 1. Одиночный выбор -->
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <app-chip-group
-            [multiple]="false"
-            [chips]="singleChips"
-            [(value)]="singleValue"
-          />
+          <app-chip-group [multiple]="false" [chips]="singleChips" />
         </div>
         <p class="demo-card__caption text-small">
           <b>Одиночный выбор</b> — <code>multiple=false</code>
@@ -235,11 +231,7 @@
       <!-- 2. Множественный выбор -->
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <app-chip-group
-            [multiple]="true"
-            [chips]="multiChips"
-            [(value)]="multiValue"
-          />
+          <app-chip-group [multiple]="true" [chips]="multiChips" />
         </div>
         <p class="demo-card__caption text-small">
           <b>Множественный выбор</b> — <code>multiple=true</code>
@@ -266,39 +258,26 @@
       <!-- 4. Readonly -->
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <app-chip-group
-            [multiple]="true"
-            [readonly]="true"
-            [chips]="preselectedChips"
-          />
+          <app-chip-group [multiple]="true" [chips]="preselectedChips" />
         </div>
         <p class="demo-card__caption text-small">
           <b>Readonly</b> — только просмотр
         </p>
       </div>
 
-      <!-- 5. Disabled -->
-      <div class="demo-card demo-card--stack shadow-block with-hover">
-        <div class="demo-card__preview demo-card__preview--block">
-          <app-chip-group
-            [multiple]="true"
-            [disabled]="true"
-            [chips]="preselectedChips"
-          />
-        </div>
-        <p class="demo-card__caption text-small">
-          <b>Disabled</b> — взаимодействие заблокировано
-        </p>
-      </div>
-
       <!-- 6. Программное управление -->
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <app-chip-group
-            [multiple]="true"
-            [chips]="multiChips"
-            [(value)]="programmaticValue"
-          />
+          <div
+            appSelectionGroup
+            
+          >
+            <app-expandable-list>
+              @for (chip of multiChips; track chip.id) {
+                
+              }
+            </app-expandable-list>
+          </div>
         </div>
         <p class="demo-card__caption text-small">
           <b>Программное управление</b> — через <code>value</code>
@@ -315,18 +294,22 @@
 
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <div appSelectionGroup [multiple]="true" [(value)]="selected">
-            <app-expandable-list>
-              @for (chip of chips(); track chip.id) {
-                <app-chip
-                  appExpandableItem
-                  [appSelectableItem]="chip"
-                  [label]="chip.label"
-                  [icon]="chip.icon"
-                  [disabled]="chip.disabled"
-                  variant="outside"
-                  (click)="onChipClick(chip)"
-                />
+          <div
+            appSelectionGroup
+            #group="selectionGroup"
+            
+          >
+            <app-expandable-list [collapsible]="true" [gap]="8">
+              @for (
+                chip of [
+                  { id: 'new', label: 'Новые', active: true },
+                  { id: 'in-progress', label: 'В работе' },
+                  { id: 'done', label: 'Готовые' },
+                  { id: 'archived', label: 'Архив', disabled: true }
+                ];
+                track chip.id
+              ) {
+                
               }
             </app-expandable-list>
           </div>
@@ -618,6 +601,14 @@
       </div>
     </div>
   </section>
+
+  <app-breadcrumbs
+    [items]="[
+      { label: 'Главная', link: '/' },
+      { label: 'Демонстрация', link: '/demo' },
+      { label: 'Демонстрация', link: '/recipes', disabled: true }
+    ]"
+  />
 </div>
 
 <ng-template #tpl>
@@ -626,16 +617,8 @@
   </p>
 
   <div class="demo-modal__groups">
-    <app-chip-group
-      [multiple]="false"
-      [chips]="singleChips"
-      [(value)]="modalSingleValue"
-    />
+    <app-chip-group [multiple]="false" [chips]="singleChips" />
 
-    <app-chip-group
-      [multiple]="true"
-      [chips]="multiChips"
-      [(value)]="modalMultiValue"
-    />
+    <app-chip-group [multiple]="true" [chips]="multiChips" />
   </div>
 </ng-template>

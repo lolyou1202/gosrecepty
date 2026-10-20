@@ -62,7 +62,8 @@ export default tseslint.config(
       '@angular-eslint/component-selector': [
         'error',
         { type: 'element', prefix: 'app', style: 'kebab-case' }
-      ]
+      ],
+      '@angular-eslint/no-input-rename': 'off'
     }
   },
   {

@@ -1,0 +1,36 @@
+.pagination-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 32px;
+  height: 32px;
+
+  background: none;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+
+  &.--active {
+    background-color: var(--color-gosblue);
+    color: var(--color-white);
+    cursor: default;
+  }
+
+  &:disabled {
+    color: var(--color-blue-selvaggio);
+    cursor: default;
+  }
+
+  &-icon {
+    display: block;
+    color: inherit;
+  }
+}
