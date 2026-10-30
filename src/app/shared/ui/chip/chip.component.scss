@@ -1,5 +1,67 @@
+:host {
+  &.--side-inside {
+    .chip__button,
+    .chip__button::after {
+      border-radius: 8px;
+    }
+  }
+
+  &.--side-outside {
+    .chip__button,
+    .chip__button::after {
+      border-radius: 12px;
+    }
+  }
+
+  &.--style-outlined {
+    &.--side-inside {
+      .chip__button {
+        background-color: var(--color-azzurro-alice);
+
+				&:hover {
+					background-color: var(--color-solitario);
+				}
+      }
+    }
+
+    &.--side-outside {
+      .chip__button {
+        background-color: var(--color-white);
+      }
+    }
+
+    .chip__button {
+      color: var(--color-gosblue);
+    }
+
+    &.--active {
+      .chip__button::after {
+        box-shadow: inset 0 0 0 var(--border-width) var(--color-gosblue);
+      }
+    }
+  }
+
+  &.--style-solid {
+    .chip__button {
+      background-color: var(--color-blue-digitale);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: var(--color-vertigini-blue);
+      }
+    }
+  }
+
+  &.--only-icon {
+    .chip__button {
+      width: 40px;
+      padding: 0;
+    }
+  }
+}
+
 .chip {
-  &__container {
+  &__button {
     position: relative;
 
     display: flex;
@@ -8,10 +70,12 @@
     gap: 4px;
 
     width: auto;
+		max-width: 360px;
     height: 40px;
 
     padding: 0 12px;
 
+    background: none;
     border: none;
 
     cursor: pointer;
@@ -19,50 +83,11 @@
       background-color ease 0.2s,
       box-shadow ease 0.2s;
 
-    &.--variant-inside {
-      background-color: var(--color-azzurro-alice);
-      border-radius: 8px;
-
-      &:hover {
-        background-color: var(--color-solitario);
-      }
-
-      &::after {
-        border-radius: 8px;
-      }
-    }
-
-    &.--variant-outside {
-      background-color: var(--color-white);
-      border-radius: 12px;
-
-      &::after {
-        border-radius: 12px;
-      }
-    }
-
-    &.--only-icon {
-      width: 40px;
-      padding: 0;
-    }
-
-    &.--active {
-      &::after {
-        opacity: 1;
-      }
-    }
-
-    &.--disabled {
+    &:disabled {
       background-color: var(--color-pervinca);
       box-shadow: none;
 
-      .chip__label,
-      .chip__icon {
-        color: var(--color-telegrey-scuro);
-      }
-    }
-
-    &:disabled {
+      color: var(--color-telegrey-scuro);
       pointer-events: none;
       cursor: default;
     }
@@ -70,26 +95,24 @@
     &::after {
       content: '';
       position: absolute;
-      top: 0;
       left: 0;
+      right: 0;
 
       width: 100%;
       height: 100%;
 
-      background-color: transparent;
-      box-shadow: inset 0 0 0 var(--border-width) var(--color-gosblue);
+      background: none;
+      box-shadow: inset 0 0 0 var(--border-width) transparent;
 
       pointer-events: none;
-      opacity: 0;
-      transition:
-        opacity 0.2s ease,
-        box-shadow 0.2s ease;
+      transition: box-shadow 0.2s ease;
     }
   }
 
   &__label,
   &__icon {
-    color: var(--color-gosblue);
+    color: inherit;
+    transition: color ease 0.2s;
   }
 
   &__label {

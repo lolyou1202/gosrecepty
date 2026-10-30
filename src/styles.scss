@@ -39,6 +39,7 @@ body {
   --color-agata-fredda: #9b3be5;
   --color-gosred: #ee3f58;
   --color-tela-rosa: #e11432;
+  --color-paura: #fce9ed;
   --color-petalo-rosa: #fcd9de;
   --color-foglia-di-acero: #ff8a00;
 
@@ -133,7 +134,7 @@ a,
 .link-plain {
   color: var(--color-gosblue);
   text-decoration: none;
-	
+
   cursor: pointer;
   transition: color 0.2s ease;
 
@@ -188,6 +189,8 @@ strong,
   background-color: var(--color-white);
   box-shadow: var(--shadow-default);
   border-radius: var(--radius-default);
+
+  transition: box-shadow 0.2s ease;
 
   &.with-hover {
     &:hover {
@@ -252,4 +255,53 @@ strong,
 
 .dropdown-panel--animate-leave {
   animation: dropdown-panel-close 0s ease;
+}
+
+.popover-backdrop-transparent {
+  background: transparent;
+}
+
+.popover-panel {
+  display: flex;
+  flex-direction: column;
+
+  background-color: var(--color-white);
+  border-radius: var(--radius-default);
+  box-shadow: var(--shadow-popup);
+  overflow: hidden;
+
+  animation: popover-enter 0.2s ease-out;
+}
+
+.popover-host {
+  display: block;
+  flex: 1;
+  min-height: 0;
+}
+
+@keyframes popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popover-panel--leaving {
+  animation: popover-leave 0.2s ease-in forwards;
+  pointer-events: none;
+}
+
+.popover-panel--no-animation {
+  animation: none !important;
+}
+
+@keyframes popover-leave {
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.95);
+  }
 }

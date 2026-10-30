@@ -1,14 +1,13 @@
-import { TemplateRef, Type } from '@angular/core'
-import { ButtonDefaultVariant } from '../button-default/button-default.model'
+import { Signal, TemplateRef, Type } from '@angular/core'
+import { DefaultButtonVariant } from '../default-button'
 
 export type ModalResult<R = unknown> =
-  | { action: 'close' }
-  | { action: 'action'; text: string; payload?: R }
+  { action: 'close' } | { action: 'action'; text: string; payload?: R }
 
 export interface ModalAction<R = unknown, D = unknown> {
-  variant: ButtonDefaultVariant
+  variant: DefaultButtonVariant
   text: string
-  disabled?: boolean
+  disabled?: boolean | Signal<boolean>
   closeOnClick?: boolean
   onClick?: (ctx: D) => R | Promise<R> | void | Promise<void>
 }

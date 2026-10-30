@@ -2,14 +2,9 @@
   type="button"
   [disabled]="disabled()"
   (click)="toggle()"
-  class="chip__container"
-  [class.shadow-block]="variant() === 'outside'"
-  [class.with-hover]="variant() === 'outside'"
-  [class.--variant-outside]="variant() === 'outside'"
-  [class.--variant-inside]="variant() === 'inside'"
-  [class.--only-icon]="icon() && !label()"
-  [class.--active]="checked()"
-  [class.--disabled]="disabled()"
+  class="chip__button"
+  [class.shadow-block]="side() === 'outside'"
+  [class.with-hover]="side() === 'outside'"
 >
   @if (icon(); as iconName) {
     <app-icon [name]="iconName" size="16px" class="chip__icon" />

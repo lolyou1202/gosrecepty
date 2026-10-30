@@ -16,7 +16,6 @@ import { BaseInputComponent } from '../../shared/ui/base-input/base-input.compon
 import { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals'
 import { SelectionGroupDirective } from '../../shared/behavior/selection/selection-group.directive'
 import { ExpandableListComponent } from '../../shared/ui/expandable-list/expandable-list.component'
-import { ExpandableItemDirective } from '../../shared/ui/expandable-list/expandable-item.directive'
 import { BreadcrumbsComponent } from '../../shared/ui/breadcrumbs/breadcrumbs.component'
 
 @Component({

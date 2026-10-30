@@ -8,11 +8,12 @@
       <app-chip
         appExpandableItem
         [checked]="isSelected(chip.id)"
-        (checkedChange)="toggle(chip)"
+        (checkedChange)="toggle(chip.id)"
         [label]="chip.label"
         [icon]="chip.icon"
         [disabled]="!!chip.disabled"
-        [variant]="chipsVariant()"
+        [side]="side()"
+        [styleVariant]="styleVariant()"
       />
     }
   </app-expandable-list>

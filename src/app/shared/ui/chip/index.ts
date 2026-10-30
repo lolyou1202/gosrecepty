@@ -1,2 +1,2 @@
 export { ChipComponent } from './chip.component'
-export type { ChipVariant } from './chip.model'
+export type { ChipSide, ChipStyleVariant } from './chip.model'

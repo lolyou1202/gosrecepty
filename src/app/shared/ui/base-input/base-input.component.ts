@@ -40,7 +40,7 @@ export class BaseInputComponent
   public readonly placeholder = input<string>()
   public readonly hint = input<string>()
   public readonly label = input<string>()
-  public readonly iconName = input<string>()
+  public readonly icon = input<string>()
   public readonly clearable = input<boolean>(false)
   public readonly invalid = input<boolean>(false)
   public readonly dirty = input<boolean>(false)

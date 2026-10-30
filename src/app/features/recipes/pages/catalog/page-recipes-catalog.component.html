@@ -11,16 +11,76 @@
   <app-chip-group
     [value]="chipValue()"
     (valueChange)="onCategoriesChange($event)"
-    chipsVariant="outside"
+    side="outside"
     [multiple]="false"
     [gap]="12"
     [chips]="chips"
     class="page-recipes-catalog__categories"
   />
 
-  <div class="page-recipes-catalog__toolbar"></div>
+  <div class="page-recipes-catalog__toolbar">
+    <div class="page-recipes-catalog__toolbar-actions">
+      <app-shadow-button icon="settings" [withHover]="true" />
+      <app-recipe-catalog-filter-bar />
+      <app-shadow-button icon="sort" [withHover]="true" />
+    </div>
+    <app-recipe-catalog-active-filters />
+  </div>
+  <app-shadow-button
+    label="Пейджинг"
+    [withHover]="true"
+    (clicked)="_config.update({ viewMode: 'pagination' })"
+  />
+  <app-shadow-button
+    label="Подгрузка"
+    [withHover]="true"
+    (clicked)="_config.update({ viewMode: 'lazy' })"
+  />
+  <app-shadow-button
+    label="Сортировать по имени"
+    [withHover]="true"
+    (clicked)="filter.setSortBy('name')"
+  />
+  <app-shadow-button
+    label="Сортировать по времени"
+    [withHover]="true"
+    (clicked)="filter.setSortBy('cookingTime')"
+  />
+  <app-shadow-button
+    label="Сортировать по калориям"
+    [withHover]="true"
+    (clicked)="filter.setSortBy('calories')"
+  />
+  <app-shadow-button
+    label="Сортировать по возрастанию"
+    [withHover]="true"
+    (clicked)="filter.setSortOrder('asc')"
+  />
+  <app-shadow-button
+    label="Сортировать по убыванию"
+    [withHover]="true"
+    (clicked)="filter.setSortOrder('desc')"
+  />
+  <app-shadow-button
+    label="1"
+    [withHover]="true"
+    (clicked)="filter.setPageSize(1)"
+  />
+  <app-shadow-button
+    label="2"
+    [withHover]="true"
+    (clicked)="filter.setPageSize(2)"
+  />
+  <app-shadow-button
+    label="5"
+    [withHover]="true"
+    (clicked)="filter.setPageSize(5)"
+  />
 
-  <div class="view-toggle">
+  <app-radio-checkbox label="По мере прокрутки" />
+  <app-radio-checkbox label="По мере прокрутки" [disabled]="true" />
+  <app-radio-checkbox label="По мере прокрутки" [invalid]="true" />
+  <!--<div class="view-toggle">
     <button
       type="button"
       class="view-toggle__btn"
@@ -37,7 +97,7 @@
     >
       Дозагрузка
     </button>
-  </div>
+  </div>-->
 
   <!--<div class="page-recipes-catalog__banner not-found shadow-block">
     <img src="./not-found.svg" alt="Ничего не найдено" />
@@ -52,7 +112,7 @@
       @for (item of items(); track item.id) {
         <article class="page-recipes-catalog__card">
           <h3>{{ item.name }}</h3>
-          <p>{{ item.cookingTime }} мин · {{ item.caloriesPerPortion }} ккал</p>
+          <p>{{ item.cookingTime }} мин · {{ item.calories }} ккал</p>
         </article>
       } @empty {
         <div class="shadow-block">
@@ -62,7 +122,7 @@
     </div>
 
     <div class="page-recipes-catalog__footer">
-      @if (filter.viewMode() === 'pagination') {
+      @if (viewMode() === 'pagination') {
         @if (totalPages() > 1) {
           <app-pagination
             [currentPage]="filter.currentPage()"
@@ -74,7 +134,7 @@
         }
       } @else {
         @if (hasMore()) {
-          <app-button-default
+          <app-default-button
             label="Показать ещё"
             [loading]="loading()"
             (clicked)="loadMore()"

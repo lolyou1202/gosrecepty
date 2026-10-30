@@ -1,0 +1,34 @@
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.recipe-catalog-filter-bar {
+  &__dot {
+    position: absolute;
+    right: -2px;
+    top: -2px;
+
+    width: 10px;
+    height: 10px;
+
+    background-color: var(--color-gosred);
+    border-radius: 6px;
+
+    pointer-events: none;
+  }
+}
+
+.recipe-catalog-filter-modal {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

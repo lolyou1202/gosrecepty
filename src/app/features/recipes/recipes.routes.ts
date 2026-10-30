@@ -1,16 +1,12 @@
 import { Routes } from '@angular/router'
 import {
-  PAGINATION_SORT_CONFIG,
-  PaginationSortConfig,
-  PaginationSortService
-} from '@shared/data/filter-from-path/pagination-sort.service'
-import {
   QUERY_PARAMS_PREFIX,
   QueryParamsService
-} from '@shared/data/filter-from-path/query-params.service'
-import { RecipeListService } from './data/recipes-list.service'
-import { RecipeListFilterService } from './data/recipe-list-filter.service'
+} from '@shared/services/query-params.service'
+import { RecipeCatalogService } from './data/recipes-catalog.service'
+import { RecipeCatalogFilterService } from './data/recipe-catalog-filter.service'
 import { RecipeApiService } from './data/recipe-api.service'
+import { RecipeCatalogConfigService } from './config/recipe-catalog-config.service'
 
 const recipeRoutes: Routes = [
   {
@@ -18,20 +14,15 @@ const recipeRoutes: Routes = [
     loadComponent: () =>
       import('./pages/catalog/page-recipes-catalog.component'),
     providers: [
-      { provide: QUERY_PARAMS_PREFIX, useValue: 'recipeList' },
-      {
-        provide: PAGINATION_SORT_CONFIG,
-        useValue: {
-          defaultPageSize: 12,
-          allowedSortBy: ['name'],
-          defaultSortBy: 'name'
-        } satisfies PaginationSortConfig
-      },
+      RecipeCatalogService,
+      RecipeCatalogFilterService,
+      RecipeCatalogConfigService,
+      RecipeApiService,
       QueryParamsService,
-      PaginationSortService,
-      RecipeListFilterService,
-      RecipeListService,
-      RecipeApiService
+      {
+        provide: QUERY_PARAMS_PREFIX,
+        useValue: 'recipeList'
+      }
     ]
   }
 ]

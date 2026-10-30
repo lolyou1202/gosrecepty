@@ -14,16 +14,13 @@ import { DefaultInputComponent } from '../default-input/default-input.component'
 import { DividerComponent } from '../divider/divider.component'
 import { ChipComponent } from '../chip/chip.component'
 import { ScrollableComponent } from '../scrollable/scrollable.component'
-import { readStringParam } from '../../../utils/functions/read-string-param'
+import { readStringParam } from '../../utils/functions/read-string-param'
 
 @Component({
   selector: 'app-filter-catalog',
   templateUrl: './filter-catalog.component.html',
   styleUrl: './filter-catalog.component.scss',
-  imports: [
-    FormField,
-    DefaultInputComponent,
-  ],
+  imports: [FormField, DefaultInputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterCatalogComponent {

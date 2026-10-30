@@ -8,9 +8,8 @@ import {
 import { SelectionGroupDirective } from '../../behavior/selection/selection-group.directive'
 import { ExpandableListComponent } from '../expandable-list/expandable-list.component'
 import { ExpandableItemDirective } from '../expandable-list/expandable-item.directive'
-import { ChipComponent } from '../chip/chip.component'
-import { ChipVariant } from '../chip/chip.model'
-import { ChipGroupItem, ChipGroupValue } from './chip-group.model'
+import { ChipComponent, ChipSide, ChipStyleVariant } from '../chip'
+import { ChipGroupItem } from './chip-group.model'
 import { FormValueControl } from '@angular/forms/signals'
 
 @Component({
@@ -27,11 +26,14 @@ import { FormValueControl } from '@angular/forms/signals'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChipGroupComponent implements FormValueControl<ChipGroupValue[]> {
-  private readonly _selection = inject(SelectionGroupDirective<ChipGroupValue>)
+export class ChipGroupComponent implements FormValueControl<
+  ChipGroupItem['id'][]
+> {
+  private readonly _selection = inject(SelectionGroupDirective)
 
   public readonly chips = input.required<ChipGroupItem[]>()
-  public readonly chipsVariant = input<ChipVariant>('inside')
+  public readonly side = input<ChipSide>('inside')
+  public readonly styleVariant = input<ChipStyleVariant>('outlined')
   public readonly collapsible = input<boolean>(true)
   public readonly gap = input<number>(12)
   public readonly disabled = input<boolean>(false)

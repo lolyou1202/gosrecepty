@@ -4,25 +4,22 @@ import {
   input,
   output
 } from '@angular/core'
-import { ButtonLightShape } from './shadow-button.model'
 import { IconComponent } from '../icon/icon.component'
 
 @Component({
-  selector: 'app-button-light',
-  templateUrl: './button-light.component.html',
-  styleUrl: './button-light.component.scss',
+  selector: 'app-shadow-button',
+  templateUrl: './shadow-button.component.html',
+  styleUrl: './shadow-button.component.scss',
   imports: [IconComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ButtonLightComponent {
-  public readonly size = input<string>('lg')
-  public readonly circleSize = input<string>()
-  public readonly shape = input<ButtonLightShape>('rounded')
+export class ShadowButtonComponent {
+  public readonly withHover = input<boolean>(false)
   public readonly disabled = input<boolean>(false)
   public readonly label = input<string>()
-  public readonly iconName = input<string>()
+  public readonly icon = input<string>()
 
-  public clicked = output<PointerEvent>()
+  public readonly clicked = output<PointerEvent>()
 
   public onClick(event: PointerEvent): void {
     if (!this.disabled()) {

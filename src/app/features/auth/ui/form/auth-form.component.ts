@@ -7,16 +7,16 @@ import {
   input
 } from '@angular/core'
 import { FormField, FormRoot } from '@angular/forms/signals'
+import { DefaultInputComponent } from '@shared/ui/default-input/default-input.component'
+import { DefaultButtonComponent } from '@shared/ui/default-button'
 import { LoginFormFactory } from '../../factorys/login-form.factory'
 import { RegisterFormFactory } from '../../factorys/register-form.factory'
-import { DefaultInputComponent } from '../../../../shared/ui/default-input/default-input.component'
-import { ButtonDefaultComponent } from '../../../../shared/ui/button-default/button-default.component'
 
 @Component({
   selector: 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrl: './auth-form.component.scss',
-  imports: [FormRoot, FormField, DefaultInputComponent, ButtonDefaultComponent],
+  imports: [FormRoot, FormField, DefaultInputComponent, DefaultButtonComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AuthFormComponent {

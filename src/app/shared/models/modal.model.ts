@@ -1,4 +1,4 @@
-import { ButtonDefaultVariant } from '../ui/button-default/button-default.model'
+import { ButtonDefaultVariant } from '../ui/default-button/default-button.model'
 import { OverlayBaseConfig } from './overlay.model'
 
 export interface ModalConfig extends OverlayBaseConfig {

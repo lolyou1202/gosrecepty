@@ -1,9 +1,6 @@
-export interface ChipGroupItem extends ChipGroupValue {
+export interface ChipGroupItem {
+	id: string
+	label: string
   icon?: string
   disabled?: boolean
-}
-
-export interface ChipGroupValue {
-  id: string
-  label: string
 }

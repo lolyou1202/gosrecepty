@@ -4,22 +4,36 @@ import {
   computed,
   inject
 } from '@angular/core'
-import { RecipeListService } from '../../data/recipes-list.service'
+import { RecipeCatalogService } from '../../data/recipes-catalog.service'
 import { BreadcrumbsComponent } from '@shared/ui/breadcrumbs/breadcrumbs.component'
 import { ChipGroupComponent } from '@shared/ui/chip-group'
-import { ChipGroupValue } from '@shared/ui/chip-group/chip-group.model'
 import { PaginationComponent } from '@shared/ui/pagination'
-import { ButtonDefaultComponent } from '@shared/ui/button-default/button-default.component';
+import { DefaultButtonComponent } from '@shared/ui/default-button'
+import { ShadowButtonComponent } from '@shared/ui/shadow-button'
+import { RecipesFilterBarComponent } from '@features/recipes/ui/recipe-catalog-filter-bar'
+import { RecipeCatalogActiveFiltersComponent } from '@features/recipes/ui/recipe-catalog-active-filters'
+import { RecipeCatalogConfigService } from '@features/recipes/config'
+import RadioCheckboxComponent from '@shared/ui/radio-checkbox/radio-checkbox.component'
 
 @Component({
   selector: 'app-page-recipes',
   templateUrl: './page-recipes-catalog.component.html',
   styleUrl: './page-recipes-catalog.component.scss',
-  imports: [BreadcrumbsComponent, ChipGroupComponent, PaginationComponent, ButtonDefaultComponent],
+  imports: [
+    BreadcrumbsComponent,
+    ChipGroupComponent,
+    PaginationComponent,
+    ShadowButtonComponent,
+    RecipesFilterBarComponent,
+    DefaultButtonComponent,
+    RecipeCatalogActiveFiltersComponent,
+		RadioCheckboxComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageRecipesCatalogComponent {
-  private readonly _recipeList = inject(RecipeListService)
+  private readonly _recipeList = inject(RecipeCatalogService)
+  protected readonly _config = inject(RecipeCatalogConfigService)
 
   protected readonly filter = this._recipeList.filter
   protected readonly items = this._recipeList.items
@@ -28,6 +42,8 @@ export default class PageRecipesCatalogComponent {
   protected readonly totalPages = this._recipeList.totalPages
   protected readonly totalItems = this._recipeList.totalItems
   protected readonly hasMore = this._recipeList.hasMore
+
+  protected readonly viewMode = this._config.viewMode
 
   protected readonly chips = [
     { id: 'all', label: 'Все категории' },
@@ -48,17 +64,17 @@ export default class PageRecipesCatalogComponent {
 
   protected readonly selectedCategory = computed(() => this.filter.category())
 
-  protected readonly chipValue = computed<ChipGroupValue[]>(() => {
+  protected readonly chipValue = computed(() => {
     const id = this.selectedCategory() ?? 'all'
-    return this.chips.filter(c => c.id === id)
+    return this.chips.filter(c => c.id === id).map(c => c.id)
   })
 
   protected readonly pages = computed(() =>
     Array.from({ length: this.totalPages() }, (_, i) => i + 1)
   )
 
-  protected onCategoriesChange(items: ChipGroupValue[]): void {
-    const id = items[0]?.id
+  protected onCategoriesChange(items: string[]): void {
+    const id = items[0]
     void this.filter.setCategory(id === 'all' ? null : (id ?? null))
   }
 

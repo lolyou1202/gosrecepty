@@ -3,7 +3,7 @@ import { OverlayService } from './overlay.service'
 import { OverlayRef } from '../models/overlay.model'
 import { ModalConfig } from '../models/modal.model'
 import { ModalComponent } from '../ui/modal/modal.component'
-import { ComponentInputValues } from '../../utils/input-value.type'
+import { ComponentInputValues } from '../utils/types/input-value.type'
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {

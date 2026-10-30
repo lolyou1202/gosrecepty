@@ -21,7 +21,7 @@ import {
   OVERLAY_REF
 } from '../models/overlay.tokens'
 import { clsx } from 'clsx'
-import { ComponentInputValues } from '../../utils/input-value.type'
+import { ComponentInputValues } from '../utils/types/input-value.type'
 
 @Injectable({ providedIn: 'root' })
 export class OverlayService {

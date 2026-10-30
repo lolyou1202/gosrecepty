@@ -8,27 +8,22 @@ import {
   Injector,
   output,
   computed,
-  InjectionToken
+  Signal
 } from '@angular/core'
-import { ButtonDefaultComponent } from '../button-default/button-default.component'
-import { DividerComponent } from '../divider/divider.component'
-import { IconComponent } from '../icon/icon.component'
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
 import { ModalAction, ModalConfig, ModalResult } from './modal.model'
-
-export const MODAL_CONFIG = new InjectionToken<ModalConfig>('MODAL_CONFIG')
-
-export const MODAL_REF = new InjectionToken<
-  MatDialogRef<ModalComponent, ModalResult>
->('MODAL_REF')
+import { MODAL_CONFIG, MODAL_REF } from './modal.tokens'
+import { DefaultButtonComponent } from '../default-button'
+import { DividerComponent } from '../divider/divider.component'
+import { IconComponent } from '../icon/icon.component'
 
 @Component({
   selector: 'app-modal',
   templateUrl: 'modal.component.html',
   styleUrl: 'modal.component.scss',
   imports: [
-    ButtonDefaultComponent,
+    DefaultButtonComponent,
     DividerComponent,
     IconComponent,
     NgTemplateOutlet,
@@ -88,11 +83,16 @@ export class ModalComponent<D = unknown, R = unknown> {
     this.closed.emit(result)
   }
 
+  protected isDisabled(value: boolean | Signal<boolean> | undefined): boolean {
+    if (value === undefined) return false
+    return typeof value === 'function' ? value() : value
+  }
+
   protected async onActionClick(action: ModalAction<R, D>): Promise<void> {
     const ctx = (this.config().data ?? {}) as D
     const payload = (await action.onClick?.(ctx)) as R | undefined
 
-    if (action.closeOnClick !== false) {
+    if (action.closeOnClick) {
       const result: ModalResult<R> = {
         action: 'action',
         text: action.text,

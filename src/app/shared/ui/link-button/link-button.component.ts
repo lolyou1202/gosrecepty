@@ -15,7 +15,7 @@ import { IconComponent } from '../icon/icon.component'
 })
 export class LinkButtonComponent {
   public readonly label = input<string>()
-  public readonly iconName = input<string>()
+  public readonly icon = input<string>()
   public readonly disabled = input<boolean>()
 
   public clicked = output<void>()

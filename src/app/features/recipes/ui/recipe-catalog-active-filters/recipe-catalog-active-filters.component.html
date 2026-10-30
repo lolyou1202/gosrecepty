@@ -1,0 +1,17 @@
+@if (hasPills()) {
+  <ul class="recipe-catalog-active-filters__list">
+    @for (pill of pills(); track pill.key) {
+      <li class="recipe-catalog-active-filters__item">
+        <app-pill
+          side="outside"
+          styleVariant="outlined"
+          [label]="pill.label"
+          (removed)="removeFilter(pill.key)"
+        />
+      </li>
+    }
+    <li class="recipe-catalog-active-filters__item clear">
+      <app-link-button label="Сбросить все" (clicked)="clearAllFilters()" />
+    </li>
+  </ul>
+}

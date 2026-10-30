@@ -1,0 +1,32 @@
+<app-shadow-button icon="filter" [withHover]="true" (clicked)="openModal()" />
+
+@if (hasActiveFilters()) {
+  <span class="recipe-catalog-filter-bar__dot"></span>
+}
+
+<ng-template #tpl>
+  <div class="recipe-catalog-filter-modal__container">
+    <div class="recipe-catalog-filter-modal__section">
+      <h5>Поиск по названию</h5>
+      <app-base-input [formField]="form.name" [clearable]="true" />
+    </div>
+    <div class="recipe-catalog-filter-modal__section">
+      <h5>Время приготовления</h5>
+      <app-chip-group
+        [formField]="form.cookingTime"
+        [collapsible]="false"
+        [multiple]="false"
+        [chips]="cookingTimeChips"
+      />
+    </div>
+    <div class="recipe-catalog-filter-modal__section">
+      <h5>Калории на 100 г</h5>
+      <app-chip-group
+        [formField]="form.calories"
+        [collapsible]="false"
+        [multiple]="false"
+        [chips]="caloriesChips"
+      />
+    </div>
+  </div>
+</ng-template>

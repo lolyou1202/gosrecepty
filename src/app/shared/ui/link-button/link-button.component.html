@@ -3,7 +3,7 @@
   [disabled]="disabled()"
   (click)="onClick()"
 >
-  @if (iconName(); as iconName) {
+  @if (icon(); as iconName) {
     <app-icon [name]="iconName" class="link-button__icon" />
   }
   @if (label(); as label) {

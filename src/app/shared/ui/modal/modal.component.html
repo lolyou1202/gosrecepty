@@ -12,15 +12,15 @@
   <div class="modal__content">
     @if (contentComponent(); as component) {
       <ng-container
-        *ngComponentOutlet="
-          component;
-          injector: bodyInjector();
-          inputs: contentComponentInputs()
-        "
+        [ngComponentOutlet]="component"
+        [ngComponentOutletInputs]="contentComponentInputs()"
+        [ngComponentOutletInjector]="bodyInjector()"
       />
     } @else if (contentTemplate(); as template) {
       <ng-container
-        *ngTemplateOutlet="template; context: contentTemplateContext()"
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="contentTemplateContext()"
+        [ngTemplateOutletInjector]="bodyInjector()"
       />
     } @else {
       <ng-content />
@@ -32,10 +32,10 @@
 
     <div class="modal__footer">
       @for (action of actions(); track action.text) {
-        <app-button-default
+        <app-default-button
           [variant]="action.variant"
           [label]="action.text"
-          [disabled]="action.disabled"
+          [disabled]="isDisabled(action.disabled)"
           (click)="onActionClick(action)"
         />
       }

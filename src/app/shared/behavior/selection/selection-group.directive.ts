@@ -4,7 +4,7 @@ import { Directive, effect, input, model } from '@angular/core'
   selector: '[appSelectionGroup]',
   exportAs: 'selectionGroup'
 })
-export class SelectionGroupDirective<T extends { id: string }> {
+export class SelectionGroupDirective<T extends string> {
   public readonly multiple = input<boolean>(false)
 
   public readonly value = model<T[]>([])
@@ -17,28 +17,28 @@ export class SelectionGroupDirective<T extends { id: string }> {
     })
   }
 
-  public isSelected(id: string): boolean {
-    return this.value().some(i => i.id === id)
+  public isSelected(id: T): boolean {
+    return this.value().some(i => i === id)
   }
 
-  public select(item: T): void {
+  public select(id: T): void {
     if (!this.multiple()) {
-      this.value.set([item])
+      this.value.set([id])
       return
     }
-    if (this.isSelected(item.id)) return
-    this.value.update(v => [...v, item])
+    if (this.isSelected(id)) return
+    this.value.update(v => [...v, id])
   }
 
-  public deselect(item: T): void {
-    this.value.update(v => v.filter(i => i.id !== item.id))
+  public deselect(id: T): void {
+    this.value.update(v => v.filter(i => i !== id))
   }
 
-  public toggle(item: T): void {
-    if (this.isSelected(item.id)) {
-      this.deselect(item)
+  public toggle(id: T): void {
+    if (this.isSelected(id)) {
+      this.deselect(id)
     } else {
-      this.select(item)
+      this.select(id)
     }
   }
 
