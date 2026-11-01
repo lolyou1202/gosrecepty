@@ -1,4 +1,4 @@
-<div class="chip-group__container">
+<div [attr.role]="groupRole()" class="chip-group__container">
   <app-expandable-list
     [collapsible]="collapsible()"
     [(expanded)]="expanded"
@@ -7,6 +7,8 @@
     @for (chip of chips(); track chip.id) {
       <app-chip
         appExpandableItem
+        [attr.role]="optionRole()"
+        [attr.aria-checked]="isSelected(chip.id)"
         [checked]="isSelected(chip.id)"
         (checkedChange)="toggle(chip.id)"
         [label]="chip.label"

@@ -11,10 +11,10 @@
   <app-chip-group
     [value]="chipValue()"
     (valueChange)="onCategoriesChange($event)"
-    side="outside"
     [multiple]="false"
     [gap]="12"
     [chips]="chips"
+    side="outside"
     class="page-recipes-catalog__categories"
   />
 
@@ -77,9 +77,15 @@
     (clicked)="filter.setPageSize(5)"
   />
 
-  <app-radio-checkbox label="По мере прокрутки" />
-  <app-radio-checkbox label="По мере прокрутки" [disabled]="true" />
-  <app-radio-checkbox label="По мере прокрутки" [invalid]="true" />
+  <app-radio-checkbox-group
+    [options]="chips"
+    [(value)]="value"
+    [withDeselect]="true"
+    [invalid]="true"
+    orientation="vertical"
+    label="Категория"
+    name="recipe-category"
+  />
   <!--<div class="view-toggle">
     <button
       type="button"

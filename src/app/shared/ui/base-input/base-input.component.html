@@ -75,21 +75,11 @@
     }
   </div>
   @if (hint()) {
-    <p class="base-input__hint text-small text-help">
+    <p class="base-input__hint text-small text-helper">
       {{ hint() }}
     </p>
   }
   @if (touched() && invalid()) {
-    <div class="base-input__errors">
-      @for (message of errorMessages(); track $index) {
-        <p class="base-input__errors-message text-small text-error">
-          @if (errorMessages().length > 1) {
-            {{ $index + 1 }}. {{ message }}
-          } @else {
-            {{ message }}
-          }
-        </p>
-      }
-    </div>
+    <app-error-list [errors]="errors()" class="base-input__errors" />
   }
 </div>

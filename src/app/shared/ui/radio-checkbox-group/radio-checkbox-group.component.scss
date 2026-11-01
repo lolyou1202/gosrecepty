@@ -1,0 +1,39 @@
+:host {
+  display: inline-flex;
+
+  &.--horizontal {
+    .radio-checkbox-group__list {
+      flex-direction: row;
+    }
+  }
+}
+
+.radio-checkbox-group {
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    background: none;
+    border: none;
+  }
+
+  &__labels {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    margin-bottom: 12px;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    row-gap: 8px;
+    column-gap: 24px;
+  }
+
+  &__errors {
+    margin-top: 12px;
+  }
+}

@@ -21,12 +21,13 @@ import { CommonModule } from '@angular/common'
 import { IconComponent } from '../icon/icon.component'
 import { DropdownPanelComponent } from '../dropdown-panel/dropdown-panel.component'
 import { FocusMonitor } from '@angular/cdk/a11y'
+import { ErrorListComponent } from '../error-list/error-list.component';
 
 @Component({
   selector: 'app-base-input',
   templateUrl: './base-input.component.html',
   styleUrl: './base-input.component.scss',
-  imports: [CommonModule, IconComponent, DropdownPanelComponent],
+  imports: [CommonModule, IconComponent, DropdownPanelComponent, ErrorListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BaseInputComponent

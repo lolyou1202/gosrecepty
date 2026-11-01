@@ -1,7 +1,7 @@
 <div class="demo-page container">
   <header class="demo-header">
     <h1>Демонстрация компонентов</h1>
-    <p class="text-large text-help">
+    <p class="text-large text-helper">
       Живые примеры UI-кита: кнопки, чипсы, пилюли и группы чипсов.
     </p>
   </header>
@@ -10,7 +10,7 @@
   <section class="demo-section">
     <header class="demo-section__header">
       <h3>Кнопки</h3>
-      <p class="text-small text-help">
+      <p class="text-small text-helper">
         <code>app-button-light</code> — размеры <em>sm/md/lg</em>, формы
         <em>circle/rounded</em>, поддержка иконки, текста и disabled-состояния.
       </p>
@@ -100,7 +100,7 @@
   <section class="demo-section">
     <header class="demo-section__header">
       <h3>Чипсы</h3>
-      <p class="text-small text-help">
+      <p class="text-small text-helper">
         <code>app-chip</code> — два варианта оформления (<em>inside</em> /
         <em>outside</em>), иконка, текст или комбинация.
       </p>
@@ -155,7 +155,7 @@
   <section class="demo-section">
     <header class="demo-section__header">
       <h3>Пилюли</h3>
-      <p class="text-small text-help">
+      <p class="text-small text-helper">
         <code>app-pill</code> — компактные метки с обрезкой длинного текста
         многоточием.
       </p>
@@ -207,7 +207,7 @@
   <section class="demo-section">
     <header class="demo-section__header">
       <h3>Группа чипсов</h3>
-      <p class="text-small text-help">
+      <p class="text-small text-helper">
         <code>app-chip-group</code> — одиночный и множественный выбор,
         <em>readonly</em>, <em>disabled</em>, программное управление через
         <code>value</code>.
@@ -223,7 +223,7 @@
         <p class="demo-card__caption text-small">
           <b>Одиночный выбор</b> — <code>multiple=false</code>
         </p>
-        <p class="demo-card__value text-small text-help">
+        <p class="demo-card__value text-small text-helper">
           Значение: <code>{{ singleValue() ?? '—' }}</code>
         </p>
       </div>
@@ -236,7 +236,7 @@
         <p class="demo-card__caption text-small">
           <b>Множественный выбор</b> — <code>multiple=true</code>
         </p>
-        <p class="demo-card__value text-small text-help">
+        <p class="demo-card__value text-small text-helper">
           Выбрано: <code>{{ selectedLabels() || '—' }}</code>
         </p>
       </div>
@@ -268,14 +268,9 @@
       <!-- 6. Программное управление -->
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <div
-            appSelectionGroup
-            
-          >
+          <div appSelectionGroup>
             <app-expandable-list>
-              @for (chip of multiChips; track chip.id) {
-                
-              }
+              @for (chip of multiChips; track chip.id) {}
             </app-expandable-list>
           </div>
         </div>
@@ -294,11 +289,7 @@
 
       <div class="demo-card demo-card--stack shadow-block with-hover">
         <div class="demo-card__preview demo-card__preview--block">
-          <div
-            appSelectionGroup
-            #group="selectionGroup"
-            
-          >
+          <div appSelectionGroup #group="selectionGroup">
             <app-expandable-list [collapsible]="true" [gap]="8">
               @for (
                 chip of [
@@ -308,9 +299,7 @@
                   { id: 'archived', label: 'Архив', disabled: true }
                 ];
                 track chip.id
-              ) {
-                
-              }
+              ) {}
             </app-expandable-list>
           </div>
         </div>
@@ -325,7 +314,7 @@
   <section class="demo-section">
     <header class="demo-section__header">
       <h3>Базовый инпут</h3>
-      <p class="text-small text-help">
+      <p class="text-small text-helper">
         <code>app-base-input</code> — два режима <em>input/display</em>,
         состояния <em>invalid</em>, <em>disabled</em>, <em>readonly</em>,
         иконки, clearable, hint и ошибки.
@@ -586,7 +575,7 @@
           <b>Live-валидация</b> — минимум 5 символов, ошибки появляются после
           blur
         </p>
-        <p class="demo-card__value text-small text-help">
+        <p class="demo-card__value text-small text-helper">
           value: <code>{{ interactiveValue() || '—' }}</code> · touched:
           <code>{{ interactiveTouched() }}</code>
         </p>

@@ -1,0 +1,10 @@
+<div class="error-list__container" role="alert" aria-live="polite">
+  @for (message of messages(); track $index) {
+    <p class="error-list__item text-small text-error">
+      @if (numbered()) {
+        <span class="error-list__index">{{ $index + 1 }}.</span>
+      }
+      <span class="error-list__text">{{ message }}</span>
+    </p>
+  }
+</div>

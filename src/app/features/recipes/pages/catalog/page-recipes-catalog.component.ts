@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject
+  inject,
+  signal
 } from '@angular/core'
 import { RecipeCatalogService } from '../../data/recipes-catalog.service'
 import { BreadcrumbsComponent } from '@shared/ui/breadcrumbs/breadcrumbs.component'
@@ -13,7 +14,7 @@ import { ShadowButtonComponent } from '@shared/ui/shadow-button'
 import { RecipesFilterBarComponent } from '@features/recipes/ui/recipe-catalog-filter-bar'
 import { RecipeCatalogActiveFiltersComponent } from '@features/recipes/ui/recipe-catalog-active-filters'
 import { RecipeCatalogConfigService } from '@features/recipes/config'
-import RadioCheckboxComponent from '@shared/ui/radio-checkbox/radio-checkbox.component'
+import { RadioCheckboxGroupComponent } from '@shared/ui/radio-checkbox-group'
 
 @Component({
   selector: 'app-page-recipes',
@@ -27,7 +28,7 @@ import RadioCheckboxComponent from '@shared/ui/radio-checkbox/radio-checkbox.com
     RecipesFilterBarComponent,
     DefaultButtonComponent,
     RecipeCatalogActiveFiltersComponent,
-		RadioCheckboxComponent
+    RadioCheckboxGroupComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -59,14 +60,11 @@ export default class PageRecipesCatalogComponent {
     { id: 'fish', label: 'Рыба и морепродукты' },
     { id: 'drinks', label: 'Напитки' }
   ]
-
+  protected readonly value = signal<string | null>('b')
   protected readonly pageSizeOptions = [4, 8, 12, 24]
 
-  protected readonly selectedCategory = computed(() => this.filter.category())
-
   protected readonly chipValue = computed(() => {
-    const id = this.selectedCategory() ?? 'all'
-    return this.chips.filter(c => c.id === id).map(c => c.id)
+    return [this.filter.category() ?? 'all']
   })
 
   protected readonly pages = computed(() =>

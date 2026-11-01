@@ -1,44 +1,37 @@
 :host {
+  display: inline-flex;
+  outline: 2px solid transparent;
+  transition: outline 0.2s ease;
+
   &.--checked {
-    .radio-checkbox__box {
-      &::after {
-        opacity: 1;
-      }
+    .radio-checkbox__box::after {
+      opacity: 1;
     }
   }
 
   &.--disabled {
-    .radio-checkbox {
+    .radio-checkbox__container {
       pointer-events: none;
     }
 
     .radio-checkbox__box {
       background-color: var(--color-calcestruzzo);
       border-color: var(--color-telegrey-scuro);
+
+      &::after {
+        background-color: var(--color-telegrey-scuro);
+      }
     }
 
-    .radio-checkbox__label {
+    .radio-checkbox__text {
       color: var(--color-telegrey-scuro);
     }
   }
 
-  &.--readonly {
-    .radio-checkbox {
-      pointer-events: none;
-    }
-
-    .radio-checkbox__box {
-      background-color: var(--color-calcestruzzo);
-      border-color: var(--color-telegrey-scuro);
-    }
-  }
-
   &.--invalid {
-    .radio-checkbox {
-      &:hover {
-        .radio-checkbox__box {
-          background-color: var(--color-petalo-rosa);
-        }
+    .radio-checkbox__container:hover {
+      .radio-checkbox__box {
+        background-color: var(--color-petalo-rosa);
       }
     }
 
@@ -51,30 +44,32 @@
       }
     }
   }
+
+  &:focus-visible {
+    outline-color: var(--color-agata-fredda);
+  }
 }
 
 .radio-checkbox {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
+  &__container {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 16px;
 
-  cursor: pointer;
+    cursor: pointer;
+    user-select: none;
 
-  &:hover {
-    .radio-checkbox__box {
-      background-color: var(--color-solitario);
+    &:hover {
+      .radio-checkbox__box {
+        background-color: var(--color-solitario);
+      }
     }
   }
 
-  &__input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
-
   &__box {
-    display: inline-grid;
-    place-items: center;
+    position: relative;
+
+    flex-shrink: 0;
 
     width: 24px;
     height: 24px;
@@ -89,6 +84,13 @@
 
     &::after {
       content: '';
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      flex-shrink: 0;
 
       width: 12px;
       height: 12px;

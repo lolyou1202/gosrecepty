@@ -1,12 +1,4 @@
-<label class="radio-checkbox">
-  <input
-    type="radio"
-    class="radio-checkbox__input"
-    [checked]="checked()"
-    [disabled]="disabled()"
-    (change)="select()"
-    (blur)="touch.emit()"
-  />
+<div class="radio-checkbox__container">
   <span class="radio-checkbox__box" aria-hidden="true"></span>
-  <p class="radio-checkbox__label">{{ label() }}</p>
-</label>
+  <p class="radio-checkbox__text text-default">{{ label() }}</p>
+</div>
