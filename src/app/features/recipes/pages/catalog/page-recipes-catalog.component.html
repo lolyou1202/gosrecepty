@@ -29,12 +29,12 @@
   <app-shadow-button
     label="Пейджинг"
     [withHover]="true"
-    (clicked)="_config.update({ viewMode: 'pagination' })"
+    (clicked)="config.update({ viewMode: 'pagination' })"
   />
   <app-shadow-button
     label="Подгрузка"
     [withHover]="true"
-    (clicked)="_config.update({ viewMode: 'lazy' })"
+    (clicked)="config.update({ viewMode: 'lazy' })"
   />
   <app-shadow-button
     label="Сортировать по имени"
@@ -78,14 +78,13 @@
   />
 
   <app-radio-checkbox-group
-    [options]="chips"
-    [(value)]="value"
-    [withDeselect]="true"
-    [invalid]="true"
+    [options]="viewModeOptions"
+    [value]="viewMode()"
+    (valueChange)="onViewModeChange($event)"
     orientation="vertical"
-    label="Категория"
-    name="recipe-category"
+    hint="Загрузка списка"
   />
+
   <!--<div class="view-toggle">
     <button
       type="button"

@@ -40,13 +40,13 @@ export class RecipeCatalogConfigService {
   }
 
   private _loadConfig(): RecipeCatalogConfig {
+    if (!isPlatformBrowser(this._platformId)) {
+      return DEFAULT_RECIPE_CATALOG_CONFIG
+    }
     try {
       const saved = this._cookieService.get(this._cookieKey)
       if (saved) {
-        return {
-          ...DEFAULT_RECIPE_CATALOG_CONFIG,
-          ...JSON.parse(saved)
-        }
+        return { ...DEFAULT_RECIPE_CATALOG_CONFIG, ...JSON.parse(saved) }
       }
     } catch (e) {
       console.warn('Не удалось прочитать настройки списка рецептов из куки', e)

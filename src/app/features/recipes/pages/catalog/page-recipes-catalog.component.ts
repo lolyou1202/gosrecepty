@@ -2,8 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  inject,
-  signal
+  inject
 } from '@angular/core'
 import { RecipeCatalogService } from '../../data/recipes-catalog.service'
 import { BreadcrumbsComponent } from '@shared/ui/breadcrumbs/breadcrumbs.component'
@@ -14,7 +13,11 @@ import { ShadowButtonComponent } from '@shared/ui/shadow-button'
 import { RecipesFilterBarComponent } from '@features/recipes/ui/recipe-catalog-filter-bar'
 import { RecipeCatalogActiveFiltersComponent } from '@features/recipes/ui/recipe-catalog-active-filters'
 import { RecipeCatalogConfigService } from '@features/recipes/config'
-import { RadioCheckboxGroupComponent } from '@shared/ui/radio-checkbox-group'
+import {
+  RadioCheckboxGroupComponent,
+  RadioCheckboxOption
+} from '@shared/ui/radio-checkbox-group'
+import { ViewMode } from '@shared/utils/types'
 
 @Component({
   selector: 'app-page-recipes',
@@ -34,7 +37,7 @@ import { RadioCheckboxGroupComponent } from '@shared/ui/radio-checkbox-group'
 })
 export default class PageRecipesCatalogComponent {
   private readonly _recipeList = inject(RecipeCatalogService)
-  protected readonly _config = inject(RecipeCatalogConfigService)
+  protected readonly config = inject(RecipeCatalogConfigService)
 
   protected readonly filter = this._recipeList.filter
   protected readonly items = this._recipeList.items
@@ -44,7 +47,7 @@ export default class PageRecipesCatalogComponent {
   protected readonly totalItems = this._recipeList.totalItems
   protected readonly hasMore = this._recipeList.hasMore
 
-  protected readonly viewMode = this._config.viewMode
+  protected readonly viewMode = this.config.viewMode
 
   protected readonly chips = [
     { id: 'all', label: 'Все категории' },
@@ -60,7 +63,12 @@ export default class PageRecipesCatalogComponent {
     { id: 'fish', label: 'Рыба и морепродукты' },
     { id: 'drinks', label: 'Напитки' }
   ]
-  protected readonly value = signal<string | null>('b')
+
+  protected readonly viewModeOptions: RadioCheckboxOption<ViewMode>[] = [
+    { id: 'lazy', label: 'По мере прокрутки' },
+    { id: 'pagination', label: 'Постранично' }
+  ]
+
   protected readonly pageSizeOptions = [4, 8, 12, 24]
 
   protected readonly chipValue = computed(() => {
@@ -70,6 +78,11 @@ export default class PageRecipesCatalogComponent {
   protected readonly pages = computed(() =>
     Array.from({ length: this.totalPages() }, (_, i) => i + 1)
   )
+
+  protected onViewModeChange(value: ViewMode | null): void {
+    if (!value) return
+    this.config.update({ viewMode: value })
+  }
 
   protected onCategoriesChange(items: string[]): void {
     const id = items[0]
