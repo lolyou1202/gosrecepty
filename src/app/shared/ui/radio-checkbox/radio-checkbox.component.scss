@@ -1,7 +1,5 @@
 :host {
   display: inline-flex;
-  outline: 2px solid transparent;
-  transition: outline 0.2s ease;
 
   &.--checked {
     .radio-checkbox__box::after {
@@ -44,31 +42,53 @@
       }
     }
   }
-
-  &:focus-visible {
-    outline-color: var(--color-agata-fredda);
-  }
 }
 
 .radio-checkbox {
   &__container {
     display: inline-flex;
-    align-items: flex-start;
-    gap: 16px;
+
+    outline: 2px solid transparent;
 
     cursor: pointer;
     user-select: none;
+    transition: outline 0.2s ease;
 
     &:hover {
       .radio-checkbox__box {
         background-color: var(--color-solitario);
       }
     }
+
+    &:has(.radio-checkbox__input:focus-visible) {
+      outline-color: var(--color-agata-fredda);
+    }
+  }
+
+  &__input {
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+
+    width: 1px;
+    height: 1px;
+
+    margin: -1px;
+
+    border: 0;
+    white-space: nowrap;
+  }
+
+  &__label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 16px;
   }
 
   &__box {
     position: relative;
 
+    display: inline-flex;
     flex-shrink: 0;
 
     width: 24px;

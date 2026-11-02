@@ -1,4 +1,17 @@
 <div class="radio-checkbox__container">
-  <span class="radio-checkbox__box" aria-hidden="true"></span>
-  <p class="radio-checkbox__text text-default">{{ label() }}</p>
+  <input
+    type="radio"
+    class="radio-checkbox__input"
+    [id]="id()"
+    [name]="name()"
+    [value]="value()"
+    [checked]="checked()"
+    [disabled]="disabled()"
+    [attr.aria-readonly]="readonly() ? true : null"
+    (change)="onChange($event)"
+  />
+  <label class="radio-checkbox__label" [for]="id()">
+    <span class="radio-checkbox__box" aria-hidden="true"></span>
+    <span class="radio-checkbox__text text-default">{{ label() }}</span>
+  </label>
 </div>
