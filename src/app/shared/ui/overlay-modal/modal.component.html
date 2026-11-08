@@ -1,13 +1,13 @@
-<div class="modal__container">
+<div class="modal__container" tabindex="-1" cdkFocusInitial>
   <div class="modal__header">
     <h3>{{ title() }}</h3>
 
-    <button class="modal__close link-plain" (click)="close()">
+    <button class="modal__close link-plain focus-ring" (click)="close()">
       <app-icon name="cross-1" class="modal__close-icon" />
     </button>
   </div>
 
-  <app-divider />
+  <app-divider marginHorizontal="24px" />
 
   <div class="modal__content">
     @if (contentComponent(); as component) {
@@ -28,12 +28,12 @@
   </div>
 
   @if (actions().length) {
-    <app-divider />
+    <app-divider marginHorizontal="24px" />
 
     <div class="modal__footer">
       @for (action of actions(); track action.text) {
         <app-default-button
-          [variant]="action.variant"
+          [styleVariant]="action.variant"
           [label]="action.text"
           [disabled]="isDisabled(action.disabled)"
           (click)="onActionClick(action)"

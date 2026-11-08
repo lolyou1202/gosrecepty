@@ -6,17 +6,16 @@ import {
   input,
   Type,
   Injector,
-  output,
   computed,
   Signal
 } from '@angular/core'
 import { NgComponentOutlet, NgTemplateOutlet } from '@angular/common'
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { ModalAction, ModalConfig, ModalResult } from './modal.model'
-import { MODAL_CONFIG, MODAL_REF } from './modal.tokens'
-import { DefaultButtonComponent } from '../default-button'
-import { DividerComponent } from '../divider/divider.component'
-import { IconComponent } from '../icon/icon.component'
+import { OVERLAY_CONFIG, OVERLAY_REF } from '@shared/ui/overlay/tokens'
+import { DefaultButtonComponent } from '@shared/ui/default-button'
+import { DividerComponent } from '@shared/ui/divider/divider.component'
+import { IconComponent } from '@shared/ui/icon/icon.component'
+import { ModalAction, ModalConfig, ModalResult } from './models'
+import { MODAL_CONFIG, MODAL_REF } from './tokens'
 
 @Component({
   selector: 'app-modal',
@@ -31,15 +30,13 @@ import { IconComponent } from '../icon/icon.component'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ModalComponent<D = unknown, R = unknown> {
-  private _dialogRef = inject(
-    MatDialogRef<ModalComponent<D, R>, ModalResult<R>>
-  )
+export class ModalComponent<C = unknown, D = unknown, R = unknown> {
   private _parentInjector = inject(Injector)
-  private _config = inject<ModalConfig<unknown, D, R>>(MAT_DIALOG_DATA)
+  private _overlayRef = inject(OVERLAY_REF)
+  private _injectedConfig = inject<ModalConfig<C, D, R>>(OVERLAY_CONFIG)
 
-  public config = input<ModalConfig<unknown, D, R>>(this._config)
-  public closed = output<ModalResult<R>>()
+  public config = input<ModalConfig<C, D, R>>(this._injectedConfig)
+  public onClose = input<(result: ModalResult<R>) => void>()
 
   protected readonly title = computed(() => this.config().title)
   protected readonly actions = computed(() => this.config().actions ?? [])
@@ -73,14 +70,20 @@ export class ModalComponent<D = unknown, R = unknown> {
       parent: this._parentInjector,
       providers: [
         { provide: MODAL_CONFIG, useValue: this.config() },
-        { provide: MODAL_REF, useValue: this._dialogRef }
+        {
+          provide: MODAL_REF,
+          useValue: {
+            close: (result?: ModalResult<R>): void =>
+              this.close(result || { action: 'close' })
+          }
+        }
       ]
     })
   )
 
   public close(result: ModalResult<R> = { action: 'close' }): void {
-    this._dialogRef.close(result)
-    this.closed.emit(result)
+    this.onClose()?.(result)
+    this._overlayRef.close()
   }
 
   protected isDisabled(value: boolean | Signal<boolean> | undefined): boolean {
@@ -93,13 +96,11 @@ export class ModalComponent<D = unknown, R = unknown> {
     const payload = (await action.onClick?.(ctx)) as R | undefined
 
     if (action.closeOnClick) {
-      const result: ModalResult<R> = {
+      this.close({
         action: 'action',
         text: action.text,
         payload
-      }
-      this._dialogRef.close(result)
-      this.closed.emit(result)
+      })
     }
   }
 }
