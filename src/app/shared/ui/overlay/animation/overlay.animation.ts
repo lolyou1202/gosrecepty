@@ -56,7 +56,13 @@ export class OverlayAnimationPlayer {
 
     const panel = this._findPanel(cdkRef.overlayElement)
     if (panel) {
-      this._animate(panel, OVERLAY_CLOSING_CLASS, duration, onAnimationComplete)
+      this._animate(
+        panel,
+        OVERLAY_CLOSING_CLASS,
+        duration,
+        onAnimationComplete,
+        true
+      )
     } else {
       setTimeout(onAnimationComplete, duration)
     }
@@ -67,14 +73,25 @@ export class OverlayAnimationPlayer {
         cdkRef.backdropElement,
         OVERLAY_BACKDROP_CLOSING_CLASS,
         duration,
-        onAnimationComplete
+        onAnimationComplete,
+        true
       )
     }
   }
 
   private _findPanel(overlayElement: HTMLElement): HTMLElement | null {
-    if (overlayElement.matches(OVERLAY_PANEL_SELECTOR)) return overlayElement
-    return overlayElement.querySelector<HTMLElement>(OVERLAY_PANEL_SELECTOR)
+    if (overlayElement.matches(OVERLAY_PANEL_SELECTOR)) {
+      return (overlayElement.firstElementChild as HTMLElement) || overlayElement
+    }
+
+    const panel = overlayElement.querySelector<HTMLElement>(
+      OVERLAY_PANEL_SELECTOR
+    )
+    if (panel) {
+      return (panel.firstElementChild as HTMLElement) || panel
+    }
+
+    return null
   }
 
   private _shouldAnimate(
@@ -109,18 +126,23 @@ export class OverlayAnimationPlayer {
     element: HTMLElement,
     className: string,
     duration: number,
-    onDone: () => void = () => {}
+    onDone: () => void = () => {},
+    isClosing = false
   ): void {
     let finished = false
+    let timer: ReturnType<typeof setTimeout> | undefined = undefined
 
     const finish = (): void => {
       if (finished) return
       finished = true
       element.removeEventListener('animationend', onAnimationEnd)
       globalThis.clearTimeout(timer)
-      element.classList.remove(className)
-      element.style.removeProperty('animation-duration')
+
       onDone()
+      if (!isClosing) {
+        element.classList.remove(className)
+        element.style.removeProperty('animation-duration')
+      }
     }
 
     const onAnimationEnd = (event: AnimationEvent): void => {
@@ -132,9 +154,12 @@ export class OverlayAnimationPlayer {
     element.addEventListener('animationend', onAnimationEnd)
     element.classList.add(className)
 
-    const timer = globalThis.setTimeout(
-      finish,
-      duration + ANIMATION_SAFETY_MARGIN
-    )
+    const computedStyle = globalThis.getComputedStyle(element)
+    if (computedStyle.animationName === 'none') {
+      finish()
+      return
+    }
+
+    timer = globalThis.setTimeout(finish, duration + ANIMATION_SAFETY_MARGIN)
   }
 }
