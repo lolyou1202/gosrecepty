@@ -1,4 +1,4 @@
-import { type RecipeCatalogFilterChip } from '@features/recipes/ui/recipe-catalog-filter-bar'
+import type { RecipeCatalogFilterChip } from '@features/recipes/models'
 
 export const COOKING_TIME_CHIPS: RecipeCatalogFilterChip[] = [
   {

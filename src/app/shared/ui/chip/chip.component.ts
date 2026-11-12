@@ -1,5 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, model } from '@angular/core'
-import { FormCheckboxControl } from '@angular/forms/signals'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  output
+} from '@angular/core'
 import { ChipSide, ChipStyleVariant } from './chip.model'
 import { IconComponent } from '../icon/icon.component'
 
@@ -18,18 +22,19 @@ import { IconComponent } from '../icon/icon.component'
   },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChipComponent implements FormCheckboxControl {
+export class ChipComponent {
+  public readonly checked = input<boolean>(false)
+  public readonly disabled = input<boolean>(false)
+
   public readonly side = input<ChipSide>('inside')
   public readonly styleVariant = input<ChipStyleVariant>('outlined')
   public readonly label = input<string>()
   public readonly icon = input<string>()
-  public readonly disabled = input<boolean>(false)
 
-  public readonly checked = model<boolean>(false)
+  public readonly toggled = output<void>()
 
   protected toggle(): void {
     if (this.disabled()) return
-
-    this.checked.update(value => !value)
+    this.toggled.emit()
   }
 }

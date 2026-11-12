@@ -1,2 +1,2 @@
 export type DividerOrientation = 'horizontal' | 'vertical'
-export type DividerColor = 'solitario' | 'divisore' | 'ciottoli'
+export type DividerColorName = 'solitario' | 'divisore' | 'ciottoli'

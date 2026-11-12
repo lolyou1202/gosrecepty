@@ -1,0 +1,40 @@
+<div
+  role="dialog"
+  tabindex="-1"
+  cdkFocusInitial
+  aria-modal="true"
+  [attr.aria-labelledby]="title() ? titleId : null"
+  class="popup__container"
+>
+  @if (isMobile()) {
+    <div class="popup__header">
+      <h3 [id]="titleId">{{ title() }}</h3>
+      <button
+        class="popup__close link-plain"
+        aria-label="Закрыть"
+        (click)="close()"
+      >
+        <app-icon name="cross-1" class="popup__close-icon" />
+      </button>
+    </div>
+    <app-divider [marginHorizontal]="24" />
+  }
+
+  <div class="popup__content">
+    @if (contentComponent(); as component) {
+      <ng-container
+        [ngComponentOutlet]="component"
+        [ngComponentOutletInputs]="contentComponentInputs()"
+        [ngComponentOutletInjector]="bodyInjector()"
+      />
+    } @else if (contentTemplate(); as template) {
+      <ng-container
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="contentTemplateContext()"
+        [ngTemplateOutletInjector]="bodyInjector()"
+      />
+    } @else {
+      <ng-content />
+    }
+  </div>
+</div>

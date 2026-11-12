@@ -1,0 +1,21 @@
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.recipe-catalog-settings {
+  &.--sort-asc {
+    --sort-down-color: var(--color-divisore);
+  }
+  &.--sort-desc {
+    --sort-up-color: var(--color-divisore);
+  }
+}
+
+.recipe-catalog-settings-modal {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}

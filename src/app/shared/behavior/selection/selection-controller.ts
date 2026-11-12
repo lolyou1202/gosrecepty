@@ -2,6 +2,7 @@ interface SelectionControllerOptions<T> {
   multiple: () => boolean
   selectedIds: () => readonly T[]
   onChange: (ids: T[]) => void
+  withDeselect?: () => boolean
 }
 
 export class SelectionController<T extends string | number> {
@@ -21,12 +22,21 @@ export class SelectionController<T extends string | number> {
       this._opts.onChange([...this._opts.selectedIds(), id])
       return
     }
-    if (this.isSelected(id)) return
     this._opts.onChange([id])
   }
 
+  public deselect(id: T): void {
+    if (!this.isSelected(id)) return
+    if (!this._opts.multiple() && !this._opts.withDeselect?.()) return
+    this._opts.onChange(this._opts.selectedIds().filter(i => i !== id))
+  }
+
   public toggle(id: T): void {
-    this.select(id)
+    if (this.isSelected(id)) {
+      this.deselect(id)
+    } else {
+      this.select(id)
+    }
   }
 
   public clear(): void {

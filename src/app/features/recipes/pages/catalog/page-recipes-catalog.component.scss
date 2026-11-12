@@ -1,5 +1,8 @@
 .page-recipes-catalog {
   &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
   &__intro {
@@ -8,21 +11,16 @@
     gap: 8px;
   }
 
-  &__categories {
-    margin-top: 24px;
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
   &__toolbar {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-
-    margin-top: 12px;
-
-    &-actions {
-      display: flex;
-      gap: 12px;
-    }
   }
 
   &__banner {
@@ -32,7 +30,7 @@
   &__footer {
     display: flex;
     justify-content: center;
-		
+
     margin-top: 24px;
   }
 }

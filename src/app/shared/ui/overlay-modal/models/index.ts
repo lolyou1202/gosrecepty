@@ -1,7 +1,0 @@
-export type { ModalRef } from './modal-ref.model'
-export type { ModalResult } from './modal-result.model'
-export type { ModalAction } from './modal-action.model'
-export type { ModalBaseConfig } from './modal-base-config.model'
-export type { ModalComponentConfig } from './modal-component-config.model'
-export type { ModalTemplateConfig } from './modal-template-config.model'
-export type { ModalConfig } from './modal-config.model'

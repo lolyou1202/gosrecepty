@@ -1,4 +1,9 @@
-<div class="radio-checkbox__container">
+<div
+  class="radio-checkbox__container"
+  [class.--checked]="checked()"
+  [class.--disabled]="disabled()"
+  [class.--invalid]="invalid()"
+>
   <input
     type="radio"
     class="radio-checkbox__input"

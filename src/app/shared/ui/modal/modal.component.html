@@ -1,0 +1,55 @@
+<div
+  role="dialog"
+  tabindex="-1"
+  cdkFocusInitial
+  aria-modal="true"
+  [attr.aria-labelledby]="title() ? titleId : null"
+  class="modal__container"
+>
+  <div class="modal__header">
+    <h3 [id]="titleId">{{ title() }}</h3>
+
+    <button
+      class="modal__close link-plain"
+      aria-label="Закрыть"
+      (click)="close()"
+    >
+      <app-icon name="cross-1" class="modal__close-icon" />
+    </button>
+  </div>
+
+  <app-divider [marginHorizontal]="24" />
+
+  <div class="modal__content">
+    @if (contentComponent(); as component) {
+      <ng-container
+        [ngComponentOutlet]="component"
+        [ngComponentOutletInputs]="contentComponentInputs()"
+        [ngComponentOutletInjector]="bodyInjector()"
+      />
+    } @else if (contentTemplate(); as template) {
+      <ng-container
+        [ngTemplateOutlet]="template"
+        [ngTemplateOutletContext]="contentTemplateContext()"
+        [ngTemplateOutletInjector]="bodyInjector()"
+      />
+    } @else {
+      <ng-content />
+    }
+  </div>
+
+  @if (actions()?.length) {
+    <app-divider [marginHorizontal]="24" />
+
+    <div class="modal__footer">
+      @for (action of actions(); track action.text) {
+        <app-default-button
+          [styleVariant]="action.variant"
+          [label]="action.text"
+          [disabled]="isActionDisabled(action.disabled)"
+          (click)="onActionClick(action)"
+        />
+      }
+    </div>
+  }
+</div>

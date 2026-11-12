@@ -4,9 +4,12 @@ import {
   input,
   output
 } from '@angular/core'
-import { DefaultButtonVariant, DefaultButtonType } from './default-button.model'
-import { IconComponent } from '../icon/icon.component'
-import { ProgressCircleComponent } from '../progress-circle/progress-circle.component'
+import { IconComponent } from '@shared/ui/icon/icon.component'
+import { ProgressCircleComponent } from '@shared/ui/progress-circle/progress-circle.component'
+import {
+  DefaultButtonStyleVariant,
+  DefaultButtonType
+} from './default-button.model'
 
 @Component({
   selector: 'app-default-button',
@@ -16,7 +19,7 @@ import { ProgressCircleComponent } from '../progress-circle/progress-circle.comp
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DefaultButtonComponent {
-  public readonly variant = input<DefaultButtonVariant>('primary')
+  public readonly styleVariant = input<DefaultButtonStyleVariant>('primary')
   public readonly type = input<DefaultButtonType>('button')
   public readonly loading = input<boolean>(false)
   public readonly fullWidth = input<boolean>(false)

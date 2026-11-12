@@ -11,12 +11,11 @@ import { ButtonLightComponent } from '../../shared/ui/button-light/button-light.
 import { ChipComponent } from '../../shared/ui/chip/chip.component'
 import { ChipGroupComponent } from '../../shared/ui/chip-group/chip-group.component'
 import { PillComponent } from '../../shared/ui/pill/pill.component'
-import { ModalService } from '../../shared/ui/modal/modal.service'
 import { BaseInputComponent } from '../../shared/ui/base-input/base-input.component'
 import { ValidationError, WithOptionalFieldTree } from '@angular/forms/signals'
-import { SelectionGroupDirective } from '../../shared/behavior/selection/selection-group.directive'
 import { ExpandableListComponent } from '../../shared/ui/expandable-list/expandable-list.component'
 import { BreadcrumbsComponent } from '../../shared/ui/breadcrumbs/breadcrumbs.component'
+import { ModalService } from '@shared/ui/modal'
 
 @Component({
   selector: 'app-page-demo',
@@ -29,7 +28,6 @@ import { BreadcrumbsComponent } from '../../shared/ui/breadcrumbs/breadcrumbs.co
     ChipGroupComponent,
     PillComponent,
     BaseInputComponent,
-    SelectionGroupDirective,
     ExpandableListComponent,
     BreadcrumbsComponent
   ]

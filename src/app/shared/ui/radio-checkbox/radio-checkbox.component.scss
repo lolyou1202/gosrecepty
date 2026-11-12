@@ -1,47 +1,5 @@
 :host {
   display: inline-flex;
-
-  &.--checked {
-    .radio-checkbox__box::after {
-      opacity: 1;
-    }
-  }
-
-  &.--disabled {
-    .radio-checkbox__container {
-      pointer-events: none;
-    }
-
-    .radio-checkbox__box {
-      background-color: var(--color-calcestruzzo);
-      border-color: var(--color-telegrey-scuro);
-
-      &::after {
-        background-color: var(--color-telegrey-scuro);
-      }
-    }
-
-    .radio-checkbox__text {
-      color: var(--color-telegrey-scuro);
-    }
-  }
-
-  &.--invalid {
-    .radio-checkbox__container:hover {
-      .radio-checkbox__box {
-        background-color: var(--color-petalo-rosa);
-      }
-    }
-
-    .radio-checkbox__box {
-      background-color: var(--color-paura);
-      border-color: var(--color-gosred);
-
-      &::after {
-        background-color: var(--color-gosred);
-      }
-    }
-  }
 }
 
 .radio-checkbox {
@@ -60,8 +18,48 @@
       }
     }
 
+    &.--checked {
+      .radio-checkbox__box::after {
+        opacity: 1;
+      }
+    }
+
+    &.--disabled {
+      pointer-events: none;
+
+      .radio-checkbox__box {
+        background-color: var(--color-calcestruzzo);
+        border-color: var(--color-telegrey-scuro);
+
+        &::after {
+          background-color: var(--color-telegrey-scuro);
+        }
+      }
+
+      .radio-checkbox__text {
+        color: var(--color-telegrey-scuro);
+      }
+    }
+
+    &.--invalid {
+      &:hover {
+        .radio-checkbox__box {
+          background-color: var(--color-petalo-rosa);
+        }
+      }
+
+      .radio-checkbox__box {
+        background-color: var(--color-paura);
+        border-color: var(--color-gosred);
+
+        &::after {
+          background-color: var(--color-gosred);
+        }
+      }
+    }
+
     &:has(.radio-checkbox__input:focus-visible) {
-      outline-color: var(--color-agata-fredda);
+      outline: 2px solid var(--color-agata-fredda);
     }
   }
 

@@ -94,13 +94,9 @@ export class RecipeCatalogFilterService {
 
   public readonly name = computed(() => this._qp.read('name'))
 
-  public readonly cookingTime = computed(() => {
-    return this._qp.read('cookingTime')
-  })
+  public readonly cookingTime = computed(() => this._qp.read('cookingTime'))
 
-  public readonly calories = computed(() => {
-    return this._qp.read('calories')
-  })
+  public readonly calories = computed(() => this._qp.read('calories'))
 
   public async patchFilters(patch: FilterPatch): Promise<void> {
     await this._qp.patch({

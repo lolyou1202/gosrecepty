@@ -13,3 +13,6 @@ export const OVERLAY_BACKDROP_CLOSING_KEYFRAME = 'overlay-backdrop-close'
 export const OVERLAY_BACKDROP_DARK_CLASS = 'overlay-backdrop--dark'
 export const OVERLAY_BACKDROP_ANIMATION_DISABLED_CLASS =
   'overlay-backdrop--animation-disabled'
+
+export const OVERLAY_COMPONENT_CLASS = 'overlay-component'
+export const OVERLAY_COMPONENT_SELECTOR = `.${OVERLAY_COMPONENT_CLASS}`

@@ -1,28 +1,27 @@
-:host.divider {
-  --divider-margin: 0 24px;
-  --divider-thickness: 1px;
-
+:host {
   display: block;
-  border: none;
+
   margin: var(--divider-margin);
 
-  &.--horizontal {
+  border: none;
+
+  &.--divider-orientation-horizontal {
     height: var(--divider-thickness);
   }
 
-  &.--vertical {
+  &.--divider-orientation-vertical {
     width: var(--divider-thickness);
   }
 
-  &.--solitario {
+  &.--divider-color-solitario {
     background-color: var(--color-solitario);
   }
 
-  &.--divisore {
+  &.--divider-color-divisore {
     background-color: var(--color-divisore);
   }
 
-  &.--ciottoli {
+  &.--divider-color-ciottoli {
     background-color: var(--color-ciottoli);
   }
 }

@@ -8,10 +8,10 @@ import {
   DEFAULT_OPENING_DURATION,
   OVERLAY_CLOSING_CLASS,
   OVERLAY_OPENING_CLASS,
-  OVERLAY_PANEL_SELECTOR,
   REDUCED_MOTION_QUERY,
   OVERLAY_BACKDROP_CLOSING_CLASS,
-  OVERLAY_BACKDROP_OPENING_CLASS
+  OVERLAY_BACKDROP_OPENING_CLASS,
+	OVERLAY_COMPONENT_SELECTOR
 } from '../utils/constants'
 
 @Injectable({ providedIn: 'root' })
@@ -23,11 +23,13 @@ export class OverlayAnimationPlayer {
     if (!this._shouldAnimate(config, 'opening')) return
     const duration = this._resolveDuration(config, 'opening')
 
+    // 1. Открываем панель
     const panel = this._findPanel(cdkRef.overlayElement)
     if (panel) {
       this._animate(panel, OVERLAY_OPENING_CLASS, duration)
     }
 
+    // 2. Открываем бэкдроп (параллельно)
     if (cdkRef.backdropElement) {
       this._animate(
         cdkRef.backdropElement,
@@ -48,50 +50,32 @@ export class OverlayAnimationPlayer {
     }
     const duration = this._resolveDuration(config, 'closing')
 
-    let activeAnimations = 1
-    const onAnimationComplete = (): void => {
-      activeAnimations--
-      if (activeAnimations === 0) onDone()
-    }
-
-    const panel = this._findPanel(cdkRef.overlayElement)
-    if (panel) {
-      this._animate(
-        panel,
-        OVERLAY_CLOSING_CLASS,
-        duration,
-        onAnimationComplete,
-        true
-      )
-    } else {
-      setTimeout(onAnimationComplete, duration)
-    }
-
     if (cdkRef.backdropElement) {
-      activeAnimations++
       this._animate(
         cdkRef.backdropElement,
         OVERLAY_BACKDROP_CLOSING_CLASS,
         duration,
-        onAnimationComplete,
+        undefined,
         true
       )
+    }
+
+    const panel = this._findPanel(cdkRef.overlayElement)
+    if (panel) {
+      this._animate(panel, OVERLAY_CLOSING_CLASS, duration, onDone, true)
+    } else {
+      setTimeout(onDone, duration)
     }
   }
 
   private _findPanel(overlayElement: HTMLElement): HTMLElement | null {
-    if (overlayElement.matches(OVERLAY_PANEL_SELECTOR)) {
-      return (overlayElement.firstElementChild as HTMLElement) || overlayElement
+    if (overlayElement.matches(OVERLAY_COMPONENT_SELECTOR)) {
+      return overlayElement
     }
-
     const panel = overlayElement.querySelector<HTMLElement>(
-      OVERLAY_PANEL_SELECTOR
+      OVERLAY_COMPONENT_SELECTOR
     )
-    if (panel) {
-      return (panel.firstElementChild as HTMLElement) || panel
-    }
-
-    return null
+    return panel || null
   }
 
   private _shouldAnimate(
@@ -139,6 +123,7 @@ export class OverlayAnimationPlayer {
       globalThis.clearTimeout(timer)
 
       onDone()
+
       if (!isClosing) {
         element.classList.remove(className)
         element.style.removeProperty('animation-duration')
@@ -154,12 +139,7 @@ export class OverlayAnimationPlayer {
     element.addEventListener('animationend', onAnimationEnd)
     element.classList.add(className)
 
-    const computedStyle = globalThis.getComputedStyle(element)
-    if (computedStyle.animationName === 'none') {
-      finish()
-      return
-    }
-
+    // Страховочный таймаут на случай, если animationend не пришел
     timer = globalThis.setTimeout(finish, duration + ANIMATION_SAFETY_MARGIN)
   }
 }

@@ -12,6 +12,7 @@
   &__container {
     display: flex;
     flex-direction: column;
+    gap: 12px;
 
     background: none;
     border: none;
@@ -21,8 +22,6 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-
-    margin-bottom: 12px;
   }
 
   &__list {

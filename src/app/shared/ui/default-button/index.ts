@@ -1,5 +1,5 @@
 export { DefaultButtonComponent } from './default-button.component'
 export type {
-  DefaultButtonVariant,
+  DefaultButtonStyleVariant,
   DefaultButtonType
 } from './default-button.model'

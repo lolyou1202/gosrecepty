@@ -8,83 +8,16 @@
     />
     <h2>Рецепты по категориям</h2>
   </div>
-  <app-chip-group
-    [value]="chipValue()"
-    (valueChange)="onCategoriesChange($event)"
-    [multiple]="false"
-    [gap]="12"
-    [chips]="chips"
-    side="outside"
-    class="page-recipes-catalog__categories"
-  />
-
-  <div class="page-recipes-catalog__toolbar">
-    <div class="page-recipes-catalog__toolbar-actions">
-      <app-shadow-button icon="settings" [withHover]="true" />
-      <app-recipe-catalog-filter-bar />
-      <app-shadow-button icon="sort" [withHover]="true" />
+  <div class="page-recipes-catalog__actions">
+    <app-recipe-catalog-categories />
+    <div class="page-recipes-catalog__toolbar">
+      <app-recipe-catalog-settings />
+      <app-recipe-catalog-filter />
+      <app-recipe-catalog-sorting />
+      <app-recipe-catalog-active-filters />
     </div>
-    <app-recipe-catalog-active-filters />
   </div>
-  <app-shadow-button
-    label="Пейджинг"
-    [withHover]="true"
-    (clicked)="config.update({ viewMode: 'pagination' })"
-  />
-  <app-shadow-button
-    label="Подгрузка"
-    [withHover]="true"
-    (clicked)="config.update({ viewMode: 'lazy' })"
-  />
-  <app-shadow-button
-    label="Сортировать по имени"
-    [withHover]="true"
-    (clicked)="filter.setSortBy('name')"
-  />
-  <app-shadow-button
-    label="Сортировать по времени"
-    [withHover]="true"
-    (clicked)="filter.setSortBy('cookingTime')"
-  />
-  <app-shadow-button
-    label="Сортировать по калориям"
-    [withHover]="true"
-    (clicked)="filter.setSortBy('calories')"
-  />
-  <app-shadow-button
-    label="Сортировать по возрастанию"
-    [withHover]="true"
-    (clicked)="filter.setSortOrder('asc')"
-  />
-  <app-shadow-button
-    label="Сортировать по убыванию"
-    [withHover]="true"
-    (clicked)="filter.setSortOrder('desc')"
-  />
-  <app-shadow-button
-    label="1"
-    [withHover]="true"
-    (clicked)="filter.setPageSize(1)"
-  />
-  <app-shadow-button
-    label="2"
-    [withHover]="true"
-    (clicked)="filter.setPageSize(2)"
-  />
-  <app-shadow-button
-    label="5"
-    [withHover]="true"
-    (clicked)="filter.setPageSize(5)"
-  />
-
-  <app-radio-checkbox-group
-    [options]="viewModeOptions"
-    [value]="viewMode()"
-    (valueChange)="onViewModeChange($event)"
-    orientation="vertical"
-    hint="Загрузка списка"
-  />
-
+	
   <!--<div class="page-recipes-catalog__banner not-found shadow-block">
     <img src="./not-found.svg" alt="Ничего не найдено" />
   </div>-->

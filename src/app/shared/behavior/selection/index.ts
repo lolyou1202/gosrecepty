@@ -1,1 +1,1 @@
-export { SelectionGroupDirective } from './selection-group.directive'
+export { SelectionController } from './selection-controller'

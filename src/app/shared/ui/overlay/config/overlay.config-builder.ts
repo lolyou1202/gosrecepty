@@ -25,10 +25,7 @@ export function buildCdkOverlayConfig(
 
   const hasBackdrop = config.hasBackdrop ?? true
 
-  const closeOnBackdropClick =
-    config.closeOnBackdropClick !== false && hasBackdrop
-
-  if (isDevMode() && closeOnBackdropClick !== false && !hasBackdrop) {
+  if (isDevMode() && config.closeOnBackdropClick !== false && !hasBackdrop) {
     console.warn(
       '[OverlayService] closeOnBackdropClick ignored: hasBackdrop is false. Backdrop clicks cannot be captured without a backdrop.'
     )
@@ -43,16 +40,7 @@ export function buildCdkOverlayConfig(
     .split(/\s+/)
     .filter(Boolean)
 
-  const panelShadowClass =
-    config.panelShadow && config.panelShadow !== 'none'
-      ? `${OVERLAY_PANEL_CLASS}--shadow-${config.panelShadow}`
-      : null
-
-  const panelClass = clsx(
-    OVERLAY_PANEL_CLASS,
-    panelShadowClass,
-    config.panelClass
-  )
+  const panelClass = clsx(OVERLAY_PANEL_CLASS, config.panelClass)
     .split(/\s+/)
     .filter(Boolean)
 
@@ -61,7 +49,6 @@ export function buildCdkOverlayConfig(
     closingDuration,
     animationDisabled,
     darkBackdrop,
-    panelShadow,
     origin,
     restoreFocus,
     ...cdkFields

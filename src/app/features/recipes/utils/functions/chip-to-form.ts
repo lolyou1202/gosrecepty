@@ -1,6 +1,6 @@
+import type { RecipeCatalogFilterChip } from '@features/recipes/models'
+import type { Nullable } from '@shared/utils/types/nullable'
 import { findFilterChip } from './find-filter-chip'
-import { type RecipeCatalogFilterChip } from '@features/recipes/ui/recipe-catalog-filter-bar'
-import { type Nullable } from '@shared/utils/types/nullable'
 
 export function chipToForm(
   chips: RecipeCatalogFilterChip[],

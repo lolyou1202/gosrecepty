@@ -1,0 +1,5 @@
+export type { PopupRef } from './popup-ref.model'
+export type { PopupBaseConfig } from './popup-base-config.model'
+export type { PopupComponentConfig } from './popup-component-config.model'
+export type { PopupTemplateConfig } from './popup-template-config.model'
+export type { PopupConfig } from './popup-config.model'

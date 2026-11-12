@@ -13,6 +13,7 @@ import {
 } from '@angular/forms/signals'
 import { RadioCheckboxComponent } from '@shared/ui/radio-checkbox'
 import { ErrorListComponent } from '@shared/ui/error-list'
+import { SelectionController } from '@shared/behavior/selection'
 import {
   RadioCheckboxOption,
   RadioCheckboxOrientation
@@ -56,6 +57,17 @@ export class RadioCheckboxGroupComponent<
   protected readonly hintId = `${this.nameId}-hint`
   protected readonly errorId = `${this.nameId}-error`
 
+  private readonly _selectedIds = computed<readonly T[]>(() => {
+    const v = this.value()
+    return v == null ? [] : [v]
+  })
+
+  protected readonly selection = new SelectionController<T>({
+    multiple: (): boolean => false,
+    selectedIds: (): readonly T[] => this._selectedIds(),
+    onChange: (ids): void => this.value.set(ids[0] ?? null)
+  })
+
   protected readonly describedBy = computed(() => {
     const ids: string[] = []
     if (this.hint()) ids.push(this.hintId)
@@ -71,7 +83,7 @@ export class RadioCheckboxGroupComponent<
 
   protected onOptionSelected(option: RadioCheckboxOption<T>): void {
     if (this.disabled() || this.readonly() || option.disabled) return
-    this.value.set(option.id)
+    this.selection.toggle(option.id)
   }
 
   protected onFocusOut(event: FocusEvent): void {

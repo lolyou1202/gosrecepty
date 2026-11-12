@@ -4,7 +4,7 @@ import {
   computed,
   ChangeDetectionStrategy
 } from '@angular/core'
-import { DefaultButtonVariant } from '../default-button'
+import { DefaultButtonStyleVariant } from '@shared/ui/default-button'
 
 @Component({
   selector: 'app-progress-circle',
@@ -15,7 +15,7 @@ import { DefaultButtonVariant } from '../default-button'
 export class ProgressCircleComponent {
   public readonly size = input<number>(24)
   public readonly strokeWidth = input<number>(4)
-  public readonly variant = input<DefaultButtonVariant>('primary')
+  public readonly variant = input<DefaultButtonStyleVariant>('primary')
   public readonly speed = input<string>('1s')
   // Процент заполнения (0-100)
   public readonly percent = input<number>(50)

@@ -1,0 +1,23 @@
+<app-shadow-button
+  icon="settings"
+  [withHover]="true"
+  (clicked)="openPopup($event)"
+/>
+
+<ng-template #tpl>
+  <div class="recipe-catalog-settings-modal__container">
+    <app-radio-checkbox-group
+      [options]="viewModeOptions"
+      [value]="viewMode()"
+      (valueChange)="onViewModeChange($event)"
+      orientation="vertical"
+      label="Пагинация"
+    />
+    <app-divider />
+    <app-radio-checkbox-group
+      [options]="cardsAppearanceOptions"
+      orientation="vertical"
+      label="Вид карточек"
+    />
+  </div>
+</ng-template>

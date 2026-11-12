@@ -1,0 +1,29 @@
+<app-shadow-button
+  icon="sort"
+	[label]="sortByLabel()"
+  [withHover]="true"
+  (clicked)="openPopup($event)"
+  class="recipe-catalog-settings"
+  [class.--sort-asc]="sortOrder() === 'asc'"
+  [class.--sort-desc]="sortOrder() === 'desc'"
+/>
+
+<ng-template #tpl>
+  <div class="recipe-catalog-settings-modal__container">
+    <app-radio-checkbox-group
+      [options]="sortOrderOptions"
+      [value]="sortOrder()"
+      (valueChange)="onSortOrderChange($event)"
+      orientation="vertical"
+      label="Направление"
+    />
+    <app-divider />
+    <app-radio-checkbox-group
+      [options]="sortByOptions"
+      [value]="sortBy()"
+      (valueChange)="onSortByChange($event)"
+      orientation="vertical"
+      label="Сортировать по"
+    />
+  </div>
+</ng-template>

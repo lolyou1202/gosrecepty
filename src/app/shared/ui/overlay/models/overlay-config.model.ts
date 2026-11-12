@@ -4,6 +4,7 @@ export interface OverlayConfig {
   origin?: HTMLElement
   positionStrategy?: PositionStrategy
   scrollStrategy?: ScrollStrategy
+  width?: number
   closeOnBackdropClick?: boolean
   openingDuration?: number
   closingDuration?: number
@@ -12,7 +13,7 @@ export interface OverlayConfig {
   closeOnEsc?: boolean
   hasBackdrop?: boolean
   darkBackdrop?: boolean
+	darkBackdropMobile?: boolean
   backdropClass?: string
   panelClass?: string
-  panelShadow?: 'default' | 'popup' | 'modal' | 'none'
 }

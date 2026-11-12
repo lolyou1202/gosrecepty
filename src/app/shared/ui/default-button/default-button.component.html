@@ -1,18 +1,17 @@
 <button
   [type]="type()"
   class="default-button"
-  [class.--primary]="variant() === 'primary'"
-  [class.--secondary]="variant() === 'secondary'"
+  [class.--style-variant-primary]="styleVariant() === 'primary'"
+  [class.--style-variant-secondary]="styleVariant() === 'secondary'"
   [class.--full-width]="fullWidth()"
   [class.--small-padding]="smallPadding()"
-  [class.--disabled]="disabled()"
   [style.height]="height()"
   [style.width]="circleRadius() ? height() : null"
-  [disabled]="disabled() || loading()"
+  [disabled]="disabled()"
   (click)="onClick($event)"
 >
   @if (loading() && !disabled()) {
-    <app-progress-circle [variant]="variant()" />
+    <app-progress-circle [variant]="styleVariant()" />
   } @else {
     @if (iconName(); as iconName) {
       <app-icon [name]="iconName" class="button-default__icon" />

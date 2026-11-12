@@ -11,11 +11,6 @@ let nextId = 0
   selector: 'app-radio-checkbox',
   templateUrl: './radio-checkbox.component.html',
   styleUrl: './radio-checkbox.component.scss',
-  host: {
-    '[class.--checked]': 'checked()',
-    '[class.--disabled]': 'disabled()',
-    '[class.--invalid]': 'invalid()'
-  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RadioCheckboxComponent {
