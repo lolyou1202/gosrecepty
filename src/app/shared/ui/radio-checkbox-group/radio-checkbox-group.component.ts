@@ -83,7 +83,7 @@ export class RadioCheckboxGroupComponent<
 
   protected onOptionSelected(option: RadioCheckboxOption<T>): void {
     if (this.disabled() || this.readonly() || option.disabled) return
-    this.selection.toggle(option.id)
+    this.selection.select(option.id)
   }
 
   protected onFocusOut(event: FocusEvent): void {
@@ -92,5 +92,21 @@ export class RadioCheckboxGroupComponent<
     if (!next || !host.contains(next)) {
       this.touch.emit()
     }
+  }
+
+  protected getTabIndex(option: RadioCheckboxOption<T>): number {
+    if (this.disabled()) return -1
+    if (this.selection.isSelected(option.id)) return 0
+
+    const hasSelected = this._selectedIds().length > 0
+    if (
+      !hasSelected &&
+      this.options().indexOf(option) === 0 &&
+      !option.disabled
+    ) {
+      return 0
+    }
+
+    return -1
   }
 }

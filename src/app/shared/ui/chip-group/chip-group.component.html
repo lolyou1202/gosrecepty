@@ -1,22 +1,15 @@
 <div [attr.role]="groupRole()" class="chip-group__container">
-  <app-expandable-list
-    [collapsible]="collapsible()"
-    [(expanded)]="expanded"
-    [gap]="gap()"
-  >
-    @for (chip of chips(); track chip.id) {
-      <app-chip
-        appExpandableItem
-        [attr.role]="optionRole()"
-        [attr.aria-checked]="selection.isSelected(chip.id)"
-        [label]="chip.label"
-        [icon]="chip.icon"
-        [disabled]="!!chip.disabled"
-        [side]="side()"
-        [styleVariant]="styleVariant()"
-        [checked]="selection.isSelected(chip.id)"
-        (toggled)="selection.toggle(chip.id)"
-      />
-    }
-  </app-expandable-list>
+  @for (chip of chips(); track chip.id) {
+    <app-chip
+      [attr.role]="optionRole()"
+      [attr.aria-checked]="selection.isSelected(chip.id)"
+      [label]="chip.label"
+      [icon]="chip.icon"
+      [disabled]="!!chip.disabled"
+      [side]="side()"
+      [styleVariant]="styleVariant()"
+      [checked]="selection.isSelected(chip.id)"
+      (toggled)="selection.toggle(chip.id)"
+    />
+  }
 </div>

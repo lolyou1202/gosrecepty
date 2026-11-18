@@ -7,11 +7,11 @@
 <ng-template #tpl>
   <div class="recipe-catalog-filter-modal__container">
     <div class="recipe-catalog-filter-modal__section">
-      <h5>Поиск по названию</h5>
+      <p class="text-small">Поиск по названию</p>
       <app-base-input [formField]="form.name" [clearable]="true" />
     </div>
     <div class="recipe-catalog-filter-modal__section">
-      <h5>Время приготовления</h5>
+      <p class="text-small">Время приготовления</p>
       <app-chip-group
         [formField]="form.cookingTime"
         [collapsible]="false"
@@ -20,7 +20,7 @@
       />
     </div>
     <div class="recipe-catalog-filter-modal__section">
-      <h5>Калории на 100 г</h5>
+      <p class="text-small">Калории на 100 г</p>
       <app-chip-group
         [formField]="form.calories"
         [collapsible]="false"

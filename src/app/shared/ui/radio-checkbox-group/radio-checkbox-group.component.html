@@ -20,6 +20,14 @@
           {{ hint() }}
         </p>
       }
+
+      @if (invalid() && touched() && errors().length) {
+        <app-error-list
+          [id]="errorId"
+          [errors]="errors()"
+          class="radio-checkbox-group__errors"
+        />
+      }
     </div>
   }
 
@@ -28,6 +36,7 @@
       <app-radio-checkbox
         [id]="optionId(option.id)"
         [name]="nameId"
+        [tabindex]="getTabIndex(option)"
         [value]="option.id"
         [label]="option.label"
         [disabled]="disabled() || !!option.disabled"
@@ -36,12 +45,4 @@
       />
     }
   </div>
-
-  @if (invalid() && touched() && errors().length) {
-    <app-error-list
-      [id]="errorId"
-      [errors]="errors()"
-      class="radio-checkbox-group__errors"
-    />
-  }
 </fieldset>

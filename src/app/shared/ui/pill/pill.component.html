@@ -1,10 +1,18 @@
 <div
   class="pill__container"
+  [class.--side-inside]="side() === 'inside'"
+  [class.--side-outside]="side() === 'outside'"
+  [class.--style-outlined]="styleVariant() === 'outlined'"
+  [class.--style-solid]="styleVariant() === 'solid'"
+  [class.--style-soft]="styleVariant() === 'soft'"
   [class.shadow-block]="side() === 'outside'"
   [class.with-hover]="side() === 'outside'"
 >
-  <p class="pill__label">
-    {{ label() }}
+  <p class="pill__text text-overflow">
+    {{ label() }}:
+    @if (value()) {
+      <span class="pill__value"> {{ value() }}</span>
+    }
   </p>
   <button type="button" class="pill__cross" (click)="remove()">
     <app-icon name="cross-2" size="16px" class="pill__cross-icon" />

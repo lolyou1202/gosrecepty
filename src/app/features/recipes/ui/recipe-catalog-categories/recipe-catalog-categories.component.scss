@@ -1,21 +1,10 @@
-.recipe-catalog-active-filters {
-  &__list {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-
-    margin: 0;
-    padding: 0;
-
-    width: 100%;
-
-    list-style: none;
-  }
-
-  &__item {
-    &.clear {
-      margin: 0 12px;
+@media (max-width: 720px) {
+  .recipe-catalog-categories {
+    &__list {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      margin-top: -12px;
+      margin-bottom: -12px;
     }
   }
 }

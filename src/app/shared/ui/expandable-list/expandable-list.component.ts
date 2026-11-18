@@ -13,58 +13,73 @@ import {
   signal,
   viewChild
 } from '@angular/core'
+import { LayoutService } from '@shared/services/layout.service'
 import { ExpandableItemDirective } from './expandable-item.directive'
 
 @Component({
   selector: 'app-expandable-list',
   templateUrl: './expandable-list.component.html',
   styleUrl: './expandable-list.component.scss',
+  host: {
+    '[class.--expanded]': 'isCollapsible() && expanded()',
+    '[class.--collapsible]': 'isCollapsible()',
+    '[style.--expandable-list-gap]': 'gapStyle()',
+    '[class.scrollable-mobile]': 'scrollableOnMobile() && isMobile()'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExpandableListComponent {
   private readonly _host = inject<ElementRef<HTMLElement>>(ElementRef)
   private readonly _destroyRef = inject(DestroyRef)
+  private readonly _layout = inject(LayoutService)
 
-  private readonly _rowRef = viewChild.required<ElementRef<HTMLElement>>('row')
   private readonly _moreMeasurerRef =
     viewChild<ElementRef<HTMLElement>>('moreMeasurer')
 
-  private readonly items = contentChildren(ExpandableItemDirective, {
+  private readonly _items = contentChildren(ExpandableItemDirective, {
     descendants: false
   })
 
   public readonly collapsible = input<boolean>(true)
-  public readonly gap = input<number>(8)
+  public readonly scrollableOnMobile = input<boolean>(true)
   public readonly expanded = model(false)
+  public readonly gap = input<number>(8)
 
   public readonly hasOverflow = signal(false)
   public readonly hiddenCount = signal(0)
 
+  protected readonly isMobile = computed(() => this._layout.isMobile())
+
+  protected readonly isCollapsible = computed(() => {
+    if (!this.collapsible()) return false
+    if (this.scrollableOnMobile() && this.isMobile()) return false
+    return true
+  })
+
   protected readonly gapStyle = computed(() => `${this.gap()}px`)
 
-  private hostRO?: ResizeObserver
-  private itemRO?: ResizeObserver
-  private moreRO?: ResizeObserver
-  private subs = new Set<HTMLElement>()
-  private rafId = 0
+  private _hostRO?: ResizeObserver
+  private _itemRO?: ResizeObserver
+  private _subs = new Set<HTMLElement>()
+  private _rafId = 0
 
   constructor() {
     afterNextRender(() => this._syncHostObserver())
 
     effect(() => {
-      const items = this.items()
+      const items = this._items()
       const expanded = this.expanded()
-      const collapsible = this.collapsible()
+      const collapsible = this.isCollapsible()
       void this.gap()
 
       this._syncHostObserver()
 
       if (!collapsible) {
-        this.hostRO?.disconnect()
-        this.hostRO = undefined
-        this.itemRO?.disconnect()
-        this.itemRO = undefined
-        this.subs.clear()
+        this._hostRO?.disconnect()
+        this._hostRO = undefined
+        this._itemRO?.disconnect()
+        this._itemRO = undefined
+        this._subs.clear()
 
         for (const it of items) it.setVisible(true)
         this.hasOverflow.set(false)
@@ -73,7 +88,7 @@ export class ExpandableListComponent {
         return
       }
 
-      this.syncItemObservers(items)
+      this._syncItemObservers(items)
 
       if (expanded) {
         for (const it of items) it.setVisible(true)
@@ -82,47 +97,47 @@ export class ExpandableListComponent {
         return
       }
 
-      this.measure()
+      this._measure()
     })
 
     this._destroyRef.onDestroy(() => {
-      this.hostRO?.disconnect()
-      this.itemRO?.disconnect()
-      this.moreRO?.disconnect()
-      cancelAnimationFrame(this.rafId)
+      this._hostRO?.disconnect()
+      this._itemRO?.disconnect()
+      cancelAnimationFrame(this._rafId)
     })
   }
 
-  private syncItemObservers(items: readonly ExpandableItemDirective[]): void {
-    if (!this.collapsible()) return
+  private _syncItemObservers(items: readonly ExpandableItemDirective[]): void {
+    if (!this.isCollapsible()) return
 
-    if (!this.itemRO) {
-      this.itemRO = new ResizeObserver(() => this.schedule())
+    if (!this._itemRO) {
+      this._itemRO = new ResizeObserver(() => this._schedule())
     }
     const next = new Set(items.map(i => i.element))
-    for (const el of this.subs) {
+    for (const el of this._subs) {
       if (!next.has(el)) {
-        this.itemRO.unobserve(el)
-        this.subs.delete(el)
+        this._itemRO.unobserve(el)
+        this._subs.delete(el)
       }
     }
     for (const el of next) {
-      if (!this.subs.has(el)) {
-        this.itemRO.observe(el)
-        this.subs.add(el)
+      if (!this._subs.has(el)) {
+        this._itemRO.observe(el)
+        this._subs.add(el)
       }
     }
   }
 
-  private schedule(): void {
-    cancelAnimationFrame(this.rafId)
-    this.rafId = requestAnimationFrame(() => this.measure())
+  private _schedule(): void {
+    cancelAnimationFrame(this._rafId)
+    this._rafId = requestAnimationFrame(() => this._measure())
   }
 
-  private measure(): void {
-    if (!this.collapsible()) return
+  private _measure(): void {
+    if (!this.isCollapsible()) return
 
-    const items = this.items()
+    const items = this._items()
+    const host = this._host.nativeElement
 
     if (this.expanded()) {
       for (const it of items) it.setVisible(true)
@@ -137,17 +152,16 @@ export class ExpandableListComponent {
       return
     }
 
-    const row = this._rowRef().nativeElement
-    const containerWidth = row.clientWidth
+    const containerWidth = host.clientWidth
     if (containerWidth === 0) {
-      this.schedule()
+      this._schedule()
       return
     }
 
     for (const it of items) it.setVisible(true)
-    void row.offsetWidth
+    void host.offsetWidth
 
-    const gap = this._getColumnGap(row)
+    const gap = this._getColumnGap(host)
     const moreButtonWidth =
       this._moreMeasurerRef()?.nativeElement.offsetWidth ?? 0
 
@@ -175,12 +189,12 @@ export class ExpandableListComponent {
     visible = Math.max(visible, 1)
 
     this._applyVisible(items, visible)
-    void row.offsetWidth
+    void host.offsetWidth
 
-    while (visible > 1 && row.scrollWidth > row.clientWidth + 1) {
+    while (visible > 1 && host.scrollWidth > host.clientWidth + 1) {
       visible--
       this._applyVisible(items, visible)
-      void row.offsetWidth
+      void host.offsetWidth
     }
 
     this.hasOverflow.set(true)
@@ -188,16 +202,16 @@ export class ExpandableListComponent {
   }
 
   private _syncHostObserver(): void {
-    const collapsible = this.collapsible()
+    const collapsible = this.isCollapsible()
     const host = this._host.nativeElement
 
-    if (collapsible && !this.hostRO) {
-      this.hostRO = new ResizeObserver(() => this.schedule())
-      this.hostRO.observe(host)
-      this.schedule()
-    } else if (!collapsible && this.hostRO) {
-      this.hostRO.disconnect()
-      this.hostRO = undefined
+    if (collapsible && !this._hostRO) {
+      this._hostRO = new ResizeObserver(() => this._schedule())
+      this._hostRO.observe(host)
+      this._schedule()
+    } else if (!collapsible && this._hostRO) {
+      this._hostRO.disconnect()
+      this._hostRO = undefined
     }
   }
 

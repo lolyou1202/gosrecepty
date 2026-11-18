@@ -1,7 +1,7 @@
 import { Injectable, TemplateRef, Type, inject } from '@angular/core'
 import { OverlayService } from '@shared/ui/overlay'
 import { OverlayConfig } from '@shared/ui/overlay/models'
-import { LayoutService } from '@shared/utils/services/layout.service'
+import { LayoutService } from '@shared/services/layout.service'
 import { ModalComponent } from './modal.component'
 import { ModalOverlayRef } from './ref/modal-ref'
 import {

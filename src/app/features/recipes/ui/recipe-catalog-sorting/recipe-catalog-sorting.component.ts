@@ -7,15 +7,17 @@ import {
   viewChild
 } from '@angular/core'
 import type { SortOrder } from '@core/api/params'
+import { RecipeCatalogFilterService } from '@features/recipes/data/recipe-catalog-filter.service'
+import {
+  SORT_BY_FILTER,
+  SORT_ORDER_FILTER
+} from '@features/recipes/utils/constants'
 import { PopupService } from '@shared/ui/popup'
 import { ShadowButtonComponent } from '@shared/ui/shadow-button'
-import {
-  RadioCheckboxOption,
-  RadioCheckboxGroupComponent
-} from '@shared/ui/radio-checkbox-group'
+import { RadioCheckboxGroupComponent } from '@shared/ui/radio-checkbox-group'
 import { DividerComponent } from '@shared/ui/divider/divider.component'
+import { findById } from '@shared/utils/functions/find-by-id'
 import type { Nullable } from '@shared/utils/types'
-import { RecipeCatalogFilterService } from '@features/recipes/data/recipe-catalog-filter.service'
 
 @Component({
   selector: 'app-recipe-catalog-sorting',
@@ -34,25 +36,14 @@ export class RecipeCatalogSortingComponent {
 
   protected readonly tpl = viewChild.required('tpl', { read: TemplateRef })
 
-  protected readonly sortOrder = this._filter.sortOrder
   protected readonly sortBy = this._filter.sortBy
+  protected readonly sortOrder = this._filter.sortOrder
+  protected readonly sortByOptions = SORT_BY_FILTER.options
+  protected readonly sortOrderOptions = SORT_ORDER_FILTER.options
 
   protected readonly sortByLabel = computed(
-    () =>
-      this.sortByOptions.find(el => el.id === this.sortBy())?.label ||
-      'Сортировка'
+    () => findById(this.sortByOptions, this.sortBy())?.label || 'Сортировка'
   )
-
-  protected readonly sortOrderOptions: RadioCheckboxOption<SortOrder>[] = [
-    { id: 'asc', label: 'По возрастанию' },
-    { id: 'desc', label: 'По убыванию' }
-  ]
-
-  protected readonly sortByOptions: RadioCheckboxOption<string>[] = [
-    { id: 'name', label: 'По названию' },
-    { id: 'calories', label: 'По калориям' },
-    { id: 'cookingTime', label: 'По времени' }
-  ]
 
   protected onSortOrderChange(value: Nullable<SortOrder>): void {
     if (!value) return

@@ -1,9 +1,20 @@
-<app-chip-group
-  [value]="chipValue()"
-  (valueChange)="onCategoriesChange($event)"
-  [multiple]="false"
+<app-expandable-list
+  [attr.role]="'radiogroup'"
   [gap]="12"
-  [chips]="chips"
-  side="outside"
-  class="page-recipes-catalog__categories"
-/>
+  [collapsible]="true"
+  [scrollableOnMobile]="true"
+  class="recipe-catalog-categories__list"
+>
+  @for (chip of chips; track chip.id) {
+    <app-chip
+      appExpandableItem
+      [attr.role]="'radio'"
+      [attr.aria-checked]="selection.isSelected(chip.id)"
+      [label]="chip.label"
+      [side]="'outside'"
+      [styleVariant]="'outlined'"
+      [checked]="selection.isSelected(chip.id)"
+      (toggled)="selection.toggle(chip.id)"
+    />
+  }
+</app-expandable-list>

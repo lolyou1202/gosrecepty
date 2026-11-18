@@ -10,17 +10,16 @@ import {
 import { apply, form, FormField } from '@angular/forms/signals'
 import { RecipeCatalogFilterService } from '@features/recipes/data/recipe-catalog-filter.service'
 import { type FilterPatch } from '@features/recipes/models'
-import { chipToForm } from '@features/recipes/utils/functions'
 import {
-  COOKING_TIME_CHIPS,
-  CALORIES_CHIPS
+  CALORIES_FILTER,
+  COOKING_TIME_FILTER
 } from '@features/recipes/utils/constants'
 import { ModalService } from '@shared/ui/modal'
 import { ShadowButtonComponent } from '@shared/ui/shadow-button'
 import { ChipGroupComponent } from '@shared/ui/chip-group'
 import { BaseInputComponent } from '@shared/ui/base-input'
-import { nameSchema } from './name.schema'
 import { type RecipeCatalogFilterForm } from './recipe-catalog-filter.model'
+import { nameSchema } from './name.schema'
 
 @Component({
   selector: 'app-recipe-catalog-filter',
@@ -40,8 +39,8 @@ export class RecipeCatalogFilterComponent {
 
   protected readonly tpl = viewChild.required('tpl', { read: TemplateRef })
 
-  protected readonly cookingTimeChips = COOKING_TIME_CHIPS
-  protected readonly caloriesChips = CALORIES_CHIPS
+  protected readonly cookingTimeChips = COOKING_TIME_FILTER.options
+  protected readonly caloriesChips = CALORIES_FILTER.options
 
   protected readonly emptyForm: RecipeCatalogFilterForm = {
     name: '',
@@ -114,10 +113,13 @@ export class RecipeCatalogFilterComponent {
   }
 
   private _prefillFromFilter(): void {
+    const cookingTime = this._filter.cookingTime()?.id
+    const calories = this._filter.calories()?.id
+
     this.form().reset({
       name: this._filter.name() ?? '',
-      cookingTime: chipToForm(COOKING_TIME_CHIPS, this._filter.cookingTime()),
-      calories: chipToForm(CALORIES_CHIPS, this._filter.calories())
+      cookingTime: cookingTime ? [cookingTime] : [],
+      calories: calories ? [calories] : []
     })
   }
 

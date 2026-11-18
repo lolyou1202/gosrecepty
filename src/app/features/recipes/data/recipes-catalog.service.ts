@@ -1,10 +1,10 @@
 import { computed, inject, Injectable, linkedSignal } from '@angular/core'
 import { rxResource } from '@angular/core/rxjs-interop'
 import { type PagingMeta } from '@core/api/paging'
-import { type Nullable } from '@shared/utils/types'
+import type { Nullable } from '@shared/utils/types'
 import { RecipeApiService } from './recipe-api.service'
 import { RecipeCatalogFilterService } from './recipe-catalog-filter.service'
-import { type RecipeCard, type RecipesRequestParams } from '../models'
+import type { RecipeCard, RequestParams } from '../models'
 import { RecipeCatalogConfigService } from '../config'
 
 @Injectable()
@@ -13,7 +13,7 @@ export class RecipeCatalogService {
   private readonly _filter = inject(RecipeCatalogFilterService)
   private readonly _config = inject(RecipeCatalogConfigService)
 
-  public readonly request = computed<RecipesRequestParams>(() => ({
+  public readonly request = computed<RequestParams>(() => ({
     category: this._filter.category(),
     name: this._filter.name(),
     cookingTime: this._filter.cookingTime(),

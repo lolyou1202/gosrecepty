@@ -1,6 +1,23 @@
 :host {
-  display: block;
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: var(--expandable-list-gap, 8px);
+  row-gap: 8px;
   min-width: 0;
+
+  &:not(.--collapsible) {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  &.--collapsible {
+    flex-wrap: nowrap;
+
+    &.--expanded {
+      flex-wrap: wrap;
+      overflow: visible;
+    }
+  }
 }
 
 .expandable-list {
@@ -12,34 +29,30 @@
     pointer-events: none;
   }
 
-  &__row {
-    display: flex;
-    flex-wrap: nowrap;
-    column-gap: var(--expandable-list-gap, 8px);
-		row-gap: 8px;
-    min-width: 0;
-
-    &:not(.--collapsible) {
-      flex-wrap: wrap;
-      overflow: visible;
-    }
-
-    &.--collapsible {
-      flex-wrap: nowrap;
-
-      &.--expanded {
-        flex-wrap: wrap;
-        overflow: visible;
-      }
-    }
-  }
-
   &__more,
   &__collapse {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     flex: 0 0 auto;
+
+    margin-left: 12px;
+
     cursor: pointer;
     white-space: nowrap;
+  }
+}
 
-    margin-left: 8px;
+@media (max-width: 720px) {
+  :host {
+    column-gap: 8px;
+  }
+
+  .expandable-list {
+    &__more,
+    &__collapse {
+      margin-left: 8px;
+    }
   }
 }

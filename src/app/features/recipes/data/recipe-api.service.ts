@@ -15,9 +15,7 @@ import {
   RawPagingApiResponse,
   mapPagingResponse
 } from '@core/api/paging'
-import { RecipeCard, RecipesRequestParams } from '../models'
-import { CALORIES_CHIPS, COOKING_TIME_CHIPS } from '../utils/constants'
-import { findFilterChip } from '../utils/functions'
+import { RecipeCard, RequestParams } from '../models'
 
 @Injectable()
 export class RecipeApiService {
@@ -25,7 +23,7 @@ export class RecipeApiService {
   private readonly _baseUrl = inject(API_BASE_URL)
 
   public getRecipes(
-    params: RecipesRequestParams
+    params: RequestParams
   ): Observable<PagingApiResponse<RecipeCard>> {
     let httpParams = new HttpParams()
 
@@ -36,7 +34,7 @@ export class RecipeApiService {
 
     if (params.category) {
       httpParams = buildFiltersApiParams(
-        { 'categories.id': params.category },
+        { 'categories.id': params.category.id },
         httpParams
       )
     }
@@ -46,20 +44,17 @@ export class RecipeApiService {
     }
 
     if (params.cookingTime) {
-      const range = findFilterChip(
-        params.cookingTime,
-        COOKING_TIME_CHIPS
-      )?.range
-      if (range) {
-        httpParams = buildRangesParams({ cookingTime: range }, httpParams)
-      }
+      httpParams = buildRangesParams(
+        { cookingTime: params.cookingTime.range! },
+        httpParams
+      )
     }
 
     if (params.calories) {
-      const range = findFilterChip(params.calories, CALORIES_CHIPS)?.range
-      if (range) {
-        httpParams = buildRangesParams({ calories: range }, httpParams)
-      }
+      httpParams = buildRangesParams(
+        { calories: params.calories.range! },
+        httpParams
+      )
     }
 
     httpParams = buildPaginationParams(params.page, params.limit, httpParams)

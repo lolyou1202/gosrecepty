@@ -4,16 +4,13 @@ import {
   computed,
   inject
 } from '@angular/core'
+import { RecipeCatalogCategoriesComponent } from '@features/recipes/ui/recipe-catalog-categories'
+import { RecipeCatalogToolbarComponent } from '@features/recipes/ui/recipe-catalog-toolbar'
 import { RecipeCatalogService } from '../../data/recipes-catalog.service'
 import { BreadcrumbsComponent } from '@shared/ui/breadcrumbs/breadcrumbs.component'
 import { PaginationComponent } from '@shared/ui/pagination'
 import { DefaultButtonComponent } from '@shared/ui/default-button'
-import { RecipeCatalogFilterComponent } from '@features/recipes/ui/recipe-catalog-filter'
 import { RecipeCatalogConfigService } from '@features/recipes/config'
-import { RecipeCatalogCategoriesComponent } from '@features/recipes/ui/recipe-catalog-categories'
-import { RecipeCatalogActiveFiltersComponent } from '@features/recipes/ui/recipe-catalog-active-filters'
-import { RecipeCatalogSettingsComponent } from '@features/recipes/ui/recipe-catalog-settings'
-import { RecipeCatalogSortingComponent } from '@features/recipes/ui/recipe-catalog-sorting';
 
 @Component({
   selector: 'app-page-recipes',
@@ -22,13 +19,10 @@ import { RecipeCatalogSortingComponent } from '@features/recipes/ui/recipe-catal
   imports: [
     BreadcrumbsComponent,
     PaginationComponent,
-    RecipeCatalogFilterComponent,
     DefaultButtonComponent,
-    RecipeCatalogActiveFiltersComponent,
     RecipeCatalogCategoriesComponent,
-    RecipeCatalogSettingsComponent,
-    RecipeCatalogSortingComponent
-],
+    RecipeCatalogToolbarComponent
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class PageRecipesCatalogComponent {
@@ -54,6 +48,6 @@ export default class PageRecipesCatalogComponent {
   protected loadMore(): void {
     if (this.loading()) return
     const nextPage = this.filter.currentPage() + 1
-    void this.filter.setCurrentPage(nextPage)
+    this.filter.setCurrentPage(nextPage)
   }
 }

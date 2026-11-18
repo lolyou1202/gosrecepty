@@ -18,9 +18,9 @@ export class RadioCheckboxComponent {
   public readonly name = input.required<string>()
   public readonly value = input.required<string | number>()
   public readonly label = input.required<string>()
+  public readonly tabindex = input<number>(-1)
 
   public readonly disabled = input<boolean>(false)
-  public readonly readonly = input<boolean>(false)
   public readonly invalid = input<boolean>(false)
 
   public readonly checked = input<boolean>(false)
@@ -28,10 +28,16 @@ export class RadioCheckboxComponent {
   public readonly checkedChange = output<void>()
 
   protected onChange(event: Event): void {
-    if (this.disabled() || this.readonly()) {
+    if (this.disabled()) {
       event.preventDefault()
       return
     }
     this.checkedChange.emit()
+  }
+
+  protected onClick(event: MouseEvent): void {
+    if (this.checked() && !this.disabled()) {
+      event.preventDefault()
+    }
   }
 }

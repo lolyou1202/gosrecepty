@@ -9,10 +9,11 @@
     class="radio-checkbox__input"
     [id]="id()"
     [name]="name()"
+    [attr.tabindex]="tabindex()"
     [value]="value()"
     [checked]="checked()"
     [disabled]="disabled()"
-    [attr.aria-readonly]="readonly() ? true : null"
+    (click)="onClick($event)"
     (change)="onChange($event)"
   />
   <label class="radio-checkbox__label" [for]="id()">

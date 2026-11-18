@@ -7,16 +7,14 @@ import {
 } from '@angular/core'
 import { FormValueControl } from '@angular/forms/signals'
 import { SelectionController } from '@shared/behavior/selection'
-import { ExpandableListComponent } from '../expandable-list/expandable-list.component'
-import { ExpandableItemDirective } from '../expandable-list/expandable-item.directive'
-import { ChipComponent, ChipSide, ChipStyleVariant } from '../chip'
-import { ChipGroupItem } from './chip-group.model'
+import { ChipComponent, type ChipSide, type ChipStyleVariant } from '../chip'
+import type { ChipGroupItem } from './chip-group.model'
 
 @Component({
   selector: 'app-chip-group',
   templateUrl: './chip-group.component.html',
   styleUrl: './chip-group.component.scss',
-  imports: [ExpandableListComponent, ExpandableItemDirective, ChipComponent],
+  imports: [ChipComponent],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChipGroupComponent<
@@ -44,7 +42,7 @@ export class ChipGroupComponent<
   protected readonly groupRole = computed(() =>
     this.multiple() ? 'group' : 'radiogroup'
   )
-	
+
   protected readonly optionRole = computed(() =>
     this.multiple() ? 'checkbox' : 'radio'
   )

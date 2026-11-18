@@ -2,7 +2,7 @@ import { Injectable, TemplateRef, Type, inject } from '@angular/core'
 import { skip, takeUntil } from 'rxjs'
 import { PositionStrategy } from '@angular/cdk/overlay'
 import { OverlayService } from '@shared/ui/overlay'
-import { LayoutService } from '@shared/utils/services/layout.service'
+import { LayoutService } from '@shared/services/layout.service'
 import { OverlayConfig, OverlayRef } from '@shared/ui/overlay/models'
 import { PopupComponent } from './popup.component'
 import { PopupOverlayRef } from './ref/popup-ref'
@@ -42,7 +42,7 @@ export class PopupService {
     const overlayConfig: OverlayConfig = {
       positionStrategy: this._getPositionStrategy(isMobile, origin),
       width: isMobile ? undefined : config.width,
-			openingDuration: 200,
+      openingDuration: 200,
       closingDuration: 200,
       hasBackdrop: true,
       darkBackdrop: isMobile,

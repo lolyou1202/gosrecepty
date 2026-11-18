@@ -1,0 +1,28 @@
+<div class="recipe-catalog-toolbar__list scrollable-mobile">
+  <app-recipe-catalog-settings />
+  <app-recipe-catalog-filter />
+  <app-recipe-catalog-sorting />
+
+  @if (hasPills()) {
+    @for (pill of pills(); track pill.key) {
+      <app-pill
+        side="outside"
+        styleVariant="outlined"
+        [label]="pill.label"
+        [value]="pill.value"
+        (removed)="removeFilter(pill.key)"
+        class="recipe-catalog-toolbar__item"
+      />
+    }
+  }
+
+  @if (canClearAll()) {
+    <button
+      type="button"
+      class="recipe-catalog-toolbar__item --clear button-reset text-default link-plain"
+      (click)="clearAllFilters()"
+    >
+      Сбросить всё
+    </button>
+  }
+</div>
